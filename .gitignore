@@ -1,0 +1,8 @@
+*.pyc
+*~
+.ipynb_checkpoints/
+.project
+.pydevproject
+.python-version
+*files/
+
