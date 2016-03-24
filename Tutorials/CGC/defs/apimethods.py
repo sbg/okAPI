@@ -8,7 +8,7 @@ import numpy as np
 
 
 ### METHODS
-def api_call(path, method='GET', query=None, data=None, token=None, flagFullPath=False):
+def api_call(path, method='GET', query=None, data=None, token=None, flag_full_path=False):
     # Translates all the HTTP calls to interface with the API
 
     data = json.dumps(data) if isinstance(data, dict) or isinstance(data,list)  else None
@@ -29,14 +29,16 @@ def api_call(path, method='GET', query=None, data=None, token=None, flagFullPath
         'Content-type': 'application/json',
     }
     
-    if flagFullPath:
+    if flag_full_path:
         response = request(method, path, params=query, data=data, headers=headers)
     else:
         response = request(method, base_url + path, params=query, data=data, headers=headers)
     response_dict = json.loads(response.content) if response.content else {}
 
     if response.status_code / 100 != 2:
-        print response_dict['message'], ('Error Code: %i.' % (response_dict['code'])), response_dict['more_info']
+        print(response_dict['message'])
+        print('Error Code: %i.' % (response_dict['code']))
+        print(response_dict['more_info'])
         raise Exception('Server responded with status code %s.' % response.status_code)
     return response_dict
 
@@ -65,7 +67,7 @@ def download_files(fileList):
         f = open((dl_dir + file_name), 'wb')
         meta = u.info()
         file_size = int(meta.getheaders("Content-Length")[0])
-        print "Downloading: %s Bytes: %s" % (file_name, file_size)
+        print("Downloading: %s Bytes: %s" % (file_name, file_size))
 
         file_size_dl = 0
         block_sz = 1024*1024
@@ -79,7 +81,7 @@ def download_files(fileList):
             status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
             status = status + chr(8)*(len(status)+1)
             if (file_size_dl * 100. / file_size) > (prior_percent+20):
-                print status + '\n'
+                print(status + '\n')
                 prior_percent = (file_size_dl * 100. / file_size)
         f.close()
         
@@ -91,9 +93,9 @@ def my_zip_sort(indexList, otherList):
 ### CLASSES
 class API(object):
     # making a class out of the api_call() function, adding other methods for housekeeping
-    def __init__(self, path, method='GET', query=None, data=None, token=None, flagFullPath=False):
+    def __init__(self, path, method='GET', query=None, data=None, token=None, flag_full_path=False):
         self.flag = {'longList': False}
-        response_dict = api_call(path, method, query, data, token, flagFullPath)
+        response_dict = api_call(path, method, query, data, token, flag_full_path)
         self.response_to_fields(response_dict)
 
         if self.flag['longList']:
@@ -142,7 +144,7 @@ class API(object):
         m = len(keys)
 
         while prior == 'next':
-            rd = api_call(rd['links'][0]['href'], method, query, data, flagFullPath=True)
+            rd = api_call(rd['links'][0]['href'], method, query, data, flag_full_path=True)
             prior = rd['links'][0]['rel']
             n = len(rd['items'])
             for jj in range(m):
