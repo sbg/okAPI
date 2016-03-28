@@ -1,13 +1,9 @@
 ### IMPORTS
-from __future__ import absolute_import
-from __future__ import print_function
 from requests import request
 import json
-from urllib.request import urlopen
+from urllib2 import urlopen
 import os
 from time import sleep
-import numpy as np
-from six.moves import range
 
 
 ### METHODS
@@ -17,7 +13,7 @@ def api_call(path, method='GET', query=None, data=None, token=None, flag_full_pa
     data = json.dumps(data) if isinstance(data, dict) or isinstance(data,list)  else None
     base_url = 'https://cgc-api.sbgenomics.com/v2/'
     if token == None:
-        if 'AUTH_TOKEN' in list(os.environ.keys()):
+        if 'AUTH_TOKEN' in os.environ.keys():
             token = os.environ['AUTH_TOKEN']
         else:
             print("""
@@ -36,14 +32,12 @@ def api_call(path, method='GET', query=None, data=None, token=None, flag_full_pa
         response = request(method, path, params=query, data=data, headers=headers)
     else:
         response = request(method, base_url + path, params=query, data=data, headers=headers)
-    response_dict = json.loads(response.content.decode()) if response.content else {}
+    response_dict = json.loads(response.content) if response.content else {}
 
-    if response.status_code // 200 != 1:
-        # print (response_dict.get('message',''))
-        # print ('Error Code: %i.' % (response_dict.get('code','')))
-        # print (response_dict.get('more_info',''))
-        print ('Error occurred')
-        print (response_dict)
+    if response.status_code / 100 != 2:
+        print(response_dict['message'])
+        print('Error Code: %i.' % (response_dict['code']))
+        print(response_dict['more_info'])
         raise Exception('Server responded with status code %s.' % response.status_code)
     return response_dict
 
@@ -72,7 +66,7 @@ def download_files(fileList):
         f = open((dl_dir + file_name), 'wb')
         meta = u.info()
         file_size = int(meta.getheaders("Content-Length")[0])
-        print(("Downloading: %s Bytes: %s" % (file_name, file_size)))
+        print("Downloading: %s Bytes: %s" % (file_name, file_size))
 
         file_size_dl = 0
         block_sz = 1024*1024
@@ -86,13 +80,9 @@ def download_files(fileList):
             status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
             status = status + chr(8)*(len(status)+1)
             if (file_size_dl * 100. / file_size) > (prior_percent+20):
-                print((status + '\n'))
+                print(status + '\n')
                 prior_percent = (file_size_dl * 100. / file_size)
         f.close()
-        
-def my_zip_sort(indexList, otherList):
-    srt = np.argsort(indexList)
-    return [otherList[i] for i in srt]
 
 
 ### CLASSES
@@ -107,7 +97,7 @@ class API(object):
             self.long_list(response_dict, path, method, query, data)
 
     def response_to_fields(self,rd):
-        if 'items' in list(rd.keys()):        # get * {files, projects, tasks, apps}              (object name plural)
+        if 'items' in rd.keys():        # get * {files, projects, tasks, apps}              (object name plural)
             if len(rd['items']) > 0:
                 self.list_read(rd)
             else:
@@ -117,7 +107,7 @@ class API(object):
 
     def list_read(self,rd):
         n = len(rd['items'])
-        keys = list(rd['items'][0].keys())
+        keys = rd['items'][0].keys()
         m = len(keys)
 
         for jj in range(m):
@@ -126,7 +116,7 @@ class API(object):
                 temp[ii] = rd['items'][ii][keys[jj]]
             setattr(self, keys[jj], temp)
 
-        if ('links' in list(rd.keys())) & (len(rd['links']) > 0):
+        if ('links' in rd.keys()) & (len(rd['links']) > 0):
             self.flag['longList'] = True
 
     def empty_read(self,rd):    # For the (unlikely) case an empty project is queried
@@ -136,7 +126,7 @@ class API(object):
         self.project = []
 
     def detail_read(self,rd):
-        keys = list(rd.keys())
+        keys = rd.keys()
         m = len(keys)
 
         for jj in range(m):
@@ -145,7 +135,7 @@ class API(object):
     def long_list(self, rd, path, method, query, data):
         prior = rd['links'][0]['rel']
         # Normally .rel[0] is the next, and .rel[1] is prior. If .rel[0] = prior, then you are at END_OF_LIST
-        keys = list(rd['items'][0].keys())
+        keys = rd['items'][0].keys()
         m = len(keys)
 
         while prior == 'next':
