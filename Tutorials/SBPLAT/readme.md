@@ -1,4 +1,4 @@
-# COMING SOON
+# tutor me
 We are happy to share a few _use-cases_  that have been useful for our customers. We are even happier to hear your **needs** so we can make things run more smoothly for you. 
 
 These scripts have been hard-coded in a few places for the particular _workflow_ used. However, they are _extensively commented_ so they can be easily adapted to other tasks.
