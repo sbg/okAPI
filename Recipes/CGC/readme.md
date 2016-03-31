@@ -38,16 +38,20 @@ will **detail** the single project with (id=project\_id). Omitting that query wi
   * get details [projects_detailOne.ipynb]
   * get members [projects_membersOne.ipynb]
   * make new [projects_makeNew.ipynb]
+  
 * Files
- * list (within a project) [files_listAll.ipynb]
+ * list (_within a project_) [files_listAll.ipynb]
+ * list (_within a project_ and _matching metadata properties_) [files_listByMetadata.ipynb]
  * get details [files_detailOne.ipynb]
  * copy Public Reference file [files_copyFromMyProject.ipynb]
  * copy from another project [files_copyFromPublicReference.ipynb]
+ 
 * Apps
  * list [apps_listAll.ipynb]
  * get details [apps_detailOne.ipynb]
  * copy from Public Apps [apps_copyFromPublicApps.ipynb]
  * copy from another project [apps_copyFromMyProject.ipynb]
+ 
 * Tasks
  * create and start [tasks_create.ipynb]
  * monitor & get outputs [tasks_monitorAndGetResults.ipynb ]
