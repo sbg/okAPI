@@ -9,6 +9,6 @@ The _recipe_ and _tutorial_ folders are subdivided into **CGC** (Cancer Genomics
 ### Notes
 1. This is compatible with **Python 2.7 only**. We are working towards version 3 compatiblity but need to adapt a few libraries.
 2. This is an **beta** and we are constantly working on improving our API and wrapper. Expect the awesomeness to continue.
-3. Please share your _feedback_ on our [forum](http://docs.cancergenomicscloud.org/discuss).
+3. Please share your _feedback_ on our [CGC forum](http://docs.cancergenomicscloud.org/discuss) or [SBG forum](http://docs.sevenbridges.com/discuss).
 4. We are happy to recieve Pull Requests with your _improvements_.
 5. While there is a lot of overlap between these systems, there are some CGC-specific documentation and metadata fields that are not present on the Platform and vice versa
