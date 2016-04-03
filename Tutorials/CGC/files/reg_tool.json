@@ -1,0 +1,197 @@
+{
+  "label": "SAMtools View Region (Regular)",
+  "stdout": "",
+  "arguments": [
+    {
+      "separate": true,
+      "valueFrom": {
+        "class": "Expression",
+        "script": "{\n filepath = $job.inputs.input_bam_or_sam_file.path\n\n filename = filepath.split(\"/\").pop();\n\n file_dot_sep = filename.split(\".\");\n file_ext = file_dot_sep[file_dot_sep.length-1];\n\n new_filename = filename.substr(0,filename.lastIndexOf(\".\"));\n \n extension = '.sam';\n  \n if ((typeof $job.inputs.output_bam !== \"undefined\" && $job.inputs.output_bam === true) ||\n     (typeof $job.inputs.uncompressed_bam !== \"undefined\" && $job.inputs.uncompressed_bam === true) ||\n     (typeof $job.inputs.fast_compression !== \"undefined\" && $job.inputs.fast_compression === true))\n \textension = '.bam'\n else if ((typeof $job.inputs.print_header_only !== \"undefined\" && $job.inputs.print_header_only === true) ||\n          (typeof $job.inputs.print_count_only !== \"undefined\" && $job.inputs.print_count_only === true))\n   \textension = '.txt'\n             \n return new_filename + extension; \n}",
+        "engine": "#cwl-js-engine"
+      },
+      "prefix": "-o",
+      "position": 0
+    }
+  ],
+  "temporaryFailCodes": [],
+  "sbg:links": [
+    {
+      "label": "Homepage",
+      "id": "http://samtools.sourceforge.net/"
+    },
+    {
+      "label": "Source Code",
+      "id": "https://github.com/samtools/samtools"
+    },
+    {
+      "label": "Wiki",
+      "id": "http://sourceforge.net/p/samtools/wiki/Home/"
+    },
+    {
+      "label": "Download",
+      "id": "http://sourceforge.net/projects/samtools/files/"
+    },
+    {
+      "label": "Publication",
+      "id": "http://www.ncbi.nlm.nih.gov/pubmed/19505943"
+    },
+    {
+      "label": "Documentation",
+      "id": "http://www.htslib.org/doc/samtools.html"
+    }
+  ],
+  "sbg:license": "The MIT License",
+  "sbg:contributors": [
+    "jack_digi"
+  ],
+  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/samtools-demo/samtools-region-only/1/raw/",
+  "baseCommand": [
+    "/opt/samtools-0.1.19/samtools",
+    "view"
+  ],
+  "class": "CommandLineTool",
+  "sbg:latestRevision": 1,
+  "sbg:createdBy": "jack_digi",
+  "sbg:revisionsInfo": [
+    {
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:modifiedOn": 1455115824,
+      "sbg:revision": 0
+    },
+    {
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:modifiedOn": 1455116048,
+      "sbg:revision": 1
+    }
+  ],
+  "sbg:project": "jack_digi/samtools-demo",
+  "outputs": [
+    {
+      "label": "Output BAM or SAM file",
+      "outputBinding": {
+        "sbg:inheritMetadataFrom": "#input_bam_or_sam_file",
+        "glob": "@(*.bam|*.sam|*.txt)",
+        "sbg:metadata": {}
+      },
+      "id": "#output_bam_or_sam_file",
+      "sbg:fileTypes": "BAM, SAM, TEXT",
+      "description": "Output BAM, SAM, header or count file.",
+      "type": [
+        "File"
+      ]
+    }
+  ],
+  "sbg:createdOn": 1455115824,
+  "sbg:validationErrors": [],
+  "sbg:cmdPreview": "/opt/samtools-0.1.19/samtools view bam_or_sam_input_file.bam -o bam_or_sam_input_file.sam",
+  "sbg:modifiedBy": "jack_digi",
+  "sbg:sbgMaintained": false,
+  "sbg:categories": [
+    "SAM/BAM-Processing"
+  ],
+  "stdin": "",
+  "sbg:modifiedOn": 1455116048,
+  "inputs": [
+    {
+      "inputBinding": {
+        "separate": true,
+        "position": 2,
+        "sbg:cmdInclude": true,
+        "itemSeparator": null
+      },
+      "label": "Array of regions",
+      "description": "If no region is specified, all the alignments will be printed; otherwise only alignments overlapping the specified regions will be output. An alignment may be given multiple times if it is overlapping several regions. A region can be presented, for example, in the following format: `chr2' (the whole chr2), `chr2:1000000' (region starting from 1,000,000bp) or `chr2:1,000,000-2,000,000' (region between 1,000,000 and 2,000,000bp including the end points). The coordinate is 1-based.",
+      "type": [
+        "null",
+        {
+          "items": "string",
+          "type": "array"
+        }
+      ],
+      "id": "#regions_array"
+    },
+    {
+      "label": "BAM or SAM input file",
+      "inputBinding": {
+        "secondaryFiles": [
+          ".bai"
+        ],
+        "sbg:cmdInclude": true
+      },
+      "id": "#input_bam_or_sam_file",
+      "sbg:fileTypes": "BAM, SAM",
+      "description": "BAM or SAM input file.",
+      "type": [
+        "File"
+      ]
+    },
+    {
+      "label": "Index file",
+      "sbg:fileTypes": "BAI",
+      "description": "Bam index (BAI) file. This is not shown in the command line but needs to be in the same directory as the bam file for region slicing.",
+      "type": [
+        "null",
+        "File"
+      ],
+      "id": "#input_index"
+    }
+  ],
+  "hints": [
+    {
+      "dockerPull": "images.sbgenomics.com/markop/samtools:0.1.19",
+      "dockerImageId": "2fb927277493",
+      "class": "DockerRequirement"
+    },
+    {
+      "value": 1,
+      "class": "sbg:CPURequirement"
+    },
+    {
+      "value": 1000,
+      "class": "sbg:MemRequirement"
+    }
+  ],
+  "sbg:job": {
+    "allocatedResources": {
+      "cpu": 1,
+      "mem": 1000
+    },
+    "inputs": {
+      "input_bam_or_sam_file": {
+        "secondaryFiles": [],
+        "path": "bam_or_sam_input_file.bam",
+        "class": "File",
+        "size": 0
+      },
+      "regions_array": [
+        "2:500-100"
+      ],
+      "input_index": {
+        "secondaryFiles": [],
+        "path": "/path/to/input_index.ext",
+        "class": "File",
+        "size": 0
+      }
+    }
+  },
+  "sbg:revision": 1,
+  "sbg:toolAuthor": "Heng Li, Sanger Institute",
+  "sbg:image_url": null,
+  "sbg:toolkit": "SAMtools",
+  "successCodes": [],
+  "requirements": [
+    {
+      "id": "#cwl-js-engine",
+      "requirements": [
+        {
+          "dockerPull": "rabix/js-engine",
+          "class": "DockerRequirement"
+        }
+      ],
+      "class": "ExpressionEngineRequirement"
+    }
+  ],
+  "sbg:toolkitVersion": "v0.1.19",
+  "sbg:id": "jack_digi/samtools-demo/samtools-region-only/1",
+  "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**"
+}
