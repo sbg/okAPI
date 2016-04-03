@@ -37,6 +37,7 @@ will **detail** the single project with (id=project\_id). Omitting that query wi
   * list [projects_listsAll.ipynb]
   * get details [projects_detailOne.ipynb]
   * get members [projects_membersOne.ipynb]
+  * add members [projects_addMembers.ipynb]
   * make new [projects_makeNew.ipynb]
   
 * Files
