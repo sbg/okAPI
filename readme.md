@@ -8,9 +8,9 @@ To help people maximize the _extensibility_ and _automation_ capability of our p
 The _recipe_ and _tutorial_ folders are subdivided into **CGC** (Cancer Genomics Cloud) and **SBPLAT** (Seven Bridges Platform). This separation ensures we link to the appropriate docs. Each folder has it's own _readme_ files within each folder which details the scripts. Feedback and improvements are welcome. Good luck & have fun!
 
 ## Branches
-Note there are two branches of this repository. You are on the **advanced_access** branch.
+Note there are two branches of this repository. You are on the **advanced\_access** branch.
 
-* **advanced_access**: This was developed from January to May 2016 and uses _apimethods.py_. This is an **unofficial** branch where we may roll out new features. It is _only compatible_ with Python 2.7.
+* **advanced\_access**: This was developed from January to May 2016 and uses _apimethods.py_. This is an **unofficial** branch where we may roll out new features. It is _only compatible_ with Python 2.7.
 * **main**: This was released April 2016 and uses _sevenbridges-python_, the **official** Python bindings supported by Seven Bridges. This branch includes most of the API functionality and is compatible with Python 2.6+ and 3.
 
 ### Notes
