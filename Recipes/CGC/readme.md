@@ -17,21 +17,7 @@ the project where the task was started.
 
 ## Recipes in this cookbook
  
-Each of the main components in the CGC is accessible by the API. Generally there is a similar strategy, e.g. everything
-related to **projects** will have 
-```python 
-path = 'projects'  
-```
-as the base. Using the 
-```python
-method='GET'
-method='POST'
-```
-will determine whether you are listing or creating a project. Queries and data further help refine functionality. For example adding
-```python 
-query = {'project', project_id}  
-```
-will **detail** the single project with (id=project\_id). Omitting that query will **list** all of your projects. These recipes are _purposefully_ repetitive to highlight the logic of the API and hopefully help users understand some of the tools available to solve problems. The current _cookbook_ includes<sup>1</sup>
+Each of the main components in the CGC is accessible by the API. These recipes are _purposefully_ repetitive to highlight the logic of the API and hopefully help users understand some of the tools available to solve problems. The current _cookbook_ includes<sup>1</sup>
 
 * Projects
   * list [projects_listsAll.ipynb]
@@ -42,7 +28,6 @@ will **detail** the single project with (id=project\_id). Omitting that query wi
   
 * Files
  * list (_within a project_) [files_listAll.ipynb]
- * list (_within a project_ and _matching metadata properties_) [files_listByMetadata.ipynb]
  * get details [files_detailOne.ipynb]
  * copy Public Reference file [files_copyFromMyProject.ipynb]
  * copy from another project [files_copyFromPublicReference.ipynb]
@@ -52,18 +37,20 @@ will **detail** the single project with (id=project\_id). Omitting that query wi
  * get details [apps_detailOne.ipynb]
  * copy from Public Apps [apps_copyFromPublicApps.ipynb]
  * copy from another project [apps_copyFromMyProject.ipynb]
- 
-* Tasks
- * create and start [tasks_create.ipynb]
- * monitor & get outputs [tasks_monitorAndGetResults.ipynb ]
+
 
 ### Notes
 <sup>1</sup> We are happy to add more cookbooks, please request what helps you most effectively get stuff done. Already in the queue are:
+
+* Files
+ * list (_within a project_ and _matching metadata properties_) [files_listByMetadata.ipynb] 
  
 * [files_makeProcessingList]. A way to screen through the metadata on all the files in your project. Can be passed to a (or a batch of) task(s)
 * [files_uploadViaAPI] New functionality to add files to the CGC via the API
 * [files_setMetadata] Create or adapt the metadata of a (non-TCGA) file on the CGC. **see also** _Tutorials/SBPLAT/quickstart_RNAseq.ipynb_ for an example of this
-
+* Tasks
+ * create and start [tasks_create.ipynb]
+ * monitor & get outputs [tasks_monitorAndGetResults.ipynb ]
 
 ### Extra Pictures of API calls
 ![Projects LIST](images/projects_listAll-01.png)
