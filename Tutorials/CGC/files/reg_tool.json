@@ -150,6 +150,10 @@
       "value": 1000,
       "class": "sbg:MemRequirement"
     }
+    {
+      "value": "c3.large",
+      "class": "sbg:AWSInstanceType"
+    }
   ],
   "sbg:job": {
     "allocatedResources": {
