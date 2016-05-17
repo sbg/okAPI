@@ -1,5 +1,5 @@
 # ok, API     
-### Official [main branch]
+### Official [master branch]
 To help people maximize the _extensibility_ and _automation_ capability of our products, we're happy to share example **API** code. These examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
 
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
@@ -21,9 +21,9 @@ prof = 'sbg'
 in the second code cell of any recipe (Note some features are available on one platform but not the other). Each folder has it's own _readme_ files within each folder which details the scripts. Feedback and improvements are welcome. Good luck & have fun!
 
 ## Branches
-Note there are two branches of this repository. You are on the **main** branch. We are currently _in transition_ and will populate this branch _as soon as possible_.
+Note there are two branches of this repository. You are on the **master** branch. We are currently _in transition_ and will populate this branch _as soon as possible_.
 
- * **main**: This was released April 2016 and uses _sevenbridges-python_, the **official** Python bindings supported by Seven Bridges. This branch includes most of the API functionality and is compatible with Python 2.6+ and 3.
+ * **master**: This was released April 2016 and uses _sevenbridges-python_, the **official** Python bindings supported by Seven Bridges. This branch includes most of the API functionality and is compatible with Python 2.6+ and 3.
  * **advanced\_access**: This was developed from January to May 2016 and uses _apimethods.py_. This is an **unofficial** branch where we may roll out new features. Currently there are more notebooks here. It is _only compatible_ with Python 2.7.
 
 
