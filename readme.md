@@ -8,15 +8,15 @@ To help people maximize the _extensibility_ and _automation_ capability of our p
 The _recipe_ and _tutorial_ folders are subdivided into **CGC** (Cancer Genomics Cloud) and **SBPLAT** (Seven Bridges Platform). This separation ensures we link to the appropriate docs. Switching platforms is as easy as changing
 
 ```python
-# [USER INPUT] specify platform {cgc, sbg}
+# [USER INPUT] specify platform {cgc, sbpla}
 prof = 'cgc'
 ```
 
 to 
 
 ```python
-# [USER INPUT] specify platform {cgc, sbg}
-prof = 'sbg'
+# [USER INPUT] specify platform {cgc, sbpla}
+prof = 'sbpla'
 ```
 in the second code cell of any recipe (Note some features are available on one platform but not the other). Each folder has it's own _readme_ files within each folder which details the scripts. Feedback and improvements are welcome. Good luck & have fun!
 
