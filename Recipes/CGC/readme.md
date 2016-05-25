@@ -43,6 +43,8 @@ Each of the main components in the CGC is accessible by the API. These recipes a
  * monitor & get outputs [tasks_monitorAndGetResults.ipynb]
 
 ### Notes
+We ask that you limit parallel tasks to **300** at a time. If you need to run more, that is **great**, but please get in touch with us so we don't _run out of cloud_.
+
 <sup>1</sup> We are happy to add more cookbooks, please request what helps you most effectively get stuff done. Already in the queue are:
 
 * Files
@@ -51,7 +53,6 @@ Each of the main components in the CGC is accessible by the API. These recipes a
 * [files_makeProcessingList]. A way to screen through the metadata on all the files in your project. Can be passed to a (or a batch of) task(s)
 * [files_uploadViaAPI] New functionality to add files to the CGC via the API
 * [files_setMetadata] Create or adapt the metadata of a (non-TCGA) file on the CGC. **see also** _Tutorials/SBPLAT/quickstart_RNAseq.ipynb_ for an example of this
-
 
 ### Extra Pictures of API calls
 ![Projects LIST](images/projects_listAll-01.png)
