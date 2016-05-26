@@ -15,14 +15,14 @@
       "id": "#cwl-js-engine"
     }
   ],
-  "sbg:latestRevision": 2,
+  "sbg:latestRevision": 1,
   "sbg:toolkit": "SAMtools",
   "label": "SAMtools View Region (Regular)",
-  "sbg:revision": 2,
-  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/batchbatch/sam-normal/2/raw/",
+  "sbg:revision": 1,
+  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/metadata-sandbox/samtools-region-only/1/raw/",
   "temporaryFailCodes": [],
   "sbg:validationErrors": [],
-  "sbg:id": "jack_digi/batchbatch/sam-normal/2",
+  "sbg:id": "jack_digi/metadata-sandbox/samtools-region-only/1",
   "arguments": [
     {
       "position": 0,
@@ -80,13 +80,38 @@
       "description": "Bam index (BAI) file. This is not shown in the command line but needs to be in the same directory as the bam file for region slicing."
     }
   ],
-  "sbg:createdOn": 1463500829,
+  "sbg:links": [
+    {
+      "label": "Homepage",
+      "id": "http://samtools.sourceforge.net/"
+    },
+    {
+      "label": "Source Code",
+      "id": "https://github.com/samtools/samtools"
+    },
+    {
+      "label": "Wiki",
+      "id": "http://sourceforge.net/p/samtools/wiki/Home/"
+    },
+    {
+      "label": "Download",
+      "id": "http://sourceforge.net/projects/samtools/files/"
+    },
+    {
+      "label": "Publication",
+      "id": "http://www.ncbi.nlm.nih.gov/pubmed/19505943"
+    },
+    {
+      "label": "Documentation",
+      "id": "http://www.htslib.org/doc/samtools.html"
+    }
+  ],
   "baseCommand": [
     "/opt/samtools-0.1.19/samtools",
     "view"
   ],
   "stdin": "",
-  "sbg:project": "jack_digi/batchbatch",
+  "sbg:project": "jack_digi/metadata-sandbox",
   "sbg:contributors": [
     "jack_digi"
   ],
@@ -115,32 +140,7 @@
       "cpu": 1
     }
   },
-  "sbg:links": [
-    {
-      "label": "Homepage",
-      "id": "http://samtools.sourceforge.net/"
-    },
-    {
-      "label": "Source Code",
-      "id": "https://github.com/samtools/samtools"
-    },
-    {
-      "label": "Wiki",
-      "id": "http://sourceforge.net/p/samtools/wiki/Home/"
-    },
-    {
-      "label": "Download",
-      "id": "http://sourceforge.net/projects/samtools/files/"
-    },
-    {
-      "label": "Publication",
-      "id": "http://www.ncbi.nlm.nih.gov/pubmed/19505943"
-    },
-    {
-      "label": "Documentation",
-      "id": "http://www.htslib.org/doc/samtools.html"
-    }
-  ],
+  "sbg:createdOn": 1464267584,
   "outputs": [
     {
       "outputBinding": {
@@ -178,30 +178,20 @@
   ],
   "sbg:revisionsInfo": [
     {
-      "sbg:modifiedOn": 1463500829,
+      "sbg:modifiedOn": 1464267584,
       "sbg:revision": 0,
       "sbg:modifiedBy": "jack_digi"
     },
     {
-      "sbg:modifiedOn": 1464189488,
+      "sbg:modifiedOn": 1464267661,
       "sbg:revision": 1,
       "sbg:modifiedBy": "jack_digi"
-    },
-    {
-      "sbg:modifiedOn": 1464189934,
-      "sbg:revision": 2,
-      "sbg:modifiedBy": "jack_digi"
-    }
-    {
-      "value": "c3.large",
-      "class": "sbg:AWSInstanceType"
     }
   ],
   "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**",
   "successCodes": [],
-  "sbg:modifiedOn": 1464189934,
+  "sbg:modifiedOn": 1464267661,
   "sbg:toolkitVersion": "v0.1.19",
-<<<<<<< HEAD
   "sbg:createdBy": "jack_digi",
   "sbg:sbgMaintained": false,
   "sbg:categories": [
@@ -209,8 +199,3 @@
   ],
   "sbg:toolAuthor": "Heng Li, Sanger Institute"
 }
-=======
-  "sbg:id": "jack_digi/samtools-demo/samtools-region-only/1",
-  "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**"
-}
->>>>>>> 70b9f49a59256f2205fa580c76b9108dc6476737

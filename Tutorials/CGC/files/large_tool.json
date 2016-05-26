@@ -15,14 +15,14 @@
       "id": "#cwl-js-engine"
     }
   ],
-  "sbg:latestRevision": 1,
+  "sbg:latestRevision": 2,
   "sbg:toolkit": "SAMtools",
   "label": "SAMtools View Region (Large)",
-  "sbg:revision": 1,
-  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/batchbatch/sam-large/1/raw/",
+  "sbg:revision": 2,
+  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/metadata-sandbox/samtools-region-only-large/2/raw/",
   "temporaryFailCodes": [],
   "sbg:validationErrors": [],
-  "sbg:id": "jack_digi/batchbatch/sam-large/1",
+  "sbg:id": "jack_digi/metadata-sandbox/samtools-region-only-large/2",
   "arguments": [
     {
       "position": 0,
@@ -80,13 +80,13 @@
       "description": "Bam index (BAI) file. This is not shown in the command line but needs to be in the same directory as the bam file for region slicing."
     }
   ],
-  "sbg:createdOn": 1463500830,
+  "sbg:createdOn": 1464267589,
   "baseCommand": [
     "/opt/samtools-0.1.19/samtools",
     "view"
   ],
   "stdin": "",
-  "sbg:project": "jack_digi/batchbatch",
+  "sbg:project": "jack_digi/metadata-sandbox",
   "sbg:contributors": [
     "jack_digi"
   ],
@@ -178,19 +178,24 @@
   ],
   "sbg:revisionsInfo": [
     {
-      "sbg:modifiedOn": 1463500830,
+      "sbg:modifiedOn": 1464267589,
       "sbg:revision": 0,
       "sbg:modifiedBy": "jack_digi"
     },
     {
-      "sbg:modifiedOn": 1464189983,
+      "sbg:modifiedOn": 1464267724,
       "sbg:revision": 1,
+      "sbg:modifiedBy": "jack_digi"
+    },
+    {
+      "sbg:modifiedOn": 1464267775,
+      "sbg:revision": 2,
       "sbg:modifiedBy": "jack_digi"
     }
   ],
-  "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**\nThis has a larger EC2 instance (c3.xlarge) to deal with input bam files larger than 25 Gb",
+  "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**\nThis has a larger EC2 instance (c3.2xlarge) to deal with input bam files larger than 25 Gb",
   "successCodes": [],
-  "sbg:modifiedOn": 1464189983,
+  "sbg:modifiedOn": 1464267775,
   "sbg:toolkitVersion": "v0.1.19",
   "sbg:createdBy": "jack_digi",
   "sbg:sbgMaintained": false,
