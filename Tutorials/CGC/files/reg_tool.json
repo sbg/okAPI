@@ -192,11 +192,16 @@
       "sbg:revision": 2,
       "sbg:modifiedBy": "jack_digi"
     }
+    {
+      "value": "c3.large",
+      "class": "sbg:AWSInstanceType"
+    }
   ],
   "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**",
   "successCodes": [],
   "sbg:modifiedOn": 1464189934,
   "sbg:toolkitVersion": "v0.1.19",
+<<<<<<< HEAD
   "sbg:createdBy": "jack_digi",
   "sbg:sbgMaintained": false,
   "sbg:categories": [
@@ -204,3 +209,8 @@
   ],
   "sbg:toolAuthor": "Heng Li, Sanger Institute"
 }
+=======
+  "sbg:id": "jack_digi/samtools-demo/samtools-region-only/1",
+  "description": "SAMtools View extracts all or a subset of alignments in a SAM or BAM file. \nIt can be used to convert from BAM to SAM file formats and vice versa. It also can be used to extract the BAM header.\n\n**This is a modification of the seven bridges samtools view wrapper to only provide option to input a region of interest.**"
+}
+>>>>>>> 70b9f49a59256f2205fa580c76b9108dc6476737
