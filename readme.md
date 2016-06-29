@@ -7,9 +7,9 @@ To help people maximize the _extensibility_ and _automation_ capability of Seven
 * **_"How do I complete my entire analysis?"_** You want a **tutorial**, which may _combine multiple recipes_ to go from start to finish of an analysis. 
 
 The recipes and tutorials in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
-* The documentation for the Seven Bridges Platform is available at docs.sevenbridges.com. In particular, see the the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
+* The documentation for the Seven Bridges Platform is available at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
 
-* The documentation for the Cancer Genomics Cloud is available at docs.cancergenomicscloud.com. In particular, see the the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
+* The documentation for the Cancer Genomics Cloud is available at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
 
 The _recipe_ and _tutorial_ folders in this repository are subdivided into **CGC** (the Cancer Genomics Cloud) and **SBPLAT** (the Seven Bridges Platform). This separation ensures we link to the appropriate docs. Switching environments is as easy as changing
 
