@@ -1,9 +1,7 @@
 # ok, API
       
 ### Official [master branch]
-
-<img src = "/SB_logo_navy.jpg" width = "300">
-### Code samples for using Seven Bridges' APIs.
+### Code samples for using <img src = "/SB_logo_navy.jpg" width = "200"> APIs.
 The recipes and tutorials in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
 * The documentation for the Seven Bridges Platform is available at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
 
