@@ -6,7 +6,7 @@ To help people maximize the _extensibility_ and _automation_ capability of Seven
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
 * **_"How do I complete my entire analysis?"_** You want a **tutorial**, which may _combine multiple recipes_ to go from start to finish of an analysis. 
 
-![Seven Bridges](https://drive.google.com/file/d/0B43KBBbPo_QdVXFXNjdXWlBrYnM/view?usp=sharing)
+![Seven Bridges](/SB_logo_navy.jpg)
 The recipes and tutorials in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
 * The documentation for the Seven Bridges Platform is available at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
 
