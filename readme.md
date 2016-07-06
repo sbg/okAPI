@@ -1,15 +1,16 @@
  <img src = "/SB_logo_navy.jpg" width = "300"> 
 # ok, API
       
-### Official [master branch]
-### Code samples for using Seven Bridges APIs.
-The recipes and tutorials in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
+### Code samples for using Seven Bridges APIs. Official [master branch]
+####Background
+The recipes in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
 * The documentation for the Seven Bridges Platform is available at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
 
 * The documentation for the Cancer Genomics Cloud is available at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
 
 * A Python library for both APIs is available. See the [documentation](http://sevenbridges-python.readthedocs.io/en/latest/) for details.
 
+####About OK API
 To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. These examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
 
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
