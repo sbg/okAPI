@@ -11,7 +11,7 @@ The recipes in this repository cover the Seven Bridges Plaform and the Cancer Ge
 * A Python library for both APIs is available. See the [documentation](http://sevenbridges-python.readthedocs.io/en/latest/) for details.
 
 ####About OK API
-To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. These examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
+To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. OK API contains examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
 
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
 * **_"How do I complete my entire analysis?"_** You want a **tutorial**, which may _combine multiple recipes_ to go from start to finish of an analysis. 
