@@ -1,4 +1,4 @@
- <img src = "_images/SB_logo.eps" width = "300"> 
+ <img src = "_images/SB_logo.jpg" width = "300"> 
 # ok, API
       
 ### Code samples for using Seven Bridges APIs. Official [master branch]
