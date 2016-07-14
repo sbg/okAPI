@@ -1,0 +1,1221 @@
+{
+  "sbg:latestRevision": 7,
+  "sbg:revisionsInfo": [
+    {
+      "sbg:revision": 0,
+      "sbg:modifiedOn": 1458705089,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 1,
+      "sbg:modifiedOn": 1458707277,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 2,
+      "sbg:modifiedOn": 1459201348,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 3,
+      "sbg:modifiedOn": 1459202682,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 4,
+      "sbg:modifiedOn": 1459202923,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 5,
+      "sbg:modifiedOn": 1459202935,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 6,
+      "sbg:modifiedOn": 1459203110,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 7,
+      "sbg:modifiedOn": 1459214545,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    }
+  ],
+  "sbg:categories": [
+    "Differential-Expression",
+    "RNA"
+  ],
+  "class": "Workflow",
+  "sbg:canvas_zoom": 0.8499999999999999,
+  "requirements": [],
+  "sbg:revision": 7,
+  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/divide-and-conquer/rna-seq-diff-expression-first/7/raw/",
+  "inputs": [
+    {
+      "type": [
+        "null",
+        "File"
+      ],
+      "label": "#Reference",
+      "sbg:x": 501,
+      "sbg:includeInPorts": true,
+      "id": "#Reference",
+      "sbg:y": 396
+    },
+    {
+      "type": [
+        "File"
+      ],
+      "label": "#Annotations",
+      "sbg:x": 609,
+      "sbg:includeInPorts": true,
+      "id": "#Annotations",
+      "sbg:y": 450
+    },
+    {
+      "type": [
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ],
+      "label": "#BAM_Group_A",
+      "sbg:x": 179,
+      "sbg:includeInPorts": true,
+      "id": "#BAM_Group_A",
+      "sbg:y": 196
+    },
+    {
+      "type": [
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ],
+      "label": "#BAM_Group_B",
+      "sbg:x": 179,
+      "sbg:includeInPorts": true,
+      "id": "#BAM_Group_B",
+      "sbg:y": 343
+    },
+    {
+      "label": "Library type",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "symbols": [
+            "fr-unstranded",
+            "ff-firststrand",
+            "ff-secondstrand",
+            "ff-unstranded",
+            "fr-firststrand",
+            "fr-secondstrand",
+            "transfrags"
+          ],
+          "name": "library_type"
+        }
+      ],
+      "description": "In cases where Cuffquant cannot determine the platform and protocol used to generate input reads, you can supply this information manually, which will allow Cuffquant to infer source strand information with certain protocols.",
+      "sbg:toolDefaultValue": "fr-unstranded",
+      "sbg:includeInPorts": false,
+      "inputBinding": {
+        "prefix": "--library-type",
+        "sbg:cmdInclude": true,
+        "separate": true,
+        "position": 4
+      },
+      "id": "#library_type",
+      "sbg:category": "Basic Options",
+      "required": false
+    },
+    {
+      "label": "Group name",
+      "type": [
+        "string"
+      ],
+      "description": "Specify the name of the group.",
+      "sbg:toolDefaultValue": "-",
+      "sbg:includeInPorts": false,
+      "id": "#group_name",
+      "sbg:suggestedValue": "BAM_Group_A",
+      "sbg:category": "Basic Options",
+      "required": true
+    },
+    {
+      "label": "Group name",
+      "type": [
+        "string"
+      ],
+      "description": "Specify the name of the group.",
+      "sbg:toolDefaultValue": "-",
+      "sbg:includeInPorts": false,
+      "id": "#group_name_1",
+      "sbg:suggestedValue": "BAM_Group_B",
+      "sbg:category": "Basic Options",
+      "required": true
+    }
+  ],
+  "sbg:sbgMaintained": false,
+  "label": "first RNA-seq cuffquant",
+  "sbg:createdOn": 1458705089,
+  "sbg:modifiedOn": 1459214545,
+  "steps": [
+    {
+      "outputs": [
+        {
+          "id": "#Cuffquant.abundances"
+        }
+      ],
+      "id": "#Cuffquant",
+      "inputs": [
+        {
+          "id": "#Cuffquant.annotations",
+          "source": [
+            "#Annotations"
+          ]
+        },
+        {
+          "id": "#Cuffquant.aligned_reads",
+          "source": [
+            "#SBG_Flatten.flat"
+          ]
+        },
+        {
+          "id": "#Cuffquant.mask_file"
+        },
+        {
+          "id": "#Cuffquant.frag_bias_correct",
+          "source": [
+            "#Reference"
+          ]
+        },
+        {
+          "id": "#Cuffquant.multi_read_correct"
+        },
+        {
+          "id": "#Cuffquant.library_type",
+          "source": [
+            "#library_type"
+          ]
+        },
+        {
+          "id": "#Cuffquant.frag_len_mean"
+        },
+        {
+          "id": "#Cuffquant.frag_len_std_dev"
+        },
+        {
+          "id": "#Cuffquant.max_mle_iterations"
+        },
+        {
+          "id": "#Cuffquant.max_bundle_frags"
+        },
+        {
+          "id": "#Cuffquant.no_effective_length_correction"
+        },
+        {
+          "id": "#Cuffquant.min_alignment_count"
+        },
+        {
+          "id": "#Cuffquant.max_frag_multihits"
+        },
+        {
+          "id": "#Cuffquant.no_length_correction"
+        }
+      ],
+      "sbg:x": 747,
+      "run": {
+        "sbg:latestRevision": 1,
+        "label": "Cuffquant",
+        "sbg:toolkit": "Cufflinks",
+        "sbg:createdBy": "bix-demo",
+        "sbg:categories": [
+          "Differential-Expression",
+          "SAM/BAM-Processing"
+        ],
+        "baseCommand": [
+          "/opt/cuffquant",
+          "--verbose",
+          "--no-update-check"
+        ],
+        "sbg:validationErrors": [],
+        "sbg:revision": 1,
+        "id": "https://api.sbgenomics.com/bix-demo/cufflinks-2-2-1-demo/cuffquant/1/raw/",
+        "temporaryFailCodes": [],
+        "inputs": [
+          {
+            "label": "Annotations",
+            "type": [
+              "File"
+            ],
+            "description": "Tells Cuffquant to use the supplied reference annotation in GTF/GFF format to estimate isoform expression. The program will ignore alignments not structurally compatible with any reference transcript.",
+            "sbg:fileTypes": "GTF, GFF",
+            "inputBinding": {
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 20
+            },
+            "id": "#annotations",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Aligned reads",
+            "type": [
+              "File"
+            ],
+            "description": "RNA-Seq read alignments in SAM/BAM format. The SAM/BAM is a standard short read alignment format, that allows aligners to attach custom tags to individual alignments, and Cuffquant requires that the alignments you supply have some of these tags.",
+            "sbg:fileTypes": "SAM, BAM",
+            "inputBinding": {
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 21
+            },
+            "id": "#aligned_reads",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Mask file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Ignore all alignments within transcripts in this file. Tells Cuffquant to ignore all reads that could have come from transcripts in this GTF/GFF file. Toolkit aothors recommend including any annotated rRNA, mitochondrial and other abundant transcripts you wish to ignore in your analysis in this file. Due to variable efficiency of mRNA enrichment methods and rRNA depletion kits, masking these transcripts often improves the overall robustness of transcript abundance estimates.",
+            "sbg:fileTypes": "GTF, GFF",
+            "sbg:altPrefix": "-M",
+            "id": "#mask_file",
+            "sbg:category": "Input files",
+            "inputBinding": {
+              "prefix": "--mask-file",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 18
+            }
+          },
+          {
+            "label": "Fragment bias correct",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Providing Cuffquant with a multifasta file via this option instructs it to run bias detection and correction algorithm which can significantly improve accuracy of transcript abundance estimates.",
+            "sbg:fileTypes": "FASTA, FA",
+            "sbg:altPrefix": "-b",
+            "id": "#frag_bias_correct",
+            "sbg:category": "Input files",
+            "inputBinding": {
+              "prefix": "--frag-bias-correct",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 19
+            }
+          },
+          {
+            "label": "Correct for reads mapped to multiple loci",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "Tells Cuffquant to do an initial estimation procedure to more accurately weight reads mapping to multiple locations in the genome.",
+            "sbg:toolDefaultValue": "False",
+            "sbg:altPrefix": "-u",
+            "id": "#multi_read_correct",
+            "sbg:category": "Basic Options",
+            "inputBinding": {
+              "prefix": "--multi-read-correct",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 3
+            }
+          },
+          {
+            "label": "Library type",
+            "type": [
+              "null",
+              {
+                "type": "enum",
+                "symbols": [
+                  "fr-unstranded",
+                  "ff-firststrand",
+                  "ff-secondstrand",
+                  "ff-unstranded",
+                  "fr-firststrand",
+                  "fr-secondstrand",
+                  "transfrags"
+                ],
+                "name": "library_type"
+              }
+            ],
+            "description": "In cases where Cuffquant cannot determine the platform and protocol used to generate input reads, you can supply this information manually, which will allow Cuffquant to infer source strand information with certain protocols.",
+            "sbg:toolDefaultValue": "fr-unstranded",
+            "sbg:includeInPorts": false,
+            "inputBinding": {
+              "prefix": "--library-type",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 4
+            },
+            "id": "#library_type",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Mean fragment length",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "This is the expected (mean) fragment length. Cuffquant learns the fragment length mean for each SAM/BAM file so this option is not recommended with paired-end reads.",
+            "sbg:toolDefaultValue": "200",
+            "sbg:altPrefix": "-m",
+            "id": "#frag_len_mean",
+            "sbg:category": "Advanced Options",
+            "inputBinding": {
+              "prefix": "--frag-len-mean",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 5
+            }
+          },
+          {
+            "label": "Fragment lengths' standard deviation",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "The standard deviation for the distribution on fragment lengths. Cuffquant learns the fragment lengths' standard deviation for each SAM/BAM file so this option is not recommended with paired-end reads.",
+            "sbg:toolDefaultValue": "80",
+            "sbg:altPrefix": "-s",
+            "id": "#frag_len_std_dev",
+            "sbg:category": "Advanced Options",
+            "inputBinding": {
+              "prefix": "--frag-len-std-dev",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 6
+            }
+          },
+          {
+            "label": "Maximum MLE number of iterations",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Sets the number of iterations allowed during maximum likelihood estimation of abundances.",
+            "sbg:toolDefaultValue": "5000",
+            "inputBinding": {
+              "prefix": "--max-mle-iterations",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 7
+            },
+            "id": "#max_mle_iterations",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Maximum bundle fragments",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Sets the maximum number of fragments a locus may have before being skipped.",
+            "sbg:toolDefaultValue": "1000000",
+            "inputBinding": {
+              "prefix": "--max-bundle-frags",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 8
+            },
+            "id": "#max_bundle_frags",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "No effective length correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "Cuffquant will not employ its \"effective\" length normalization to transcript FPKM.",
+            "sbg:toolDefaultValue": "False",
+            "inputBinding": {
+              "prefix": "--no-effective-length-correction",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 9
+            },
+            "id": "#no_effective_length_correction",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Minimum number of alignments",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Minimum number of alignments in a locus for testing.",
+            "sbg:toolDefaultValue": "10",
+            "sbg:altPrefix": "-c",
+            "id": "#min_alignment_count",
+            "sbg:category": "Advanced Options",
+            "inputBinding": {
+              "prefix": "--min-alignment-count",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 10
+            }
+          },
+          {
+            "label": "Maximum alignments per fragment",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Maximum number of alignments allowed per fragment",
+            "sbg:toolDefaultValue": "unlimited",
+            "inputBinding": {
+              "prefix": "--max-frag-multihits",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 11
+            },
+            "id": "#max_frag_multihits",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "No length correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "Cuffquant will not normalize fragment counts by transcript length at all. Use this option when fragment count is independent of the size of the features being quantified (e.g. for small RNA libraries, where no fragmentation takes place, or 3 prime end sequencing, where sampled RNA fragments are all essentially the same length). Experimental option, use with caution.",
+            "sbg:toolDefaultValue": "False",
+            "inputBinding": {
+              "prefix": "--no-length-correction",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 12
+            },
+            "id": "#no_length_correction",
+            "sbg:category": "Advanced Options"
+          }
+        ],
+        "sbg:sbgMaintained": false,
+        "stdout": "",
+        "sbg:createdOn": 1450911492,
+        "successCodes": [],
+        "stdin": "",
+        "sbg:modifiedOn": 1450911493,
+        "sbg:cmdPreview": "/opt/cuffquant --verbose --no-update-check --multi-read-correct  --library-type fr-unstranded --frag-len-mean 0 --frag-len-std-dev 0 --max-mle-iterations 0 --max-bundle-frags 0 --no-effective-length-correction  --min-alignment-count 0 --max-frag-multihits 0 --no-length-correction  --mask-file mask_file.ext --frag-bias-correct frag_bias_correct.ext  annotations.ext  /test-data/aligned_reads.ext  && mv abundances.cxb aligned_reads_abundances.cxb annotations.ext /test-data/aligned_reads.ext",
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "id": "#cwl-js-engine",
+            "class": "ExpressionEngineRequirement"
+          }
+        ],
+        "outputs": [
+          {
+            "label": "Abundances",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "This file contains estimated transcript abundances for each sample. It can be used as an input for Cuffdiff and Cuffnorm tools.",
+            "sbg:fileTypes": "CXB",
+            "outputBinding": {
+              "sbg:inheritMetadataFrom": "#aligned_reads",
+              "sbg:metadata": {},
+              "glob": {
+                "engine": "#cwl-js-engine",
+                "script": "$job.inputs.aligned_reads.path.split('.').slice(0, $job.inputs.aligned_reads.path.split('.').length-1).join('.').replace(/^.*[\\\\\\/]/, '').concat(\"_\", \"abundances.cxb\")",
+                "class": "Expression"
+              }
+            },
+            "id": "#abundances"
+          }
+        ],
+        "description": "Cuffquant performs preparations on SAM/BAM files for differential expression analysis of RNA-seq data. It computes the gene and transcript expression profiles of various samples, which can be fed into Cuffnorm or Cuffdiff. \n\nNote: It is recommended to use Cuffquant for analyses involving more than a handful of libraries.",
+        "sbg:toolAuthor": "Cole Trapnell/University of Washington",
+        "sbg:project": "bix-demo/cufflinks-2-2-1-demo",
+        "sbg:id": "djordje_klisic/public-apps-by-seven-bridges/cuffquant/0",
+        "class": "CommandLineTool",
+        "sbg:modifiedBy": "bix-demo",
+        "hints": [
+          {
+            "dockerPull": "images.sbgenomics.com/ana_d/cufflinks:2.2.1",
+            "dockerImageId": "191aecc448a8",
+            "class": "DockerRequirement"
+          },
+          {
+            "value": 8,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 6000,
+            "class": "sbg:MemRequirement"
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedOn": 1450911492,
+            "sbg:modifiedBy": "bix-demo"
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedOn": 1450911493,
+            "sbg:modifiedBy": "bix-demo"
+          }
+        ],
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 6000,
+            "cpu": 8
+          },
+          "inputs": {
+            "frag_bias_correct": {
+              "path": "frag_bias_correct.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "frag_len_mean": 0,
+            "library_type": "fr-unstranded",
+            "frag_len_std_dev": 0,
+            "annotations": {
+              "path": "annotations.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "no_length_correction": true,
+            "mask_file": {
+              "path": "mask_file.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "max_bundle_frags": 0,
+            "multi_read_correct": true,
+            "min_alignment_count": 0,
+            "max_mle_iterations": 0,
+            "aligned_reads": {
+              "path": "/test-data/aligned_reads.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "no_effective_length_correction": true,
+            "max_frag_multihits": 0
+          }
+        },
+        "sbg:license": "Boost Software License 1.0",
+        "sbg:toolkitVersion": "2.2.1",
+        "sbg:links": [
+          {
+            "id": "http://cole-trapnell-lab.github.io/cufflinks/",
+            "label": "Homepage"
+          },
+          {
+            "id": "http://cole-trapnell-lab.github.io/cufflinks/cuffquant/index.html",
+            "label": "Manual"
+          },
+          {
+            "id": "http://cole-trapnell-lab.github.io/cufflinks/assets/downloads/cufflinks-2.2.1.tar.gz",
+            "label": "Source code"
+          },
+          {
+            "id": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3146043/",
+            "label": "Publication"
+          }
+        ],
+        "arguments": [
+          {
+            "valueFrom": {
+              "engine": "#cwl-js-engine",
+              "script": "{\n  read_path = $job.inputs.aligned_reads.path\n  read_name = read_path.split('.').slice(0, read_path.split('.').length-1).join('.').replace(/^.*[\\\\\\/]/, '')\n  source_name = \"abundances.cxb\"\n  return \"&& mv \".concat(source_name, \" \", read_name, \"_abundances.cxb\")\n}",
+              "class": "Expression"
+            },
+            "separate": true,
+            "position": 50
+          }
+        ]
+      },
+      "scatter": "#Cuffquant.aligned_reads",
+      "sbg:y": 235
+    },
+    {
+      "outputs": [
+        {
+          "id": "#SBG_Flatten.flat"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "#SBG_Flatten.nested",
+          "source": [
+            "#SBG_Group_Input_1.grouped_files",
+            "#SBG_Group_Input.grouped_files"
+          ]
+        }
+      ],
+      "sbg:x": 529,
+      "run": {
+        "sbg:latestRevision": 1,
+        "label": "SBG Flatten",
+        "sbg:toolkit": "SBGTools",
+        "sbg:createdBy": "bix-demo",
+        "sbg:categories": [
+          "Other"
+        ],
+        "baseCommand": [
+          "python",
+          "/opt/sbg-flatten.py"
+        ],
+        "requirements": [],
+        "sbg:revision": 1,
+        "id": "https://api.sbgenomics.com/bix-demo/sbgtools-demo/sbg-flatten/1/raw/",
+        "temporaryFailCodes": [],
+        "inputs": [
+          {
+            "type": [
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "label": "Nested",
+            "id": "#nested",
+            "description": "Files from all SBG Group Input outputs should be provided.",
+            "sbg:category": "Input files"
+          }
+        ],
+        "sbg:sbgMaintained": false,
+        "stdout": "",
+        "sbg:createdOn": 1450911285,
+        "successCodes": [],
+        "stdin": "",
+        "sbg:modifiedOn": 1450911285,
+        "sbg:cmdPreview": "python /opt/sbg-flatten.py",
+        "outputs": [
+          {
+            "type": [
+              "null",
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "outputBinding": {
+              "sbg:metadata": {}
+            },
+            "id": "#flat",
+            "description": "All grouped files as one list.",
+            "label": "All grouped files"
+          }
+        ],
+        "description": "SBG Flatten is used only with SBG Group Input app for purposes of providing grouped inputs. All SBG Group Input outputs should be passed to the \"Nested\" SBG Flatten input in order to produce the output with all grouped files as one list.",
+        "sbg:toolAuthor": "Ana Damljanovic/ Seven Bridges Genomics",
+        "sbg:project": "bix-demo/sbgtools-demo",
+        "sbg:id": "djordje_klisic/public-apps-by-seven-bridges/sbg-flatten/0",
+        "class": "CommandLineTool",
+        "sbg:modifiedBy": "bix-demo",
+        "hints": [
+          {
+            "dockerPull": "images.sbgenomics.com/ana_d/sbg-flatten:1.0",
+            "dockerImageId": "c0e1d93b3d76",
+            "class": "DockerRequirement"
+          },
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedOn": 1450911285,
+            "sbg:modifiedBy": "bix-demo"
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedOn": 1450911285,
+            "sbg:modifiedBy": "bix-demo"
+          }
+        ],
+        "sbg:validationErrors": [],
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          },
+          "inputs": {
+            "nested": "nested"
+          }
+        },
+        "sbg:license": "Apache License 2.0",
+        "sbg:toolkitVersion": "1.0",
+        "arguments": []
+      },
+      "id": "#SBG_Flatten",
+      "sbg:y": 268
+    },
+    {
+      "outputs": [
+        {
+          "id": "#SBG_Group_Input.grouped_files"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "#SBG_Group_Input.input_files",
+          "source": [
+            "#BAM_Group_A"
+          ]
+        },
+        {
+          "default": "BAM_Group_A",
+          "id": "#SBG_Group_Input.group_name",
+          "source": [
+            "#group_name"
+          ]
+        }
+      ],
+      "sbg:x": 349,
+      "run": {
+        "sbg:latestRevision": 1,
+        "label": "SBG Group Input",
+        "sbg:toolkit": "SBGTools",
+        "sbg:createdBy": "bix-demo",
+        "sbg:categories": [
+          "Other"
+        ],
+        "baseCommand": [
+          "python",
+          "/opt/sbg-groupcp.py"
+        ],
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "id": "#cwl-js-engine",
+            "class": "ExpressionEngineRequirement"
+          }
+        ],
+        "sbg:revision": 1,
+        "id": "https://api.sbgenomics.com/bix-demo/sbgtools-demo/sbg-group-input/1/raw/",
+        "temporaryFailCodes": [],
+        "inputs": [
+          {
+            "type": [
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "description": "Provide files which belong to one group.",
+            "label": "Input files",
+            "inputBinding": {
+              "prefix": "--group",
+              "itemSeparator": ",",
+              "position": 2,
+              "separate": true,
+              "sbg:cmdInclude": true
+            },
+            "id": "#input_files",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Group name",
+            "type": [
+              "string"
+            ],
+            "description": "Specify the name of the group.",
+            "sbg:toolDefaultValue": "-",
+            "sbg:includeInPorts": false,
+            "id": "#group_name",
+            "sbg:category": "Basic Options"
+          }
+        ],
+        "sbg:sbgMaintained": false,
+        "stdout": "",
+        "sbg:createdOn": 1450911284,
+        "successCodes": [],
+        "stdin": "",
+        "sbg:modifiedOn": 1450911284,
+        "sbg:cmdPreview": "python /opt/sbg-groupcp.py --group /test-data/input_files.ext.ext2,/test-data/input_files2.ext.ext2,/test-data/input_files3.ext.ext2 --dest ./group_out",
+        "outputs": [
+          {
+            "type": [
+              "null",
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "outputBinding": {
+              "sbg:metadata": {
+                "sample_id": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.input_files[0].metadata.sample_id",
+                  "class": "Expression"
+                },
+                "sample_group": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.group_name",
+                  "class": "Expression"
+                },
+                "platform": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.input_files[0].metadata.platform",
+                  "class": "Expression"
+                },
+                "library_id": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.input_files[0].metadata.library_id",
+                  "class": "Expression"
+                }
+              },
+              "glob": "group_out/*"
+            },
+            "id": "#grouped_files",
+            "description": "Processed (grouped) files with metadata field indicating the same group.",
+            "label": "Grouped Files"
+          }
+        ],
+        "description": "SBG Group Input accepts list of files that need to be grouped and sets the metadata field that indicates these files belong to the same group. This app should be included in the pipeline once for each group and used together with SBG Flatten. Each SBG Group Input output should be passed to SBG Flatten \"Nested\" input.",
+        "sbg:toolAuthor": "Ana Damljanovic/ Seven Bridges Genomics",
+        "sbg:project": "bix-demo/sbgtools-demo",
+        "sbg:id": "djordje_klisic/public-apps-by-seven-bridges/sbg-group-input/0",
+        "class": "CommandLineTool",
+        "sbg:modifiedBy": "bix-demo",
+        "hints": [
+          {
+            "dockerPull": "images.sbgenomics.com/ana_d/sbg-groupcp:1.0",
+            "dockerImageId": "d89b97cad221",
+            "class": "DockerRequirement"
+          },
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedOn": 1450911284,
+            "sbg:modifiedBy": "bix-demo"
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedOn": 1450911284,
+            "sbg:modifiedBy": "bix-demo"
+          }
+        ],
+        "sbg:validationErrors": [],
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          },
+          "inputs": {
+            "group_name": "group_name",
+            "input_files": [
+              {
+                "path": "/test-data/input_files.ext.ext2"
+              },
+              {
+                "path": "/test-data/input_files2.ext.ext2"
+              },
+              {
+                "path": "/test-data/input_files3.ext.ext2"
+              }
+            ]
+          }
+        },
+        "sbg:license": "Apache License 2.0",
+        "sbg:toolkitVersion": "1.0",
+        "arguments": [
+          {
+            "valueFrom": "./group_out",
+            "prefix": "--dest",
+            "separate": true,
+            "position": 3
+          }
+        ]
+      },
+      "id": "#SBG_Group_Input",
+      "sbg:y": 196
+    },
+    {
+      "outputs": [
+        {
+          "id": "#SBG_Group_Input_1.grouped_files"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "#SBG_Group_Input_1.input_files",
+          "source": [
+            "#BAM_Group_B"
+          ]
+        },
+        {
+          "default": "BAM_Group_B",
+          "id": "#SBG_Group_Input_1.group_name",
+          "source": [
+            "#group_name_1"
+          ]
+        }
+      ],
+      "sbg:x": 348,
+      "run": {
+        "sbg:latestRevision": 1,
+        "label": "SBG Group Input",
+        "sbg:toolkit": "SBGTools",
+        "sbg:createdBy": "bix-demo",
+        "sbg:categories": [
+          "Other"
+        ],
+        "baseCommand": [
+          "python",
+          "/opt/sbg-groupcp.py"
+        ],
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "id": "#cwl-js-engine",
+            "class": "ExpressionEngineRequirement"
+          }
+        ],
+        "sbg:revision": 1,
+        "id": "https://api.sbgenomics.com/bix-demo/sbgtools-demo/sbg-group-input/1/raw/",
+        "temporaryFailCodes": [],
+        "inputs": [
+          {
+            "type": [
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "description": "Provide files which belong to one group.",
+            "label": "Input files",
+            "inputBinding": {
+              "prefix": "--group",
+              "itemSeparator": ",",
+              "position": 2,
+              "separate": true,
+              "sbg:cmdInclude": true
+            },
+            "id": "#input_files",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Group name",
+            "type": [
+              "string"
+            ],
+            "description": "Specify the name of the group.",
+            "sbg:toolDefaultValue": "-",
+            "sbg:includeInPorts": false,
+            "id": "#group_name",
+            "sbg:category": "Basic Options"
+          }
+        ],
+        "sbg:sbgMaintained": false,
+        "stdout": "",
+        "sbg:createdOn": 1450911284,
+        "successCodes": [],
+        "stdin": "",
+        "sbg:modifiedOn": 1450911284,
+        "sbg:cmdPreview": "python /opt/sbg-groupcp.py --group /test-data/input_files.ext.ext2,/test-data/input_files2.ext.ext2,/test-data/input_files3.ext.ext2 --dest ./group_out",
+        "outputs": [
+          {
+            "type": [
+              "null",
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "outputBinding": {
+              "sbg:metadata": {
+                "sample_id": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.input_files[0].metadata.sample_id",
+                  "class": "Expression"
+                },
+                "sample_group": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.group_name",
+                  "class": "Expression"
+                },
+                "platform": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.input_files[0].metadata.platform",
+                  "class": "Expression"
+                },
+                "library_id": {
+                  "engine": "#cwl-js-engine",
+                  "script": "$job.inputs.input_files[0].metadata.library_id",
+                  "class": "Expression"
+                }
+              },
+              "glob": "group_out/*"
+            },
+            "id": "#grouped_files",
+            "description": "Processed (grouped) files with metadata field indicating the same group.",
+            "label": "Grouped Files"
+          }
+        ],
+        "description": "SBG Group Input accepts list of files that need to be grouped and sets the metadata field that indicates these files belong to the same group. This app should be included in the pipeline once for each group and used together with SBG Flatten. Each SBG Group Input output should be passed to SBG Flatten \"Nested\" input.",
+        "sbg:toolAuthor": "Ana Damljanovic/ Seven Bridges Genomics",
+        "sbg:project": "bix-demo/sbgtools-demo",
+        "sbg:id": "djordje_klisic/public-apps-by-seven-bridges/sbg-group-input/0",
+        "class": "CommandLineTool",
+        "sbg:modifiedBy": "bix-demo",
+        "hints": [
+          {
+            "dockerPull": "images.sbgenomics.com/ana_d/sbg-groupcp:1.0",
+            "dockerImageId": "d89b97cad221",
+            "class": "DockerRequirement"
+          },
+          {
+            "value": 1,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 1000,
+            "class": "sbg:MemRequirement"
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedOn": 1450911284,
+            "sbg:modifiedBy": "bix-demo"
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedOn": 1450911284,
+            "sbg:modifiedBy": "bix-demo"
+          }
+        ],
+        "sbg:validationErrors": [],
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          },
+          "inputs": {
+            "group_name": "group_name",
+            "input_files": [
+              {
+                "path": "/test-data/input_files.ext.ext2"
+              },
+              {
+                "path": "/test-data/input_files2.ext.ext2"
+              },
+              {
+                "path": "/test-data/input_files3.ext.ext2"
+              }
+            ]
+          }
+        },
+        "sbg:license": "Apache License 2.0",
+        "sbg:toolkitVersion": "1.0",
+        "arguments": [
+          {
+            "valueFrom": "./group_out",
+            "prefix": "--dest",
+            "separate": true,
+            "position": 3
+          }
+        ]
+      },
+      "id": "#SBG_Group_Input_1",
+      "sbg:y": 343
+    }
+  ],
+  "outputs": [
+    {
+      "type": [
+        "null",
+        "File"
+      ],
+      "sbg:y": 244.7058823529412,
+      "label": "abundances",
+      "sbg:x": 1237.6470588235295,
+      "sbg:includeInPorts": true,
+      "id": "#abundances",
+      "source": [
+        "#Cuffquant.abundances"
+      ]
+    }
+  ],
+  "description": "Profiling the transcriptome of cells and tissues under different conditions provides unique insights into the molecular basis of phenotypic variation in biology and can provide a more complete understanding of both normal and pathological processes. Identification of differentially expressed genes and transcripts is the most common application of transcriptome profiling by RNA-Seq. In addition to these changes, RNA-Seq allows detection of alterations in transcription start sites and alternate coding regions as well as identification of differential splicing between conditions.\n\nThis pipeline uses Cuffdiff to find significant differences in transcripts expression between groups of samples. The Cuffdiff algorithm incorporates both biological and technical variability in order to identify differentially expressed genes and transcripts. Thus, the ability to detect true significant changes (and limit false positive detections) is determined by the number of replicates included in an experiment and the inter-replicate variability.\n\nOn the Seven Bridges Platform, you can use this pipeline in combination with the RNA-Seq Alignment \u2013 TopHat Public Pipeline to take you all the way from raw sequencing reads to visualization and a list of differentially expressed genes and transcripts.\n\nCuffdiff allows detection of differential expression at the gene, isoform, tss and cds levels. Following quantitation, Cuffdiff performs differential expression tests between groups of samples. This pipeline also performs basic quality control analysis of your differential expression experiment powered by CummeRbundQC.\n\nGroup input: At least two aligned reads files in BAM or SAM format. You will need to set the name of your groups; this name will then be used to report results. For example if you have three replicates (A, B, & C) of an experimental condition (X), set the \"Group name\" parameter in \"SBG Group Input\" app to X and add BAM files A, B, & C to the group. The number of replicates doesn\u2019t need to be the same in each experimental condition. If you use fewer than 3 replicates per condition, by default Cuffdiff will not test for significant alterations in splicing, tss, or cds usage. If there are more than two groups, modify the pipeline by adding more \"SBG Group Input\" apps and connecting these to the \"SBG Flatten\" input.\nReference (FASTA): FASTA file containing reference genome. For Human samples we recommend \"ucsc.hg19.fasta\".\nAnnotations (GTF): Gene Transfer Format file containing known transcripts annotations. GTF file needs to be augmented with tss_id and p_id attributes in order to look for changes in primary transcript expression, splicing, coding output, and promoter use. For Human samples we recommend Ensembl gene annotations with chromosome names converted to be compatible with the UCSC format \"human\\_hg19\\_genes.2014.gtf\".",
+  "hints": [
+    {
+      "value": "c4.4xlarge",
+      "class": "sbg:AWSInstanceType"
+    }
+  ],
+  "sbg:project": "jack_digi/divide-and-conquer",
+  "sbg:id": "jack_digi/divide-and-conquer/rna-seq-diff-expression-first/7",
+  "sbg:toolkit": "Cufflinks",
+  "sbg:canvas_x": -73,
+  "sbg:modifiedBy": "jack_digi",
+  "sbg:toolAuthor": "Seven Bridges Genomics",
+  "sbg:image_url": "https://cgc-brood.sbgenomics.com/static/jack_digi/divide-and-conquer/rna-seq-diff-expression-first/7.png",
+  "sbg:createdBy": "jack_digi",
+  "sbg:validationErrors": [],
+  "sbg:contributors": [
+    "jack_digi"
+  ],
+  "sbg:license": "Apache License 2.0",
+  "sbg:toolkitVersion": "2.2.1",
+  "sbg:canvas_y": -96
+}

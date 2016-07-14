@@ -1,0 +1,1206 @@
+{
+  "sbg:latestRevision": 4,
+  "sbg:revisionsInfo": [
+    {
+      "sbg:revision": 0,
+      "sbg:modifiedOn": 1458705249,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 1,
+      "sbg:modifiedOn": 1458706789,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 2,
+      "sbg:modifiedOn": 1458707026,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 3,
+      "sbg:modifiedOn": 1459202253,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:revision": 4,
+      "sbg:modifiedOn": 1459203232,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revisionNotes": null
+    }
+  ],
+  "sbg:categories": [
+    "Differential-Expression",
+    "RNA"
+  ],
+  "class": "Workflow",
+  "sbg:canvas_zoom": 0.6999999999999997,
+  "requirements": [],
+  "sbg:revision": 4,
+  "id": "https://cgc-api.sbgenomics.com/v2/apps/jack_digi/divide-and-conquer/rna-seq-diff-expression-second/4/raw/",
+  "inputs": [
+    {
+      "type": [
+        "null",
+        "File"
+      ],
+      "label": "#Reference",
+      "sbg:x": 501,
+      "sbg:includeInPorts": true,
+      "id": "#Reference",
+      "sbg:y": 396
+    },
+    {
+      "type": [
+        "File"
+      ],
+      "label": "#Annotations",
+      "sbg:x": 600.7647346047795,
+      "sbg:includeInPorts": true,
+      "id": "#Annotations",
+      "sbg:y": 491.17647058823536
+    },
+    {
+      "type": [
+        {
+          "items": "File",
+          "type": "array"
+        }
+      ],
+      "id": "#sample_files",
+      "label": "sample_files",
+      "sbg:y": 323.5293974034926,
+      "sbg:x": 183.52938304227928
+    },
+    {
+      "label": "Minimum replicates for JS test",
+      "type": [
+        "null",
+        "int"
+      ],
+      "description": "Number of replicates needed for relative isoform shift testing. Cuffdiff won't test genes for differential regulation unless the conditions in question have at least this many replicates.",
+      "sbg:toolDefaultValue": "3",
+      "sbg:includeInPorts": false,
+      "inputBinding": {
+        "prefix": "--min-reps-for-js-test",
+        "sbg:cmdInclude": true,
+        "separate": true
+      },
+      "id": "#min_reps_for_js_test",
+      "sbg:category": "Advanced Options",
+      "required": false
+    },
+    {
+      "label": "Library type",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "symbols": [
+            "fr-unstranded",
+            "ff-firststrand",
+            "ff-secondstrand",
+            "ff-unstranded",
+            "fr-firststrand",
+            "fr-secondstrand",
+            "transfrags"
+          ],
+          "name": "library_type"
+        }
+      ],
+      "description": "In cases where Cuffdiff cannot determine the platform and protocol used to generate input reads, you can supply this information manually, which will allow Cufflinks to infer source strand information with certain protocols.",
+      "sbg:toolDefaultValue": "fr-unstranded",
+      "sbg:includeInPorts": false,
+      "inputBinding": {
+        "prefix": "--library-type",
+        "sbg:cmdInclude": true,
+        "separate": true
+      },
+      "id": "#library_type",
+      "sbg:category": "Basic Options",
+      "required": false
+    },
+    {
+      "label": "Library normalization method",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "symbols": [
+            "geometric",
+            "classic-fpkm",
+            "quartile"
+          ],
+          "name": "library_norm_method"
+        }
+      ],
+      "description": "Value of this parameter controls how library sizes, i.e. sequencing depths, are normalized in Cuffdiff.",
+      "sbg:toolDefaultValue": "geometric",
+      "sbg:includeInPorts": false,
+      "inputBinding": {
+        "prefix": "--library-norm-method",
+        "sbg:cmdInclude": true,
+        "separate": true
+      },
+      "id": "#library_norm_method",
+      "sbg:category": "Basic Options",
+      "required": false
+    },
+    {
+      "label": "Dispersion method",
+      "type": [
+        "null",
+        {
+          "type": "enum",
+          "symbols": [
+            "pooled",
+            "blind",
+            "per-condition",
+            "poisson"
+          ],
+          "name": "dispersion_method"
+        }
+      ],
+      "description": "Method used to estimate dispersion models",
+      "sbg:toolDefaultValue": "pooled",
+      "sbg:includeInPorts": false,
+      "inputBinding": {
+        "prefix": "--dispersion-method",
+        "sbg:cmdInclude": true,
+        "separate": true
+      },
+      "id": "#dispersion_method",
+      "sbg:category": "Basic Options",
+      "required": false
+    },
+    {
+      "label": "FDR",
+      "type": [
+        "null",
+        "float"
+      ],
+      "description": "The allowed false discovery rate.",
+      "sbg:toolDefaultValue": "0.05",
+      "sbg:includeInPorts": false,
+      "inputBinding": {
+        "prefix": "--FDR",
+        "sbg:cmdInclude": true,
+        "separate": true
+      },
+      "id": "#FDR",
+      "sbg:category": "Basic Options",
+      "required": false
+    }
+  ],
+  "sbg:sbgMaintained": false,
+  "label": "second RNA-seq cuffdiff",
+  "sbg:createdOn": 1458705249,
+  "sbg:modifiedOn": 1459203232,
+  "steps": [
+    {
+      "outputs": [
+        {
+          "id": "#Cuffdiff.zipped"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "#Cuffdiff.sample_files",
+          "source": [
+            "#sample_files"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.compatible_hits_norm"
+        },
+        {
+          "id": "#Cuffdiff.mask_file"
+        },
+        {
+          "id": "#Cuffdiff.contrast_file"
+        },
+        {
+          "id": "#Cuffdiff.frag_bias_correct",
+          "source": [
+            "#Reference"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.transcripts",
+          "source": [
+            "#Annotations"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.total_hits_norm"
+        },
+        {
+          "id": "#Cuffdiff.FDR",
+          "source": [
+            "#FDR"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.multi_read_correct"
+        },
+        {
+          "id": "#Cuffdiff.min_alignment_count"
+        },
+        {
+          "id": "#Cuffdiff.library_type",
+          "source": [
+            "#library_type"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.dispersion_method",
+          "source": [
+            "#dispersion_method"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.library_norm_method",
+          "source": [
+            "#library_norm_method"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.frag_len_mean"
+        },
+        {
+          "id": "#Cuffdiff.frag_len_std_dev"
+        },
+        {
+          "id": "#Cuffdiff.max_mle_iterations"
+        },
+        {
+          "id": "#Cuffdiff.max_bundle_frags"
+        },
+        {
+          "id": "#Cuffdiff.num_frag_count_draws"
+        },
+        {
+          "id": "#Cuffdiff.num_frag_assign_draws"
+        },
+        {
+          "id": "#Cuffdiff.min_reps_for_js_test",
+          "source": [
+            "#min_reps_for_js_test"
+          ]
+        },
+        {
+          "id": "#Cuffdiff.no_effective_length_correction"
+        }
+      ],
+      "sbg:x": 948,
+      "run": {
+        "sbg:latestRevision": 1,
+        "label": "Cuffdiff",
+        "sbg:toolkit": "Cufflinks",
+        "sbg:createdBy": "bix-demo",
+        "sbg:categories": [
+          "Differential-Expression"
+        ],
+        "baseCommand": [
+          "/opt/cuffdiff",
+          "--output-dir",
+          "./cuffdiff_dir",
+          "--num-threads",
+          {
+            "engine": "#cwl-js-engine",
+            "script": "{\n  return $job.allocatedResources.cpu\n}",
+            "class": "Expression"
+          },
+          "--verbose",
+          "--no-update-check"
+        ],
+        "sbg:validationErrors": [],
+        "sbg:revision": 1,
+        "id": "https://api.sbgenomics.com/bix-demo/cufflinks-2-2-1-demo/cuffdiff/1/raw/",
+        "temporaryFailCodes": [],
+        "inputs": [
+          {
+            "label": "Sample files",
+            "type": [
+              {
+                "items": "File",
+                "type": "array"
+              }
+            ],
+            "description": "Either SAM/BAM files of aligned RNA-Seq reads, or CXB files produced by Cuffquant. SAM/BAM files cannot be mixed with CXB files. If more than two groups are provided, Cuffdiff tests for differential expression and regulation between all pairs of sample groups, or between all samples if no sample groups are specified.",
+            "sbg:fileTypes": "SAM, BAM, CXB",
+            "id": "#sample_files",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Compatible hits normalization",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "With this option, Cuffdiff counts only those fragments compatible with some reference transcript towards the number of mapped hits used in the FPKM denominator. Using this mode is generally recommended in Cuffdiff to reduce certain types of bias caused by different amounts of ribosomal reads which can create the impression of falsely differentially expressed genes.",
+            "sbg:toolDefaultValue": "True",
+            "inputBinding": {
+              "prefix": "--compatible-hits-norm",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#compatible_hits_norm",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Mask file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Tells Cuffdiff to ignore all reads that could have come from transcripts in this GTF file. Toolkit authors recommend including any annotated rRNA, mitochondrial and other abundant transcripts you wish to ignore in your analysis in this file. Due to variable efficiency of mRNA enrichment methods and rRNA depletion kits, masking these transcripts often improves the overall robustness of transcript abundance estimates.",
+            "sbg:fileTypes": "GTF, GFF",
+            "sbg:altPrefix": "-M",
+            "id": "#mask_file",
+            "sbg:category": "Input files",
+            "inputBinding": {
+              "prefix": "--mask-file",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 28
+            }
+          },
+          {
+            "label": "Contrast file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Cuffdiff performs the contrasts (differential expression analysis between two sample groups or between two samples) specified in this tab delimited text file.",
+            "sbg:fileTypes": "TXT",
+            "sbg:altPrefix": "-C",
+            "id": "#contrast_file",
+            "sbg:category": "Input files",
+            "inputBinding": {
+              "prefix": "--contrast-file",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 26
+            }
+          },
+          {
+            "label": "Fragment bias correct",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Providing Cuffdiff with the multifasta file your reads were mapped to via this option instructs it to run bias detection and correction algorithm which can significantly improve accuracy of transcript abundance estimates.",
+            "sbg:fileTypes": "FASTA, FA",
+            "sbg:altPrefix": "-b",
+            "id": "#frag_bias_correct",
+            "sbg:category": "Input files",
+            "inputBinding": {
+              "prefix": "--frag-bias-correct",
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 27
+            }
+          },
+          {
+            "label": "Transcripts",
+            "type": [
+              "File"
+            ],
+            "description": "A transcript annotation file in GTF/GFF format, produced by Cufflinks, Cuffcompare, or other source.",
+            "sbg:fileTypes": "GTF, GFF",
+            "inputBinding": {
+              "sbg:cmdInclude": true,
+              "separate": true,
+              "position": 29
+            },
+            "id": "#transcripts",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Total hits normalization",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "If you set this option, Cuffdiff counts all fragments, including those not compatible with any reference transcript, towards the number of mapped hits used in the FPKM denominator.",
+            "sbg:toolDefaultValue": "False",
+            "inputBinding": {
+              "prefix": "--total-hits-norm",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#total_hits_norm",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "FDR",
+            "type": [
+              "null",
+              "float"
+            ],
+            "description": "The allowed false discovery rate.",
+            "sbg:toolDefaultValue": "0.05",
+            "sbg:includeInPorts": false,
+            "inputBinding": {
+              "prefix": "--FDR",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#FDR",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Correct for reads mapped to multiple loci",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "Tells Cuffdiff to do an initial estimation procedure to more accurately weight reads mapping to multiple locations in the genome.",
+            "sbg:toolDefaultValue": "False",
+            "sbg:altPrefix": "-u",
+            "id": "#multi_read_correct",
+            "sbg:category": "Basic Options",
+            "inputBinding": {
+              "prefix": "--multi-read-correct",
+              "sbg:cmdInclude": true,
+              "separate": true
+            }
+          },
+          {
+            "label": "Minimum alignment count",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "The minimum number of alignments in a locus needed to conduct significance testing on changes in that locus observed between samples. If no testing is performed, changes in the locus are deemed not significant, and the locus' observed changes don't contribute to correction for multiple testing.",
+            "sbg:toolDefaultValue": "10",
+            "sbg:altPrefix": "-c",
+            "id": "#min_alignment_count",
+            "sbg:category": "Advanced Options",
+            "inputBinding": {
+              "prefix": "--min-alignment-count",
+              "sbg:cmdInclude": true,
+              "separate": true
+            }
+          },
+          {
+            "label": "Library type",
+            "type": [
+              "null",
+              {
+                "type": "enum",
+                "symbols": [
+                  "fr-unstranded",
+                  "ff-firststrand",
+                  "ff-secondstrand",
+                  "ff-unstranded",
+                  "fr-firststrand",
+                  "fr-secondstrand",
+                  "transfrags"
+                ],
+                "name": "library_type"
+              }
+            ],
+            "description": "In cases where Cuffdiff cannot determine the platform and protocol used to generate input reads, you can supply this information manually, which will allow Cufflinks to infer source strand information with certain protocols.",
+            "sbg:toolDefaultValue": "fr-unstranded",
+            "sbg:includeInPorts": false,
+            "inputBinding": {
+              "prefix": "--library-type",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#library_type",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Dispersion method",
+            "type": [
+              "null",
+              {
+                "type": "enum",
+                "symbols": [
+                  "pooled",
+                  "blind",
+                  "per-condition",
+                  "poisson"
+                ],
+                "name": "dispersion_method"
+              }
+            ],
+            "description": "Method used to estimate dispersion models",
+            "sbg:toolDefaultValue": "pooled",
+            "sbg:includeInPorts": false,
+            "inputBinding": {
+              "prefix": "--dispersion-method",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#dispersion_method",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Library normalization method",
+            "type": [
+              "null",
+              {
+                "type": "enum",
+                "symbols": [
+                  "geometric",
+                  "classic-fpkm",
+                  "quartile"
+                ],
+                "name": "library_norm_method"
+              }
+            ],
+            "description": "Value of this parameter controls how library sizes, i.e. sequencing depths, are normalized in Cuffdiff.",
+            "sbg:toolDefaultValue": "geometric",
+            "sbg:includeInPorts": false,
+            "inputBinding": {
+              "prefix": "--library-norm-method",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#library_norm_method",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Mean fragment length",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "This is the expected (mean) fragment length. Cuffdiff learns the fragment length mean for each SAM/BAM file so this option is not recommended with paired-end reads.",
+            "sbg:toolDefaultValue": "200",
+            "sbg:altPrefix": "-m",
+            "id": "#frag_len_mean",
+            "sbg:category": "Advanced Options",
+            "inputBinding": {
+              "prefix": "--frag-len-mean",
+              "sbg:cmdInclude": true,
+              "separate": true
+            }
+          },
+          {
+            "label": "Fragment lengths' standard deviation",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "The standard deviation for the distribution on fragment lengths. Cuffdiff learns the fragment lengths' standard deviation for each SAM/BAM file so this option is not recommended with paired-end reads.",
+            "sbg:toolDefaultValue": "80",
+            "sbg:altPrefix": "-s",
+            "id": "#frag_len_std_dev",
+            "sbg:category": "Advanced Options",
+            "inputBinding": {
+              "prefix": "--frag-len-std-dev",
+              "sbg:cmdInclude": true,
+              "separate": true
+            }
+          },
+          {
+            "label": "Maximum MLE number of iterations",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Sets the number of iterations allowed during maximum likelihood estimation of abundances.",
+            "sbg:toolDefaultValue": "5000",
+            "inputBinding": {
+              "prefix": "--max-mle-iterations",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#max_mle_iterations",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Maximum bundle fragments",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Sets the maximum number of fragments a locus may have before being skipped. Skipped loci are marked with status HIDATA.",
+            "sbg:toolDefaultValue": "500000",
+            "inputBinding": {
+              "prefix": "--max-bundle-frags",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#max_bundle_frags",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Number of draws for counting fragments",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Cuffdiff will make this many draws from each transcript's predicted negative binomial random number generator. Each draw is a number of fragments that will be probabilistically assigned to the transcripts in the transcriptome. Used to estimate the variance-covariance matrix on assigned fragment counts.",
+            "sbg:toolDefaultValue": "100",
+            "inputBinding": {
+              "prefix": "--num-frag-count-draws",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#num_frag_count_draws",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Number of assignments for fragment draws",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "For each fragment drawn from a transcript, Cuffdiff will assign it this many times (probabilistically), thus estimating the assignment uncertainty for each transcript. Used to estimate the variance-covariance matrix on assigned fragment counts.",
+            "sbg:toolDefaultValue": "50",
+            "inputBinding": {
+              "prefix": "--num-frag-assign-draws",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#num_frag_assign_draws",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "Minimum replicates for JS test",
+            "type": [
+              "null",
+              "int"
+            ],
+            "description": "Number of replicates needed for relative isoform shift testing. Cuffdiff won't test genes for differential regulation unless the conditions in question have at least this many replicates.",
+            "sbg:toolDefaultValue": "3",
+            "sbg:includeInPorts": false,
+            "inputBinding": {
+              "prefix": "--min-reps-for-js-test",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#min_reps_for_js_test",
+            "sbg:category": "Advanced Options"
+          },
+          {
+            "label": "No effective length correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "Cuffdiff will not employ its \"effective\" length normalization to transcript FPKM.",
+            "sbg:toolDefaultValue": "False",
+            "inputBinding": {
+              "prefix": "--no-effective-length-correction",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#no_effective_length_correction",
+            "sbg:category": "Advanced Options"
+          }
+        ],
+        "sbg:sbgMaintained": false,
+        "stdout": "",
+        "sbg:createdOn": 1450911496,
+        "successCodes": [],
+        "stdin": "",
+        "sbg:modifiedOn": 1450911496,
+        "sbg:cmdPreview": "/opt/cuffdiff --output-dir ./cuffdiff_dir --num-threads 15 --verbose --no-update-check --compatible-hits-norm  --total-hits-norm  --FDR 0 --multi-read-correct  --min-alignment-count 0 --library-type fr-unstranded --dispersion-method pooled --library-norm-method geometric --frag-len-mean 0 --frag-len-std-dev 0 --max-mle-iterations 0 --max-bundle-frags 0 --num-frag-count-draws 0 --num-frag-assign-draws 0 --min-reps-for-js-test 0 --no-effective-length-correction  --contrast-file contrast_file.ext --frag-bias-correct frag_bias_correct.ext --mask-file mask_file.ext  transcripts.ext --labels sample,D /test/rnaseq/SMA_D1_SCT.R.accepted_hits.abundances.cxb,/test/rnaseq/SMA_D2_SCT.R.accepted_hits.abundances.cxb /test/rnaseq/SMA_K1_SCT.R.accepted_hits.abundances.cxb,/test/rnaseq/SMA_K2_SCT.R.accepted_hits.abundances.cxb  && zip -j  SMA_.cuffdiff.zip  cuffdiff_dir/*.fpkm_tracking cuffdiff_dir/*.count_tracking cuffdiff_dir/*.read_group_tracking cuffdiff_dir/*.diff cuffdiff_dir/*.info  transcripts.ext",
+        "requirements": [
+          {
+            "requirements": [
+              {
+                "dockerPull": "rabix/js-engine",
+                "class": "DockerRequirement"
+              }
+            ],
+            "id": "#cwl-js-engine",
+            "class": "ExpressionEngineRequirement"
+          }
+        ],
+        "outputs": [
+          {
+            "label": "Archive of Cuffdiff output files",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Zipped list of output tracking, tab delimited and INFO files.",
+            "sbg:fileTypes": "ZIP",
+            "outputBinding": {
+              "sbg:metadata": {},
+              "glob": {
+                "engine": "#cwl-js-engine",
+                "script": "{\n  return \"*.cuffdiff.zip\"\n}",
+                "class": "Expression"
+              }
+            },
+            "id": "#zipped"
+          }
+        ],
+        "description": "Cuffdiff is a highly accurate tool for performing differential expression analysis for RNA-seq experiments. It accepts read alignment files from two or more samples, calculates expression at the isoform and gene level, and tests for significant expression differences. Cuffdiff outputs a downloadable collection of files that can be explored as spreadsheets. A quality control analysis of Cuffdiff results can be performed using CummeRbundQC.",
+        "sbg:toolAuthor": "Cole Trapnell/University of Washington",
+        "sbg:project": "bix-demo/cufflinks-2-2-1-demo",
+        "sbg:id": "djordje_klisic/public-apps-by-seven-bridges/cuffdiff/0",
+        "class": "CommandLineTool",
+        "sbg:modifiedBy": "bix-demo",
+        "hints": [
+          {
+            "dockerPull": "images.sbgenomics.com/ana_d/cufflinks:2.2.1",
+            "dockerImageId": "191aecc448a8",
+            "class": "DockerRequirement"
+          },
+          {
+            "value": 30000,
+            "class": "sbg:MemRequirement"
+          },
+          {
+            "value": 15,
+            "class": "sbg:CPURequirement"
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedOn": 1450911496,
+            "sbg:modifiedBy": "bix-demo"
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedOn": 1450911496,
+            "sbg:modifiedBy": "bix-demo"
+          }
+        ],
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 30000,
+            "cpu": 15
+          },
+          "inputs": {
+            "num_frag_assign_draws": 0,
+            "frag_bias_correct": {
+              "path": "frag_bias_correct.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "frag_len_mean": 0,
+            "dispersion_method": "pooled",
+            "library_type": "fr-unstranded",
+            "frag_len_std_dev": 0,
+            "num_frag_count_draws": 0,
+            "compatible_hits_norm": true,
+            "contrast_file": {
+              "path": "contrast_file.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "mask_file": {
+              "path": "mask_file.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "min_reps_for_js_test": 0,
+            "transcripts": {
+              "path": "transcripts.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "max_bundle_frags": 0,
+            "multi_read_correct": true,
+            "min_alignment_count": 0,
+            "library_norm_method": "geometric",
+            "max_mle_iterations": 0,
+            "total_hits_norm": true,
+            "no_effective_length_correction": true,
+            "FDR": 0,
+            "sample_files": [
+              {
+                "metadata": {
+                  "sample_group": "sample"
+                },
+                "path": "/test/rnaseq/SMA_D1_SCT.R.accepted_hits.abundances.cxb",
+                "secondaryFiles": [],
+                "size": 0,
+                "class": "File"
+              },
+              {
+                "metadata": {
+                  "sample_group": "sample"
+                },
+                "path": "/test/rnaseq/SMA_D2_SCT.R.accepted_hits.abundances.cxb",
+                "secondaryFiles": []
+              },
+              {
+                "metadata": {
+                  "sample_group": "D"
+                },
+                "path": "/test/rnaseq/SMA_K1_SCT.R.accepted_hits.abundances.cxb",
+                "secondaryFiles": []
+              },
+              {
+                "metadata": {
+                  "sample_group": "D"
+                },
+                "path": "/test/rnaseq/SMA_K2_SCT.R.accepted_hits.abundances.cxb",
+                "secondaryFiles": []
+              }
+            ]
+          }
+        },
+        "sbg:license": "Boost Software License 1.0",
+        "sbg:toolkitVersion": "2.2.1",
+        "sbg:links": [
+          {
+            "id": "http://cole-trapnell-lab.github.io/cufflinks/",
+            "label": "Homepage"
+          },
+          {
+            "id": "http://cole-trapnell-lab.github.io/cufflinks/cuffdiff/",
+            "label": "Manual"
+          },
+          {
+            "id": "http://cole-trapnell-lab.github.io/cufflinks/assets/downloads/cufflinks-2.2.1.tar.gz",
+            "label": "Source code"
+          },
+          {
+            "id": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3146043/",
+            "label": "Publication"
+          }
+        ],
+        "arguments": [
+          {
+            "valueFrom": {
+              "engine": "#cwl-js-engine",
+              "script": "{\n  paths = []\n  cspaths = []\n  all_groups = []\n  labels = []\n  temp_group = []\n  $job.inputs.sample_files.forEach( function(file){\n    meta_key = file.metadata.sample_group\n    all_groups.push(meta_key)\n    basename = file.path.replace(/\\\\/g,'/').replace( /.*\\//, '' )\n    /*paths.push(basename);*/\n  });\n  function onlyUnique(value, index, self) { \n    return self.indexOf(value) === index;\n  }\n  labels = all_groups.filter(onlyUnique);\n  /*return paths.join(',');*/\n  labels.forEach( function(label){\n    paths = []\n    $job.inputs.sample_files.forEach( function(sample){\n      if (sample.metadata.sample_group === label){\n        paths.push(sample.path)\n      }\n    })\n    cspaths.push(paths.join(','))\n  })\n  return labels.join(',').concat(\" \", cspaths.join(' '));\n}",
+              "class": "Expression"
+            },
+            "prefix": "--labels",
+            "separate": true,
+            "position": 30
+          },
+          {
+            "valueFrom": "&& zip -j",
+            "separate": true,
+            "position": 31
+          },
+          {
+            "valueFrom": {
+              "engine": "#cwl-js-engine",
+              "script": "{\n  function sharedStart(array){\n    var A= array.concat().sort(), \n    a1= A[0], a2= A[A.length-1], L= a1.length, i= 0;\n    while(i<L && a1.charAt(i)=== a2.charAt(i)) i++;\n    return a1.substring(0, i);\n  }\n  path_list = []\n  $job.inputs.sample_files.forEach(function(f){return path_list.push(f.path.replace(/\\\\/g,'/').replace( /.*\\//, '' ))})\n  common_prefix = sharedStart(path_list)\n  return common_prefix.concat(\".cuffdiff.zip\")\n}",
+              "class": "Expression"
+            },
+            "separate": true,
+            "position": 32
+          },
+          {
+            "valueFrom": {
+              "engine": "#cwl-js-engine",
+              "script": "{\n  return \"cuffdiff_dir/*.fpkm_tracking cuffdiff_dir/*.count_tracking cuffdiff_dir/*.read_group_tracking cuffdiff_dir/*.diff cuffdiff_dir/*.info\"\n}",
+              "class": "Expression"
+            },
+            "separate": true,
+            "position": 33
+          }
+        ]
+      },
+      "id": "#Cuffdiff",
+      "sbg:y": 377
+    },
+    {
+      "outputs": [
+        {
+          "id": "#CummeRbundQC.archive"
+        },
+        {
+          "id": "#CummeRbundQC.html"
+        }
+      ],
+      "inputs": [
+        {
+          "id": "#CummeRbundQC.cuffdiff_zip",
+          "source": [
+            "#Cuffdiff.zipped"
+          ]
+        },
+        {
+          "id": "#CummeRbundQC.dispersion_threshold"
+        },
+        {
+          "id": "#CummeRbundQC.density_threshold"
+        },
+        {
+          "id": "#CummeRbundQC.thresholds_off"
+        }
+      ],
+      "sbg:x": 1106,
+      "run": {
+        "sbg:latestRevision": 1,
+        "label": "CummeRbundQC",
+        "sbg:toolkit": "CummeRbund",
+        "sbg:createdBy": "bix-demo",
+        "sbg:categories": [
+          "Differential-Expression",
+          "Plotting-and-Rendering"
+        ],
+        "baseCommand": [
+          "python",
+          "/opt/cummerbund-qc.py"
+        ],
+        "sbg:validationErrors": [],
+        "sbg:revision": 1,
+        "id": "https://api.sbgenomics.com/bix-demo/cummerbundqc-2-8-2-demo/cummerbundqc/1/raw/",
+        "temporaryFailCodes": [],
+        "inputs": [
+          {
+            "label": "Archive of Cuffdiff output files",
+            "type": [
+              "File"
+            ],
+            "description": "Zipped list of output tracking, tab delimited and INFO files.",
+            "sbg:fileTypes": "ZIP",
+            "inputBinding": {
+              "prefix": "--cuffzip",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#cuffdiff_zip",
+            "sbg:category": "Input files"
+          },
+          {
+            "label": "Dispersion plot threshold",
+            "type": [
+              "null",
+              "float"
+            ],
+            "description": "Changing this parameter sets threshold for the genes that are displayed on dispersion plot, namely it removes from the plot all genes that have dispersion lower than this value.",
+            "sbg:toolDefaultValue": "0.01",
+            "inputBinding": {
+              "prefix": "--dispthreshold",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#dispersion_threshold",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Density plot threshold",
+            "type": [
+              "null",
+              "float"
+            ],
+            "description": "Changing this parameter sets threshold for the genes that are displayed on both density plots. It removes from the plots all genes that have FPKM value lower than this value.",
+            "sbg:toolDefaultValue": "0.0001",
+            "inputBinding": {
+              "prefix": "--densthreshold",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#density_threshold",
+            "sbg:category": "Basic Options"
+          },
+          {
+            "label": "Turn off thresholds",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "description": "Set this parameter in case you don't want to eliminate lower expressed genes on dispersion and density plots. Be aware that this would cause plots to be stretched in order to show these low values for dispersion and FPKM.",
+            "sbg:toolDefaultValue": "False",
+            "inputBinding": {
+              "prefix": "--thresholdsoff",
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "id": "#thresholds_off",
+            "sbg:category": "Basic Options"
+          }
+        ],
+        "sbg:sbgMaintained": false,
+        "stdout": "",
+        "sbg:createdOn": 1450911523,
+        "successCodes": [],
+        "stdin": "",
+        "sbg:modifiedOn": 1450911523,
+        "sbg:cmdPreview": "python /opt/cummerbund-qc.py --cuffzip cuffdiff_zip.ext --dispthreshold 0 --densthreshold 0 --thresholdsoff  cuffdiff_zip.ext",
+        "requirements": [],
+        "outputs": [
+          {
+            "label": "Report archive",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Downloadable zipped report.",
+            "sbg:fileTypes": "ZIP",
+            "outputBinding": {
+              "sbg:inheritMetadataFrom": "#cuffdiff_zip",
+              "sbg:metadata": {},
+              "glob": "*.zip"
+            },
+            "id": "#archive"
+          },
+          {
+            "label": "Report",
+            "type": [
+              "null",
+              "File"
+            ],
+            "description": "Base64 encoded HTML report prepared for easy viewing.",
+            "sbg:fileTypes": "B64HTML",
+            "outputBinding": {
+              "sbg:inheritMetadataFrom": "#cuffdiff_zip",
+              "sbg:metadata": {},
+              "glob": "*.b64html"
+            },
+            "id": "#html"
+          }
+        ],
+        "description": "CummeRbundQC assesses the quality of a differential expression analysis performed with Cuffdiff. It accepts differential expression results in the form of a cuffdiff.zip folder as input and produces a report with charts that can be viewed on Seven Bridges platform or downloaded to your local drive. \n\nCummeRbundQC is built on top of CummeRbund v. 2.8.2. CummeRbundQC incorporates the \"Global Statistics and Quality Control\" graphs described in the CummeRbund manual. These visualizations provide an overview of the relationships among the replicates and help in detecting over-dispersion in samples.",
+        "sbg:toolAuthor": "Cole Trapnell/University of Washington",
+        "sbg:project": "bix-demo/cummerbundqc-2-8-2-demo",
+        "sbg:id": "djordje_klisic/public-apps-by-seven-bridges/cummerbundqc/0",
+        "class": "CommandLineTool",
+        "sbg:modifiedBy": "bix-demo",
+        "hints": [
+          {
+            "dockerPull": "images.sbgenomics.com/ana_d/cummerbund-qc:2.8.2--1.0",
+            "dockerImageId": "0c4541b52eb7",
+            "class": "DockerRequirement"
+          },
+          {
+            "value": 8,
+            "class": "sbg:CPURequirement"
+          },
+          {
+            "value": 6000,
+            "class": "sbg:MemRequirement"
+          }
+        ],
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revision": 0,
+            "sbg:modifiedOn": 1450911523,
+            "sbg:modifiedBy": "bix-demo"
+          },
+          {
+            "sbg:revision": 1,
+            "sbg:modifiedOn": 1450911523,
+            "sbg:modifiedBy": "bix-demo"
+          }
+        ],
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 6000,
+            "cpu": 8
+          },
+          "inputs": {
+            "dispersion_threshold": 0,
+            "thresholds_off": true,
+            "cuffdiff_zip": {
+              "path": "cuffdiff_zip.ext",
+              "secondaryFiles": [],
+              "size": 0,
+              "class": "File"
+            },
+            "density_threshold": 0
+          }
+        },
+        "sbg:license": "Artistic License 2.0",
+        "sbg:toolkitVersion": "2.8.2",
+        "sbg:links": [
+          {
+            "id": "http://bioconductor.org/packages/release/bioc/html/cummeRbund.html",
+            "label": "Homepage"
+          },
+          {
+            "id": "http://bioconductor.org/packages/release/bioc/vignettes/cummeRbund/inst/doc/cummeRbund-manual.pdf",
+            "label": "Manual"
+          },
+          {
+            "id": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3334321/",
+            "label": "Publication"
+          }
+        ],
+        "arguments": []
+      },
+      "id": "#CummeRbundQC",
+      "sbg:y": 378
+    }
+  ],
+  "outputs": [
+    {
+      "type": [
+        "null",
+        "File"
+      ],
+      "sbg:y": 242,
+      "label": "zipped",
+      "sbg:x": 1108,
+      "sbg:includeInPorts": true,
+      "id": "#zipped",
+      "source": [
+        "#Cuffdiff.zipped"
+      ]
+    },
+    {
+      "type": [
+        "null",
+        "File"
+      ],
+      "sbg:y": 313,
+      "label": "html",
+      "sbg:x": 1242,
+      "sbg:includeInPorts": true,
+      "id": "#html",
+      "source": [
+        "#CummeRbundQC.html"
+      ]
+    },
+    {
+      "type": [
+        "null",
+        "File"
+      ],
+      "sbg:y": 439,
+      "label": "archive",
+      "sbg:x": 1247,
+      "sbg:includeInPorts": true,
+      "id": "#archive",
+      "source": [
+        "#CummeRbundQC.archive"
+      ]
+    }
+  ],
+  "description": "Profiling the transcriptome of cells and tissues under different conditions provides unique insights into the molecular basis of phenotypic variation in biology and can provide a more complete understanding of both normal and pathological processes. Identification of differentially expressed genes and transcripts is the most common application of transcriptome profiling by RNA-Seq. In addition to these changes, RNA-Seq allows detection of alterations in transcription start sites and alternate coding regions as well as identification of differential splicing between conditions.\n\nThis pipeline uses Cuffdiff to find significant differences in transcripts expression between groups of samples. The Cuffdiff algorithm incorporates both biological and technical variability in order to identify differentially expressed genes and transcripts. Thus, the ability to detect true significant changes (and limit false positive detections) is determined by the number of replicates included in an experiment and the inter-replicate variability.\n\nOn the Seven Bridges Platform, you can use this pipeline in combination with the RNA-Seq Alignment \u2013 TopHat Public Pipeline to take you all the way from raw sequencing reads to visualization and a list of differentially expressed genes and transcripts.\n\nCuffdiff allows detection of differential expression at the gene, isoform, tss and cds levels. Following quantitation, Cuffdiff performs differential expression tests between groups of samples. This pipeline also performs basic quality control analysis of your differential expression experiment powered by CummeRbundQC.\n\nGroup input: At least two aligned reads files in BAM or SAM format. You will need to set the name of your groups; this name will then be used to report results. For example if you have three replicates (A, B, & C) of an experimental condition (X), set the \"Group name\" parameter in \"SBG Group Input\" app to X and add BAM files A, B, & C to the group. The number of replicates doesn\u2019t need to be the same in each experimental condition. If you use fewer than 3 replicates per condition, by default Cuffdiff will not test for significant alterations in splicing, tss, or cds usage. If there are more than two groups, modify the pipeline by adding more \"SBG Group Input\" apps and connecting these to the \"SBG Flatten\" input.\nReference (FASTA): FASTA file containing reference genome. For Human samples we recommend \"ucsc.hg19.fasta\".\nAnnotations (GTF): Gene Transfer Format file containing known transcripts annotations. GTF file needs to be augmented with tss_id and p_id attributes in order to look for changes in primary transcript expression, splicing, coding output, and promoter use. For Human samples we recommend Ensembl gene annotations with chromosome names converted to be compatible with the UCSC format \"human\\_hg19\\_genes.2014.gtf\".",
+  "hints": [
+    {
+      "value": "c3.8xlarge",
+      "class": "sbg:AWSInstanceType"
+    }
+  ],
+  "sbg:project": "jack_digi/divide-and-conquer",
+  "sbg:id": "jack_digi/divide-and-conquer/rna-seq-diff-expression-second/4",
+  "sbg:toolkit": "Cufflinks",
+  "sbg:canvas_x": -72,
+  "sbg:modifiedBy": "jack_digi",
+  "sbg:toolAuthor": "Seven Bridges Genomics",
+  "sbg:image_url": "https://cgc-brood.sbgenomics.com/static/jack_digi/divide-and-conquer/rna-seq-diff-expression-second/4.png",
+  "sbg:createdBy": "jack_digi",
+  "sbg:validationErrors": [],
+  "sbg:contributors": [
+    "jack_digi"
+  ],
+  "sbg:license": "Apache License 2.0",
+  "sbg:toolkitVersion": "2.2.1",
+  "sbg:canvas_y": -96
+}

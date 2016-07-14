@@ -1,0 +1,4211 @@
+{
+  "sbg:image_url": "https://brood.sbgenomics.com/static/jack_digi/not-a-hippy-demo/cnvnator-analysis/1.png",
+  "class": "Workflow",
+  "sbg:links": [
+    {
+      "label": "Homepage",
+      "id": "https://github.com/abyzovlab/CNVnator/releases"
+    },
+    {
+      "label": "Download",
+      "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+    },
+    {
+      "label": "Publication",
+      "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+    }
+  ],
+  "description": "CNVnator Analysis workflow performs CNV calling by doing read-depth(RD) analysis of the input BAM files.\nCNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n4'. Calculating average RD signal per bin\n5. CNVs identifying\n\nIn order to execute the workflow properly, a user should set the following input files:\n1. Input BAM files(tree) - one or more BAM files\n2. Reference genome file(ref_genome) - FASTA file matching the provided BAM files\n3. Reference genome files - one FASTA file per chromosome specified in the Chromosomes filed(Reference genome splitted by chromosomes) \n\nField Chromosomes should also be set (e.g. \"1 2 8 X\"). All the bin sizes fields should also be set.  The No GC correction (calcaulate results without GC correstion) can be set, but is not mandatory.\n\nOn the output two files are generated:\n1. average_rd_output_file - Contains average RD signal per bin. These results are calculated after the RD signal partitioning step.\n2. cnv_result_file - This file contains the result of the CNV calling as follows:\n\nCNV_type coordinates CNV_size normalized_RD e-val1 e-val2 e-val3 e-val4 q0\n\nnormalized_RD - normalized to 1.\ne-val1        - is calculated using t-test statistics.\ne-val2        -  is from the probability of RD values within the region to be in the tails of a gaussian distribution describing frequencies of RD values in bins.\ne-val3        - same as e-val1 but for the middle of CNV\ne-val4        -  same as e-val2 but for the middle of CNV\nq0            - fraction of reads mapped with q0 quality",
+  "label": "CNVnator Analysis",
+  "sbg:canvas_zoom": 0.8999999999999999,
+  "inputs": [
+    {
+      "label": "ref_genome",
+      "sbg:x": 157.11110248683428,
+      "sbg:y": 520.6665974134295,
+      "type": [
+        "null",
+        "File"
+      ],
+      "id": "#ref_genome"
+    },
+    {
+      "sbg:includeInPorts": true,
+      "sbg:x": 971.1110582587168,
+      "sbg:y": 136.66664433773704,
+      "label": "no_gc_correction",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "id": "#no_gc_correction"
+    },
+    {
+      "sbg:includeInPorts": true,
+      "sbg:x": 100.11110758192748,
+      "sbg:y": 322.66664122357827,
+      "label": "#bam_files",
+      "type": [
+        "null",
+        {
+          "type": "array",
+          "items": "File"
+        }
+      ],
+      "id": "#bam_files"
+    },
+    {
+      "sbg:category": "Histogram generation",
+      "description": "Generate a histogram. The value sets the bin size.",
+      "required": false,
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "position": 99,
+        "prefix": "-his"
+      },
+      "sbg:includeInPorts": false,
+      "label": "Histogram",
+      "type": [
+        "null",
+        "int"
+      ],
+      "id": "#histogram"
+    },
+    {
+      "sbg:category": "Statistics calculation",
+      "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+      "required": false,
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "position": 99,
+        "prefix": "-stat"
+      },
+      "sbg:includeInPorts": false,
+      "label": "Calculate statistics",
+      "type": [
+        "null",
+        "int"
+      ],
+      "id": "#statistics"
+    },
+    {
+      "sbg:category": "Evaluation",
+      "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "position": 99,
+        "prefix": "-eval"
+      },
+      "label": "Evaluate RD",
+      "type": [
+        "null",
+        "int"
+      ],
+      "id": "#evaluation"
+    },
+    {
+      "sbg:category": "Partitioning",
+      "description": "RD signal partitioning. The value sets the bin size.",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "position": 99,
+        "prefix": "-partition"
+      },
+      "label": "RD signal partitioning",
+      "type": [
+        "null",
+        "int"
+      ],
+      "id": "#partitioning"
+    },
+    {
+      "sbg:category": "Calling",
+      "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "position": 99,
+        "prefix": "-call"
+      },
+      "label": "Identifying CNVs",
+      "type": [
+        "null",
+        "int"
+      ],
+      "id": "#calling"
+    }
+  ],
+  "sbg:createdBy": "jack_digi",
+  "sbg:createdOn": 1468239963,
+  "sbg:canvas_y": -200,
+  "sbg:sbgMaintained": false,
+  "sbg:canvas_x": -69,
+  "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+  "sbg:project": "jack_digi/not-a-hippy-demo",
+  "id": "https://api.sbgenomics.com/v2/apps/jack_digi/not-a-hippy-demo/cnvnator-analysis/1/raw/",
+  "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+  "sbg:toolkit": "CNVnator",
+  "sbg:validationErrors": [],
+  "requirements": [],
+  "sbg:latestRevision": 1,
+  "sbg:revisionsInfo": [
+    {
+      "sbg:revisionNotes": "Copy of sevenbridges/public-apps/cnvnator-analysis/31",
+      "sbg:modifiedOn": 1468239963,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revision": 0
+    },
+    {
+      "sbg:revisionNotes": "put in a SplitFasta and Decompressor to feed the histogram generator",
+      "sbg:modifiedOn": 1468355070,
+      "sbg:modifiedBy": "jack_digi",
+      "sbg:revision": 1
+    }
+  ],
+  "hints": [],
+  "sbg:contributors": [
+    "jack_digi"
+  ],
+  "sbg:id": "jack_digi/not-a-hippy-demo/cnvnator-analysis/1",
+  "steps": [
+    {
+      "sbg:y": 148.5069406280915,
+      "sbg:x": 1552.2222138805148,
+      "outputs": [
+        {
+          "id": "#CNVnator2VCF.vcf"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "Convert the CNV file into VCF format. \ncnvnator2VCF.pl $S_CNV.txt  > $S.vcf",
+        "label": "CNVnator2VCF",
+        "sbg:modifiedOn": 1464708107,
+        "inputs": [
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "TXT",
+            "required": false,
+            "inputBinding": {
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "separate": true
+            },
+            "description": "Result from CNVnator",
+            "label": "Result from CNVnator",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_cnvnator_result"
+          }
+        ],
+        "y": 148.5069406280915,
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1464701889,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_cnvnator_result": {
+              "path": "input/data.txt",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            }
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "bix-demo/cnvnator-0-3-2-demo",
+        "id": "sevenbridges/public-apps/cnvnator2vcf/0",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "x": 1552.2222138805148,
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/cnvnator2VCF.pl"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 2,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:modifiedOn": 1464701889,
+            "sbg:modifiedBy": "bix-demo",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:modifiedOn": 1464702834,
+            "sbg:modifiedBy": "bix-demo",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:modifiedOn": 1464708107,
+            "sbg:modifiedBy": "bix-demo",
+            "sbg:revision": 2
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "bix-demo",
+        "sbg:id": "sevenbridges/public-apps/cnvnator2vcf/0",
+        "sbg:contributors": [
+          "bix-demo"
+        ],
+        "sbg:modifiedBy": "bix-demo",
+        "stdout": "",
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/cnvnator2VCF.pl   > data.vcf",
+        "outputs": [
+          {
+            "sbg:fileTypes": "TXT",
+            "fileTypes": "VCF",
+            "description": "CNV calling VCF file.",
+            "outputBinding": {
+              "glob": "*.vcf",
+              "sbg:inheritMetadataFrom": "#input_cnvnator_result"
+            },
+            "label": "CNV calling VCF file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#vcf"
+          }
+        ],
+        "arguments": [
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\n  input_file = $job.inputs.input_cnvnator_result\n  name = input_file.path.split('/')[input_file.path.split('/').length-1]\n  return ' > ' + name.slice(0, -3) + 'vcf'\n}"
+            },
+            "position": 5,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 2
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator2VCF.input_cnvnator_result",
+          "source": [
+            "#CNVnator_Calling.cnv_results_file"
+          ]
+        }
+      ],
+      "id": "#CNVnator2VCF"
+    },
+    {
+      "sbg:y": 579.9999367808132,
+      "sbg:x": 331.1110808761037,
+      "outputs": [
+        {
+          "id": "#SBG_SplitFasta.fastas"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "description": "SBG-SplitFasta is a tool that splits input FASTA file per chromosome. The output is given as a compressed .tar.gz file.",
+        "label": "SBG SplitFasta",
+        "sbg:modifiedOn": 1453798786,
+        "inputs": [
+          {
+            "sbg:category": "",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "sbg:cmdInclude": true,
+              "separate": true
+            },
+            "description": "Fasta file to be split.",
+            "label": "Fasta file",
+            "type": [
+              "File"
+            ],
+            "id": "#fasta_file"
+          }
+        ],
+        "sbg:license": "Apache License 2.0",
+        "sbg:createdOn": 1453798785,
+        "sbg:sbgMaintained": false,
+        "sbg:modifiedBy": "sevenbridges",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          },
+          "inputs": {
+            "fasta_file": {
+              "path": "tmp/ucsc.hg19.fasta"
+            }
+          }
+        },
+        "sbg:toolkitVersion": "1.0",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/sbg-splitfasta/1/raw/",
+        "sbg:toolAuthor": "Vladan Arsenijevic, Seven Bridges Genomics, <vladan.arsenijevic@sbgenomics.com>",
+        "sbg:toolkit": "SBGTools",
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 1,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453798785,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453798786,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/arsenijae/sbg-splitfasta:1.0",
+            "dockerImageId": "addea1453ca1"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 1000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/sbg-splitfasta/1",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "outputs": [
+          {
+            "outputBinding": {
+              "sbg:metadata": {
+                "file_format": "ARCHIVE"
+              },
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\nreturn \"*_chrs.tar.gz\"\n}"
+              }
+            },
+            "description": "Compressed fastas per chromosome.",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#fastas",
+            "label": "Compressed fastas"
+          }
+        ],
+        "stdout": "",
+        "sbg:categories": [
+          "FASTA-Processing"
+        ],
+        "sbg:cmdPreview": "python2.7 /opt/sbg_splitfasta.py  tmp/ucsc.hg19.fasta tmp/ucsc.hg19.fasta",
+        "baseCommand": [
+          "python2.7",
+          "/opt/sbg_splitfasta.py"
+        ],
+        "arguments": [],
+        "sbg:revision": 1
+      },
+      "inputs": [
+        {
+          "id": "#SBG_SplitFasta.fasta_file",
+          "source": [
+            "#ref_genome"
+          ]
+        }
+      ],
+      "id": "#SBG_SplitFasta"
+    },
+    {
+      "sbg:y": 453.33331124576546,
+      "sbg:x": 481.1111086621693,
+      "outputs": [
+        {
+          "id": "#SBG_Decompressor.output_files"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "description": "SBG Decompressor performs the extraction of the input archive file. \nSupported formats are:\n1. TAR\n2. TAR.GZ (TGZ)\n3. TAR.BZ2 (TBZ2)\n4. GZ\n5. BZ2\n6. ZIP\n\nIf the archive contains folder structure, it is going to be flatten because CWL doesn't support folders at the moment. In that case the output would contain all the files from all the folders from the archive.",
+        "label": "SBG Decompressor",
+        "sbg:modifiedOn": 1463797004,
+        "inputs": [
+          {
+            "sbg:category": "",
+            "sbg:fileTypes": "TAR, TAR.GZ, TGZ, TAR.BZ2, TBZ2,  GZ, BZ2, ZIP",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "--input_archive_file"
+            },
+            "description": "The input archive file to be unpacked.",
+            "label": "Input archive file",
+            "type": [
+              "File"
+            ],
+            "id": "#input_archive_file"
+          }
+        ],
+        "sbg:homepage": "https://igor.sbgenomics.com/",
+        "sbg:license": "Apache License 2.0",
+        "sbg:createdOn": 1453799111,
+        "sbg:sbgMaintained": false,
+        "sbg:modifiedBy": "sevenbridges",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 1000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_archive_file": {
+              "path": "input_file.tar",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            }
+          }
+        },
+        "sbg:toolkitVersion": "v1.0",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/sbg-decompressor-1-0/5/raw/",
+        "sbg:toolAuthor": "Marko Petkovic, Seven Bridges Genomics",
+        "sbg:toolkit": "SBGTools",
+        "sbg:validationErrors": [],
+        "requirements": [],
+        "successCodes": [],
+        "sbg:latestRevision": 5,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799111,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799112,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1463153245,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1463797004,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/sbg-decompressor:1.0",
+            "dockerImageId": "58b79c627f95"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 1000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/sbg-decompressor-1-0/5",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "outputs": [
+          {
+            "outputBinding": {
+              "glob": "decompressed_files/!(*.meta)",
+              "sbg:inheritMetadataFrom": "#input_archive_file"
+            },
+            "description": "Unpacked files from the input archive.",
+            "type": [
+              {
+                "name": "output_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#output_files",
+            "label": "Output files"
+          }
+        ],
+        "stdout": "",
+        "sbg:categories": [
+          "Other"
+        ],
+        "sbg:cmdPreview": "/opt/sbg_decompressor.py --input_archive_file input_file.tar ; find ./decompressed_files -mindepth 2 -type f -exec mv -i '{}' ./decompressed_files ';'; mkdir ./decompressed_files/dummy_to_delete ;rm -R -- ./decompressed_files/*/",
+        "baseCommand": [
+          "/opt/sbg_decompressor.py"
+        ],
+        "arguments": [
+          {
+            "valueFrom": "; find ./decompressed_files -mindepth 2 -type f -exec mv -i '{}' ./decompressed_files ';'; mkdir ./decompressed_files/dummy_to_delete ;rm -R -- ./decompressed_files/*/",
+            "position": 1,
+            "separate": false
+          }
+        ],
+        "sbg:revision": 5
+      },
+      "inputs": [
+        {
+          "id": "#SBG_Decompressor.input_archive_file",
+          "source": [
+            "#SBG_SplitFasta.fastas"
+          ]
+        }
+      ],
+      "id": "#SBG_Decompressor"
+    },
+    {
+      "sbg:y": 323.777762418912,
+      "sbg:x": 349.6666505925452,
+      "outputs": [
+        {
+          "id": "#CNVnator_Reads_Extraction.output_root_file"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.cnv_results_file"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.average_rd_output_file"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "CNVnator performs CNV calling by doing read-depth(RD) analysis of the input BAM files. CNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n5. CNVs identifying\n\nThe tools can also Merge multiple ROOT files and Evaluate results of the Statistics calculation step.",
+        "label": "CNVnator Reads Extraction",
+        "sbg:modifiedOn": 1465231639,
+        "inputs": [
+          {
+            "sbg:category": "Reads extraction",
+            "sbg:fileTypes": "BAM",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-tree"
+            },
+            "description": "The extraction of the read mappings from BAM file(files).",
+            "label": "Input BAM files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#tree"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 1,
+              "prefix": "-genome"
+            },
+            "description": "A FASTA file. Valid genomes are: NCBI36, hg18, GRCh37, and hg19.",
+            "label": "Reference genome file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#ref_genome"
+          },
+          {
+            "sbg:category": "General",
+            "description": "Chromosome names must be specified the same way as they are described in BAM header, e.g., chrX or X. One can specify multiple chromosomes separated by space. If no chromosome is specified, read mapping is extracted for all chromosomes in BAM file.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 2,
+              "prefix": "-chrom"
+            },
+            "label": "Chromosomes",
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#chromosomes"
+          },
+          {
+            "sbg:category": "Reads extraction",
+            "description": "In order to have correct q0 field for CNV calls, one needs to use this option. This option can only be used during the extraction of the read mappings.",
+            "inputBinding": {
+              "separate": false,
+              "sbg:cmdInclude": true,
+              "position": 3,
+              "prefix": "-unique"
+            },
+            "label": "Uniquely mapped reads",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#unique"
+          },
+          {
+            "sbg:category": "ROOT files merging",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-merge"
+            },
+            "description": "Merge multiple ROOT files into a single file.",
+            "label": "Input ROOT files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#merging"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "-root"
+            },
+            "description": "The input ROOT file. This input is required for all the steps except for the extracting of the read mappings and merging ROOT files step.",
+            "label": "Input ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_root_file"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "Generate a histogram. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-his"
+            },
+            "label": "Histogram",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#histogram"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "The reference FASTA files for all the chromosomes. Files should be named as: chr1.fa, chr2.fa, etc. This input is required for the histogram generation step. All the files should be in the same directory(project, or generated by the same app).",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#ref_genome_files",
+            "label": "Reference genome files"
+          },
+          {
+            "sbg:category": "Statistics calculation",
+            "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-stat"
+            },
+            "label": "Calculate statistics",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#statistics"
+          },
+          {
+            "sbg:category": "General",
+            "description": "This option specifies not to use GC corrected RD signal. It can be used in the partitioning or CNV calling step.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 100,
+              "prefix": "-ngc"
+            },
+            "label": "No GC correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#no_gc_correction"
+          },
+          {
+            "sbg:category": "Partitioning",
+            "description": "RD signal partitioning. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-partition"
+            },
+            "label": "RD signal partitioning",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#partitioning"
+          },
+          {
+            "sbg:category": "Calling",
+            "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-call"
+            },
+            "label": "Identifying CNVs",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#calling"
+          },
+          {
+            "sbg:category": "Evaluation",
+            "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-eval"
+            },
+            "label": "Evaluate RD",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#evaluation"
+          },
+          {
+            "sbg:fileTypes": "BAM",
+            "description": "This Field is used for nameig the output of the Result and Evaluation steps.",
+            "label": "Input BAM Files",
+            "type": [
+              "null",
+              {
+                "name": "input_bam_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "sbg:stageInput": null,
+            "id": "#input_bam_files"
+          }
+        ],
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1453799735,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_root_file": {
+              "path": "input/root.ext",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            },
+            "unique": false,
+            "ref_genome_files": [
+              {
+                "path": "/input/ref1.fa"
+              },
+              {
+                "path": "/input/ref2.fa"
+              }
+            ],
+            "histogram": 100,
+            "evaluation": 100,
+            "input_bam_files": [
+              {
+                "path": "/path/to/input_bam_files-1.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              },
+              {
+                "path": "/path/to/input_bam_files-2.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              }
+            ],
+            "merging": null,
+            "tree": null,
+            "no_gc_correction": false,
+            "chromosomes": "11 20",
+            "calling": 100,
+            "statistics": 100,
+            "ref_genome": {
+              "path": "input/input.fa"
+            },
+            "partitioning": 100
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/cnvnator-0-3-2/12/raw/",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/src/cnvnator"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 12,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799735,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799736,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799737,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456250925,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456338151,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 6
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 7
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 8
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 9
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 10
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1459789092,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 11
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1465231639,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 12
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/cnvnator-0-3-2/12",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "sbg:modifiedBy": "sevenbridges",
+        "stdout": {
+          "class": "Expression",
+          "engine": "#cwl-js-engine",
+          "script": "{\n  if (typeof $job.inputs.calling !== 'undefined'){\n  \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n    result_name += \"_cnv_calling_results.txt\"\n    return result_name\n  }\n  else{\n    if (typeof $job.inputs.evaluation !== 'undefined'){\n    \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n      \tresult_name += \"_average_rd_output.txt\"\n    \treturn result_name\n    }\n    else\n      return \"out.txt\"\n  }\n  \n}"
+        },
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/src/cnvnator -root CNVnator_result_root_file.root  -d /input/ > input_bam_files-1_cnv_calling_results.txt",
+        "outputs": [
+          {
+            "sbg:fileTypes": "ROOT",
+            "description": "Output ROOT file",
+            "outputBinding": {
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' || typeof $job.inputs.merging !== 'undefined')\n   return \"CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"CNVnator_result_root_file.his.root\";\n else if (typeof $job.inputs.input_root_file !== null)\n   return $job.inputs.input_root_file.path.split(\"/\").pop()\n else\n   return \"\"\n}"
+              },
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "Output ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#output_root_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "CNV  calling results file.",
+            "outputBinding": {
+              "glob": "*_cnv_calling_results.txt",
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "CNV calling results file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#cnv_results_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "Average RD output file.",
+            "outputBinding": {
+              "glob": "*_average_rd_output.txt"
+            },
+            "label": "Average RD output file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#average_rd_output_file"
+          }
+        ],
+        "arguments": [
+          {
+            "separate": false,
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' ||  typeof $job.inputs.merging !== 'undefined')\n   return \"-root CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"-outroot CNVnator_result_root_file.his.root\"\n else\n   return \"\"\n}\n"
+            },
+            "position": 0,
+            "prefix": ""
+          },
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n  if (typeof $job.inputs.ref_genome_files !== 'undefined'){\n    filepath = $job.inputs.ref_genome_files[0].path\n\n  \tfile_path_sep = filepath.split(\"/\")\n  \n  \tfile_path =\"\"\n \tif (file_path_sep.length > 1)\n \t\tfile_path = filepath.substr(0, filepath.lastIndexOf(\"/\")) + \"/\"\n    return \"-d \" + file_path;\n   }\n else\n   return \"\"\n}\n"
+            },
+            "position": 4,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 12
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator_Reads_Extraction.tree",
+          "source": [
+            "#bam_files"
+          ]
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.ref_genome",
+          "source": [
+            "#ref_genome"
+          ]
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.chromosomes"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.unique"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.merging"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.input_root_file"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.histogram"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.ref_genome_files"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.statistics"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.no_gc_correction"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.partitioning"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.calling"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.evaluation"
+        },
+        {
+          "id": "#CNVnator_Reads_Extraction.input_bam_files"
+        }
+      ],
+      "id": "#CNVnator_Reads_Extraction"
+    },
+    {
+      "sbg:y": 323.111078786262,
+      "sbg:x": 624.1110674510775,
+      "outputs": [
+        {
+          "id": "#CNVnator_Histogram_Generation.output_root_file"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.cnv_results_file"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.average_rd_output_file"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "CNVnator performs CNV calling by doing read-depth(RD) analysis of the input BAM files. CNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n5. CNVs identifying\n\nThe tools can also Merge multiple ROOT files and Evaluate results of the Statistics calculation step.",
+        "label": "CNVnator Histogram Generation",
+        "sbg:modifiedOn": 1465231639,
+        "inputs": [
+          {
+            "sbg:category": "Reads extraction",
+            "sbg:fileTypes": "BAM",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-tree"
+            },
+            "description": "The extraction of the read mappings from BAM file(files).",
+            "label": "Input BAM files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#tree"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 1,
+              "prefix": "-genome"
+            },
+            "description": "A FASTA file. Valid genomes are: NCBI36, hg18, GRCh37, and hg19.",
+            "label": "Reference genome file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#ref_genome"
+          },
+          {
+            "sbg:category": "General",
+            "description": "Chromosome names must be specified the same way as they are described in BAM header, e.g., chrX or X. One can specify multiple chromosomes separated by space. If no chromosome is specified, read mapping is extracted for all chromosomes in BAM file.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 2,
+              "prefix": "-chrom"
+            },
+            "label": "Chromosomes",
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#chromosomes"
+          },
+          {
+            "sbg:category": "Reads extraction",
+            "description": "In order to have correct q0 field for CNV calls, one needs to use this option. This option can only be used during the extraction of the read mappings.",
+            "inputBinding": {
+              "separate": false,
+              "sbg:cmdInclude": true,
+              "position": 3,
+              "prefix": "-unique"
+            },
+            "label": "Uniquely mapped reads",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#unique"
+          },
+          {
+            "sbg:category": "ROOT files merging",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-merge"
+            },
+            "description": "Merge multiple ROOT files into a single file.",
+            "label": "Input ROOT files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#merging"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "-root"
+            },
+            "description": "The input ROOT file. This input is required for all the steps except for the extracting of the read mappings and merging ROOT files step.",
+            "label": "Input ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_root_file"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "Generate a histogram. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-his"
+            },
+            "label": "Histogram",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#histogram"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "The reference FASTA files for all the chromosomes. Files should be named as: chr1.fa, chr2.fa, etc. This input is required for the histogram generation step. All the files should be in the same directory(project, or generated by the same app).",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#ref_genome_files",
+            "label": "Reference genome files"
+          },
+          {
+            "sbg:category": "Statistics calculation",
+            "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-stat"
+            },
+            "label": "Calculate statistics",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#statistics"
+          },
+          {
+            "sbg:category": "General",
+            "description": "This option specifies not to use GC corrected RD signal. It can be used in the partitioning or CNV calling step.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 100,
+              "prefix": "-ngc"
+            },
+            "label": "No GC correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#no_gc_correction"
+          },
+          {
+            "sbg:category": "Partitioning",
+            "description": "RD signal partitioning. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-partition"
+            },
+            "label": "RD signal partitioning",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#partitioning"
+          },
+          {
+            "sbg:category": "Calling",
+            "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-call"
+            },
+            "label": "Identifying CNVs",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#calling"
+          },
+          {
+            "sbg:category": "Evaluation",
+            "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-eval"
+            },
+            "label": "Evaluate RD",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#evaluation"
+          },
+          {
+            "sbg:fileTypes": "BAM",
+            "description": "This Field is used for nameig the output of the Result and Evaluation steps.",
+            "label": "Input BAM Files",
+            "type": [
+              "null",
+              {
+                "name": "input_bam_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "sbg:stageInput": null,
+            "id": "#input_bam_files"
+          }
+        ],
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1453799735,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_root_file": {
+              "path": "input/root.ext",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            },
+            "unique": false,
+            "ref_genome_files": [
+              {
+                "path": "/input/ref1.fa"
+              },
+              {
+                "path": "/input/ref2.fa"
+              }
+            ],
+            "histogram": 100,
+            "evaluation": 100,
+            "input_bam_files": [
+              {
+                "path": "/path/to/input_bam_files-1.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              },
+              {
+                "path": "/path/to/input_bam_files-2.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              }
+            ],
+            "merging": null,
+            "tree": null,
+            "no_gc_correction": false,
+            "chromosomes": "11 20",
+            "calling": 100,
+            "statistics": 100,
+            "ref_genome": {
+              "path": "input/input.fa"
+            },
+            "partitioning": 100
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/cnvnator-0-3-2/12/raw/",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/src/cnvnator"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 12,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799735,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799736,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799737,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456250925,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456338151,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 6
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 7
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 8
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 9
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 10
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1459789092,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 11
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1465231639,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 12
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/cnvnator-0-3-2/12",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "sbg:modifiedBy": "sevenbridges",
+        "stdout": {
+          "class": "Expression",
+          "engine": "#cwl-js-engine",
+          "script": "{\n  if (typeof $job.inputs.calling !== 'undefined'){\n  \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n    result_name += \"_cnv_calling_results.txt\"\n    return result_name\n  }\n  else{\n    if (typeof $job.inputs.evaluation !== 'undefined'){\n    \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n      \tresult_name += \"_average_rd_output.txt\"\n    \treturn result_name\n    }\n    else\n      return \"out.txt\"\n  }\n  \n}"
+        },
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/src/cnvnator -root CNVnator_result_root_file.root  -d /input/ > input_bam_files-1_cnv_calling_results.txt",
+        "outputs": [
+          {
+            "sbg:fileTypes": "ROOT",
+            "description": "Output ROOT file",
+            "outputBinding": {
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' || typeof $job.inputs.merging !== 'undefined')\n   return \"CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"CNVnator_result_root_file.his.root\";\n else if (typeof $job.inputs.input_root_file !== null)\n   return $job.inputs.input_root_file.path.split(\"/\").pop()\n else\n   return \"\"\n}"
+              },
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "Output ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#output_root_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "CNV  calling results file.",
+            "outputBinding": {
+              "glob": "*_cnv_calling_results.txt",
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "CNV calling results file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#cnv_results_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "Average RD output file.",
+            "outputBinding": {
+              "glob": "*_average_rd_output.txt"
+            },
+            "label": "Average RD output file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#average_rd_output_file"
+          }
+        ],
+        "arguments": [
+          {
+            "separate": false,
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' ||  typeof $job.inputs.merging !== 'undefined')\n   return \"-root CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"-outroot CNVnator_result_root_file.his.root\"\n else\n   return \"\"\n}\n"
+            },
+            "position": 0,
+            "prefix": ""
+          },
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n  if (typeof $job.inputs.ref_genome_files !== 'undefined'){\n    filepath = $job.inputs.ref_genome_files[0].path\n\n  \tfile_path_sep = filepath.split(\"/\")\n  \n  \tfile_path =\"\"\n \tif (file_path_sep.length > 1)\n \t\tfile_path = filepath.substr(0, filepath.lastIndexOf(\"/\")) + \"/\"\n    return \"-d \" + file_path;\n   }\n else\n   return \"\"\n}\n"
+            },
+            "position": 4,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 12
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator_Histogram_Generation.tree"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.ref_genome",
+          "source": [
+            "#ref_genome"
+          ]
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.chromosomes"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.unique"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.merging"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.input_root_file",
+          "source": [
+            "#CNVnator_Reads_Extraction.output_root_file"
+          ]
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.histogram",
+          "source": [
+            "#histogram"
+          ]
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.ref_genome_files",
+          "source": [
+            "#SBG_Decompressor.output_files"
+          ]
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.statistics"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.no_gc_correction"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.partitioning"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.calling"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.evaluation"
+        },
+        {
+          "id": "#CNVnator_Histogram_Generation.input_bam_files"
+        }
+      ],
+      "id": "#CNVnator_Histogram_Generation"
+    },
+    {
+      "sbg:y": 267.4444358878666,
+      "sbg:x": 852.9998946101599,
+      "outputs": [
+        {
+          "id": "#CNVnator_Statistics_Calculation.output_root_file"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.cnv_results_file"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.average_rd_output_file"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "CNVnator performs CNV calling by doing read-depth(RD) analysis of the input BAM files. CNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n5. CNVs identifying\n\nThe tools can also Merge multiple ROOT files and Evaluate results of the Statistics calculation step.",
+        "label": "CNVnator Statistics Calculation",
+        "sbg:modifiedOn": 1465231639,
+        "inputs": [
+          {
+            "sbg:category": "Reads extraction",
+            "sbg:fileTypes": "BAM",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-tree"
+            },
+            "description": "The extraction of the read mappings from BAM file(files).",
+            "label": "Input BAM files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#tree"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 1,
+              "prefix": "-genome"
+            },
+            "description": "A FASTA file. Valid genomes are: NCBI36, hg18, GRCh37, and hg19.",
+            "label": "Reference genome file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#ref_genome"
+          },
+          {
+            "sbg:category": "General",
+            "description": "Chromosome names must be specified the same way as they are described in BAM header, e.g., chrX or X. One can specify multiple chromosomes separated by space. If no chromosome is specified, read mapping is extracted for all chromosomes in BAM file.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 2,
+              "prefix": "-chrom"
+            },
+            "label": "Chromosomes",
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#chromosomes"
+          },
+          {
+            "sbg:category": "Reads extraction",
+            "description": "In order to have correct q0 field for CNV calls, one needs to use this option. This option can only be used during the extraction of the read mappings.",
+            "inputBinding": {
+              "separate": false,
+              "sbg:cmdInclude": true,
+              "position": 3,
+              "prefix": "-unique"
+            },
+            "label": "Uniquely mapped reads",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#unique"
+          },
+          {
+            "sbg:category": "ROOT files merging",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-merge"
+            },
+            "description": "Merge multiple ROOT files into a single file.",
+            "label": "Input ROOT files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#merging"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "-root"
+            },
+            "description": "The input ROOT file. This input is required for all the steps except for the extracting of the read mappings and merging ROOT files step.",
+            "label": "Input ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_root_file"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "Generate a histogram. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-his"
+            },
+            "label": "Histogram",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#histogram"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "The reference FASTA files for all the chromosomes. Files should be named as: chr1.fa, chr2.fa, etc. This input is required for the histogram generation step. All the files should be in the same directory(project, or generated by the same app).",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#ref_genome_files",
+            "label": "Reference genome files"
+          },
+          {
+            "sbg:category": "Statistics calculation",
+            "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-stat"
+            },
+            "label": "Calculate statistics",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#statistics"
+          },
+          {
+            "sbg:category": "General",
+            "description": "This option specifies not to use GC corrected RD signal. It can be used in the partitioning or CNV calling step.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 100,
+              "prefix": "-ngc"
+            },
+            "label": "No GC correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#no_gc_correction"
+          },
+          {
+            "sbg:category": "Partitioning",
+            "description": "RD signal partitioning. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-partition"
+            },
+            "label": "RD signal partitioning",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#partitioning"
+          },
+          {
+            "sbg:category": "Calling",
+            "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-call"
+            },
+            "label": "Identifying CNVs",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#calling"
+          },
+          {
+            "sbg:category": "Evaluation",
+            "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-eval"
+            },
+            "label": "Evaluate RD",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#evaluation"
+          },
+          {
+            "sbg:fileTypes": "BAM",
+            "description": "This Field is used for nameig the output of the Result and Evaluation steps.",
+            "label": "Input BAM Files",
+            "type": [
+              "null",
+              {
+                "name": "input_bam_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "sbg:stageInput": null,
+            "id": "#input_bam_files"
+          }
+        ],
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1453799735,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_root_file": {
+              "path": "input/root.ext",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            },
+            "unique": false,
+            "ref_genome_files": [
+              {
+                "path": "/input/ref1.fa"
+              },
+              {
+                "path": "/input/ref2.fa"
+              }
+            ],
+            "histogram": 100,
+            "evaluation": 100,
+            "input_bam_files": [
+              {
+                "path": "/path/to/input_bam_files-1.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              },
+              {
+                "path": "/path/to/input_bam_files-2.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              }
+            ],
+            "merging": null,
+            "tree": null,
+            "no_gc_correction": false,
+            "chromosomes": "11 20",
+            "calling": 100,
+            "statistics": 100,
+            "ref_genome": {
+              "path": "input/input.fa"
+            },
+            "partitioning": 100
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/cnvnator-0-3-2/12/raw/",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/src/cnvnator"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 12,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799735,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799736,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799737,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456250925,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456338151,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 6
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 7
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 8
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 9
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 10
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1459789092,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 11
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1465231639,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 12
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/cnvnator-0-3-2/12",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "sbg:modifiedBy": "sevenbridges",
+        "stdout": {
+          "class": "Expression",
+          "engine": "#cwl-js-engine",
+          "script": "{\n  if (typeof $job.inputs.calling !== 'undefined'){\n  \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n    result_name += \"_cnv_calling_results.txt\"\n    return result_name\n  }\n  else{\n    if (typeof $job.inputs.evaluation !== 'undefined'){\n    \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n      \tresult_name += \"_average_rd_output.txt\"\n    \treturn result_name\n    }\n    else\n      return \"out.txt\"\n  }\n  \n}"
+        },
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/src/cnvnator -root CNVnator_result_root_file.root  -d /input/ > input_bam_files-1_cnv_calling_results.txt",
+        "outputs": [
+          {
+            "sbg:fileTypes": "ROOT",
+            "description": "Output ROOT file",
+            "outputBinding": {
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' || typeof $job.inputs.merging !== 'undefined')\n   return \"CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"CNVnator_result_root_file.his.root\";\n else if (typeof $job.inputs.input_root_file !== null)\n   return $job.inputs.input_root_file.path.split(\"/\").pop()\n else\n   return \"\"\n}"
+              },
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "Output ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#output_root_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "CNV  calling results file.",
+            "outputBinding": {
+              "glob": "*_cnv_calling_results.txt",
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "CNV calling results file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#cnv_results_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "Average RD output file.",
+            "outputBinding": {
+              "glob": "*_average_rd_output.txt"
+            },
+            "label": "Average RD output file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#average_rd_output_file"
+          }
+        ],
+        "arguments": [
+          {
+            "separate": false,
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' ||  typeof $job.inputs.merging !== 'undefined')\n   return \"-root CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"-outroot CNVnator_result_root_file.his.root\"\n else\n   return \"\"\n}\n"
+            },
+            "position": 0,
+            "prefix": ""
+          },
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n  if (typeof $job.inputs.ref_genome_files !== 'undefined'){\n    filepath = $job.inputs.ref_genome_files[0].path\n\n  \tfile_path_sep = filepath.split(\"/\")\n  \n  \tfile_path =\"\"\n \tif (file_path_sep.length > 1)\n \t\tfile_path = filepath.substr(0, filepath.lastIndexOf(\"/\")) + \"/\"\n    return \"-d \" + file_path;\n   }\n else\n   return \"\"\n}\n"
+            },
+            "position": 4,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 12
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator_Statistics_Calculation.tree"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.ref_genome"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.chromosomes"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.unique"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.merging"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.input_root_file",
+          "source": [
+            "#CNVnator_Histogram_Generation.output_root_file"
+          ]
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.histogram"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.ref_genome_files"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.statistics",
+          "source": [
+            "#statistics"
+          ]
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.no_gc_correction"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.partitioning"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.calling"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.evaluation"
+        },
+        {
+          "id": "#CNVnator_Statistics_Calculation.input_bam_files"
+        }
+      ],
+      "id": "#CNVnator_Statistics_Calculation"
+    },
+    {
+      "sbg:y": 537.4444098914117,
+      "sbg:x": 1132.6666637291137,
+      "outputs": [
+        {
+          "id": "#CNVnator_Evaluation.output_root_file"
+        },
+        {
+          "id": "#CNVnator_Evaluation.cnv_results_file"
+        },
+        {
+          "id": "#CNVnator_Evaluation.average_rd_output_file"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "CNVnator performs CNV calling by doing read-depth(RD) analysis of the input BAM files. CNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n5. CNVs identifying\n\nThe tools can also Merge multiple ROOT files and Evaluate results of the Statistics calculation step.",
+        "label": "CNVnator Evaluation",
+        "sbg:modifiedOn": 1465231639,
+        "inputs": [
+          {
+            "sbg:category": "Reads extraction",
+            "sbg:fileTypes": "BAM",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-tree"
+            },
+            "description": "The extraction of the read mappings from BAM file(files).",
+            "label": "Input BAM files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#tree"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 1,
+              "prefix": "-genome"
+            },
+            "description": "A FASTA file. Valid genomes are: NCBI36, hg18, GRCh37, and hg19.",
+            "label": "Reference genome file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#ref_genome"
+          },
+          {
+            "sbg:category": "General",
+            "description": "Chromosome names must be specified the same way as they are described in BAM header, e.g., chrX or X. One can specify multiple chromosomes separated by space. If no chromosome is specified, read mapping is extracted for all chromosomes in BAM file.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 2,
+              "prefix": "-chrom"
+            },
+            "label": "Chromosomes",
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#chromosomes"
+          },
+          {
+            "sbg:category": "Reads extraction",
+            "description": "In order to have correct q0 field for CNV calls, one needs to use this option. This option can only be used during the extraction of the read mappings.",
+            "inputBinding": {
+              "separate": false,
+              "sbg:cmdInclude": true,
+              "position": 3,
+              "prefix": "-unique"
+            },
+            "label": "Uniquely mapped reads",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#unique"
+          },
+          {
+            "sbg:category": "ROOT files merging",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-merge"
+            },
+            "description": "Merge multiple ROOT files into a single file.",
+            "label": "Input ROOT files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#merging"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "-root"
+            },
+            "description": "The input ROOT file. This input is required for all the steps except for the extracting of the read mappings and merging ROOT files step.",
+            "label": "Input ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_root_file"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "Generate a histogram. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-his"
+            },
+            "label": "Histogram",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#histogram"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "The reference FASTA files for all the chromosomes. Files should be named as: chr1.fa, chr2.fa, etc. This input is required for the histogram generation step. All the files should be in the same directory(project, or generated by the same app).",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#ref_genome_files",
+            "label": "Reference genome files"
+          },
+          {
+            "sbg:category": "Statistics calculation",
+            "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-stat"
+            },
+            "label": "Calculate statistics",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#statistics"
+          },
+          {
+            "sbg:category": "General",
+            "description": "This option specifies not to use GC corrected RD signal. It can be used in the partitioning or CNV calling step.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 100,
+              "prefix": "-ngc"
+            },
+            "label": "No GC correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#no_gc_correction"
+          },
+          {
+            "sbg:category": "Partitioning",
+            "description": "RD signal partitioning. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-partition"
+            },
+            "label": "RD signal partitioning",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#partitioning"
+          },
+          {
+            "sbg:category": "Calling",
+            "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-call"
+            },
+            "label": "Identifying CNVs",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#calling"
+          },
+          {
+            "sbg:category": "Evaluation",
+            "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-eval"
+            },
+            "label": "Evaluate RD",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#evaluation"
+          },
+          {
+            "sbg:fileTypes": "BAM",
+            "description": "This Field is used for nameig the output of the Result and Evaluation steps.",
+            "label": "Input BAM Files",
+            "type": [
+              "null",
+              {
+                "name": "input_bam_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "sbg:stageInput": null,
+            "id": "#input_bam_files"
+          }
+        ],
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1453799735,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_root_file": {
+              "path": "input/root.ext",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            },
+            "unique": false,
+            "ref_genome_files": [
+              {
+                "path": "/input/ref1.fa"
+              },
+              {
+                "path": "/input/ref2.fa"
+              }
+            ],
+            "histogram": 100,
+            "evaluation": 100,
+            "input_bam_files": [
+              {
+                "path": "/path/to/input_bam_files-1.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              },
+              {
+                "path": "/path/to/input_bam_files-2.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              }
+            ],
+            "merging": null,
+            "tree": null,
+            "no_gc_correction": false,
+            "chromosomes": "11 20",
+            "calling": 100,
+            "statistics": 100,
+            "ref_genome": {
+              "path": "input/input.fa"
+            },
+            "partitioning": 100
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/cnvnator-0-3-2/12/raw/",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/src/cnvnator"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 12,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799735,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799736,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799737,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456250925,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456338151,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 6
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 7
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 8
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 9
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 10
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1459789092,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 11
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1465231639,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 12
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/cnvnator-0-3-2/12",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "sbg:modifiedBy": "sevenbridges",
+        "stdout": {
+          "class": "Expression",
+          "engine": "#cwl-js-engine",
+          "script": "{\n  if (typeof $job.inputs.calling !== 'undefined'){\n  \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n    result_name += \"_cnv_calling_results.txt\"\n    return result_name\n  }\n  else{\n    if (typeof $job.inputs.evaluation !== 'undefined'){\n    \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n      \tresult_name += \"_average_rd_output.txt\"\n    \treturn result_name\n    }\n    else\n      return \"out.txt\"\n  }\n  \n}"
+        },
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/src/cnvnator -root CNVnator_result_root_file.root  -d /input/ > input_bam_files-1_cnv_calling_results.txt",
+        "outputs": [
+          {
+            "sbg:fileTypes": "ROOT",
+            "description": "Output ROOT file",
+            "outputBinding": {
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' || typeof $job.inputs.merging !== 'undefined')\n   return \"CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"CNVnator_result_root_file.his.root\";\n else if (typeof $job.inputs.input_root_file !== null)\n   return $job.inputs.input_root_file.path.split(\"/\").pop()\n else\n   return \"\"\n}"
+              },
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "Output ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#output_root_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "CNV  calling results file.",
+            "outputBinding": {
+              "glob": "*_cnv_calling_results.txt",
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "CNV calling results file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#cnv_results_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "Average RD output file.",
+            "outputBinding": {
+              "glob": "*_average_rd_output.txt"
+            },
+            "label": "Average RD output file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#average_rd_output_file"
+          }
+        ],
+        "arguments": [
+          {
+            "separate": false,
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' ||  typeof $job.inputs.merging !== 'undefined')\n   return \"-root CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"-outroot CNVnator_result_root_file.his.root\"\n else\n   return \"\"\n}\n"
+            },
+            "position": 0,
+            "prefix": ""
+          },
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n  if (typeof $job.inputs.ref_genome_files !== 'undefined'){\n    filepath = $job.inputs.ref_genome_files[0].path\n\n  \tfile_path_sep = filepath.split(\"/\")\n  \n  \tfile_path =\"\"\n \tif (file_path_sep.length > 1)\n \t\tfile_path = filepath.substr(0, filepath.lastIndexOf(\"/\")) + \"/\"\n    return \"-d \" + file_path;\n   }\n else\n   return \"\"\n}\n"
+            },
+            "position": 4,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 12
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator_Evaluation.tree"
+        },
+        {
+          "id": "#CNVnator_Evaluation.ref_genome"
+        },
+        {
+          "id": "#CNVnator_Evaluation.chromosomes"
+        },
+        {
+          "id": "#CNVnator_Evaluation.unique"
+        },
+        {
+          "id": "#CNVnator_Evaluation.merging"
+        },
+        {
+          "id": "#CNVnator_Evaluation.input_root_file",
+          "source": [
+            "#CNVnator_Statistics_Calculation.output_root_file"
+          ]
+        },
+        {
+          "id": "#CNVnator_Evaluation.histogram"
+        },
+        {
+          "id": "#CNVnator_Evaluation.ref_genome_files"
+        },
+        {
+          "id": "#CNVnator_Evaluation.statistics"
+        },
+        {
+          "id": "#CNVnator_Evaluation.no_gc_correction"
+        },
+        {
+          "id": "#CNVnator_Evaluation.partitioning"
+        },
+        {
+          "id": "#CNVnator_Evaluation.calling"
+        },
+        {
+          "id": "#CNVnator_Evaluation.evaluation",
+          "source": [
+            "#evaluation"
+          ]
+        },
+        {
+          "id": "#CNVnator_Evaluation.input_bam_files",
+          "source": [
+            "#bam_files"
+          ]
+        }
+      ],
+      "id": "#CNVnator_Evaluation"
+    },
+    {
+      "sbg:y": 322.1111059689227,
+      "sbg:x": 1137.9999020953255,
+      "outputs": [
+        {
+          "id": "#CNVnator_Partitioning.output_root_file"
+        },
+        {
+          "id": "#CNVnator_Partitioning.cnv_results_file"
+        },
+        {
+          "id": "#CNVnator_Partitioning.average_rd_output_file"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "CNVnator performs CNV calling by doing read-depth(RD) analysis of the input BAM files. CNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n5. CNVs identifying\n\nThe tools can also Merge multiple ROOT files and Evaluate results of the Statistics calculation step.",
+        "label": "CNVnator Partitioning",
+        "sbg:modifiedOn": 1465231639,
+        "inputs": [
+          {
+            "sbg:category": "Reads extraction",
+            "sbg:fileTypes": "BAM",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-tree"
+            },
+            "description": "The extraction of the read mappings from BAM file(files).",
+            "label": "Input BAM files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#tree"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 1,
+              "prefix": "-genome"
+            },
+            "description": "A FASTA file. Valid genomes are: NCBI36, hg18, GRCh37, and hg19.",
+            "label": "Reference genome file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#ref_genome"
+          },
+          {
+            "sbg:category": "General",
+            "description": "Chromosome names must be specified the same way as they are described in BAM header, e.g., chrX or X. One can specify multiple chromosomes separated by space. If no chromosome is specified, read mapping is extracted for all chromosomes in BAM file.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 2,
+              "prefix": "-chrom"
+            },
+            "label": "Chromosomes",
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#chromosomes"
+          },
+          {
+            "sbg:category": "Reads extraction",
+            "description": "In order to have correct q0 field for CNV calls, one needs to use this option. This option can only be used during the extraction of the read mappings.",
+            "inputBinding": {
+              "separate": false,
+              "sbg:cmdInclude": true,
+              "position": 3,
+              "prefix": "-unique"
+            },
+            "label": "Uniquely mapped reads",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#unique"
+          },
+          {
+            "sbg:category": "ROOT files merging",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-merge"
+            },
+            "description": "Merge multiple ROOT files into a single file.",
+            "label": "Input ROOT files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#merging"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "-root"
+            },
+            "description": "The input ROOT file. This input is required for all the steps except for the extracting of the read mappings and merging ROOT files step.",
+            "label": "Input ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_root_file"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "Generate a histogram. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-his"
+            },
+            "label": "Histogram",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#histogram"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "The reference FASTA files for all the chromosomes. Files should be named as: chr1.fa, chr2.fa, etc. This input is required for the histogram generation step. All the files should be in the same directory(project, or generated by the same app).",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#ref_genome_files",
+            "label": "Reference genome files"
+          },
+          {
+            "sbg:category": "Statistics calculation",
+            "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-stat"
+            },
+            "label": "Calculate statistics",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#statistics"
+          },
+          {
+            "sbg:category": "General",
+            "description": "This option specifies not to use GC corrected RD signal. It can be used in the partitioning or CNV calling step.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 100,
+              "prefix": "-ngc"
+            },
+            "label": "No GC correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#no_gc_correction"
+          },
+          {
+            "sbg:category": "Partitioning",
+            "description": "RD signal partitioning. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-partition"
+            },
+            "label": "RD signal partitioning",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#partitioning"
+          },
+          {
+            "sbg:category": "Calling",
+            "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-call"
+            },
+            "label": "Identifying CNVs",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#calling"
+          },
+          {
+            "sbg:category": "Evaluation",
+            "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-eval"
+            },
+            "label": "Evaluate RD",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#evaluation"
+          },
+          {
+            "sbg:fileTypes": "BAM",
+            "description": "This Field is used for nameig the output of the Result and Evaluation steps.",
+            "label": "Input BAM Files",
+            "type": [
+              "null",
+              {
+                "name": "input_bam_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "sbg:stageInput": null,
+            "id": "#input_bam_files"
+          }
+        ],
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1453799735,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_root_file": {
+              "path": "input/root.ext",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            },
+            "unique": false,
+            "ref_genome_files": [
+              {
+                "path": "/input/ref1.fa"
+              },
+              {
+                "path": "/input/ref2.fa"
+              }
+            ],
+            "histogram": 100,
+            "evaluation": 100,
+            "input_bam_files": [
+              {
+                "path": "/path/to/input_bam_files-1.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              },
+              {
+                "path": "/path/to/input_bam_files-2.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              }
+            ],
+            "merging": null,
+            "tree": null,
+            "no_gc_correction": false,
+            "chromosomes": "11 20",
+            "calling": 100,
+            "statistics": 100,
+            "ref_genome": {
+              "path": "input/input.fa"
+            },
+            "partitioning": 100
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/cnvnator-0-3-2/12/raw/",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/src/cnvnator"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 12,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799735,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799736,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799737,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456250925,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456338151,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 6
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 7
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 8
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 9
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 10
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1459789092,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 11
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1465231639,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 12
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/cnvnator-0-3-2/12",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "sbg:modifiedBy": "sevenbridges",
+        "stdout": {
+          "class": "Expression",
+          "engine": "#cwl-js-engine",
+          "script": "{\n  if (typeof $job.inputs.calling !== 'undefined'){\n  \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n    result_name += \"_cnv_calling_results.txt\"\n    return result_name\n  }\n  else{\n    if (typeof $job.inputs.evaluation !== 'undefined'){\n    \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n      \tresult_name += \"_average_rd_output.txt\"\n    \treturn result_name\n    }\n    else\n      return \"out.txt\"\n  }\n  \n}"
+        },
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/src/cnvnator -root CNVnator_result_root_file.root  -d /input/ > input_bam_files-1_cnv_calling_results.txt",
+        "outputs": [
+          {
+            "sbg:fileTypes": "ROOT",
+            "description": "Output ROOT file",
+            "outputBinding": {
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' || typeof $job.inputs.merging !== 'undefined')\n   return \"CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"CNVnator_result_root_file.his.root\";\n else if (typeof $job.inputs.input_root_file !== null)\n   return $job.inputs.input_root_file.path.split(\"/\").pop()\n else\n   return \"\"\n}"
+              },
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "Output ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#output_root_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "CNV  calling results file.",
+            "outputBinding": {
+              "glob": "*_cnv_calling_results.txt",
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "CNV calling results file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#cnv_results_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "Average RD output file.",
+            "outputBinding": {
+              "glob": "*_average_rd_output.txt"
+            },
+            "label": "Average RD output file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#average_rd_output_file"
+          }
+        ],
+        "arguments": [
+          {
+            "separate": false,
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' ||  typeof $job.inputs.merging !== 'undefined')\n   return \"-root CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"-outroot CNVnator_result_root_file.his.root\"\n else\n   return \"\"\n}\n"
+            },
+            "position": 0,
+            "prefix": ""
+          },
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n  if (typeof $job.inputs.ref_genome_files !== 'undefined'){\n    filepath = $job.inputs.ref_genome_files[0].path\n\n  \tfile_path_sep = filepath.split(\"/\")\n  \n  \tfile_path =\"\"\n \tif (file_path_sep.length > 1)\n \t\tfile_path = filepath.substr(0, filepath.lastIndexOf(\"/\")) + \"/\"\n    return \"-d \" + file_path;\n   }\n else\n   return \"\"\n}\n"
+            },
+            "position": 4,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 12
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator_Partitioning.tree"
+        },
+        {
+          "id": "#CNVnator_Partitioning.ref_genome"
+        },
+        {
+          "id": "#CNVnator_Partitioning.chromosomes"
+        },
+        {
+          "id": "#CNVnator_Partitioning.unique"
+        },
+        {
+          "id": "#CNVnator_Partitioning.merging"
+        },
+        {
+          "id": "#CNVnator_Partitioning.input_root_file",
+          "source": [
+            "#CNVnator_Statistics_Calculation.output_root_file"
+          ]
+        },
+        {
+          "id": "#CNVnator_Partitioning.histogram"
+        },
+        {
+          "id": "#CNVnator_Partitioning.ref_genome_files"
+        },
+        {
+          "id": "#CNVnator_Partitioning.statistics"
+        },
+        {
+          "id": "#CNVnator_Partitioning.no_gc_correction",
+          "source": [
+            "#no_gc_correction"
+          ]
+        },
+        {
+          "id": "#CNVnator_Partitioning.partitioning",
+          "source": [
+            "#partitioning"
+          ]
+        },
+        {
+          "id": "#CNVnator_Partitioning.calling"
+        },
+        {
+          "id": "#CNVnator_Partitioning.evaluation"
+        },
+        {
+          "id": "#CNVnator_Partitioning.input_bam_files"
+        }
+      ],
+      "id": "#CNVnator_Partitioning"
+    },
+    {
+      "sbg:y": 327.7777623129482,
+      "sbg:x": 1341.999937292971,
+      "outputs": [
+        {
+          "id": "#CNVnator_Calling.output_root_file"
+        },
+        {
+          "id": "#CNVnator_Calling.cnv_results_file"
+        },
+        {
+          "id": "#CNVnator_Calling.average_rd_output_file"
+        }
+      ],
+      "run": {
+        "temporaryFailCodes": [],
+        "sbg:image_url": null,
+        "class": "CommandLineTool",
+        "sbg:links": [
+          {
+            "label": "Homepage",
+            "id": "https://github.com/abyzovlab/CNVnator/releases"
+          },
+          {
+            "label": "Download",
+            "id": "https://github.com/abyzovlab/CNVnator/releases/download/v0.3.2/CNVnator_v0.3.2.zip"
+          },
+          {
+            "label": "Publication",
+            "id": "http://genome.cshlp.org/content/genome/21/6/974.full.html"
+          }
+        ],
+        "description": "CNVnator performs CNV calling by doing read-depth(RD) analysis of the input BAM files. CNVnator tool has five major steps:  \n1. Reads extraction\n2. Histogram generation\n3. Statistics calculation\n4. RD signal partitioning\n5. CNVs identifying\n\nThe tools can also Merge multiple ROOT files and Evaluate results of the Statistics calculation step.",
+        "label": "CNVnator Calling",
+        "sbg:modifiedOn": 1465231639,
+        "inputs": [
+          {
+            "sbg:category": "Reads extraction",
+            "sbg:fileTypes": "BAM",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-tree"
+            },
+            "description": "The extraction of the read mappings from BAM file(files).",
+            "label": "Input BAM files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#tree"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "FASTA",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 1,
+              "prefix": "-genome"
+            },
+            "description": "A FASTA file. Valid genomes are: NCBI36, hg18, GRCh37, and hg19.",
+            "label": "Reference genome file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#ref_genome"
+          },
+          {
+            "sbg:category": "General",
+            "description": "Chromosome names must be specified the same way as they are described in BAM header, e.g., chrX or X. One can specify multiple chromosomes separated by space. If no chromosome is specified, read mapping is extracted for all chromosomes in BAM file.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 2,
+              "prefix": "-chrom"
+            },
+            "label": "Chromosomes",
+            "type": [
+              "null",
+              "string"
+            ],
+            "id": "#chromosomes"
+          },
+          {
+            "sbg:category": "Reads extraction",
+            "description": "In order to have correct q0 field for CNV calls, one needs to use this option. This option can only be used during the extraction of the read mappings.",
+            "inputBinding": {
+              "separate": false,
+              "sbg:cmdInclude": true,
+              "position": 3,
+              "prefix": "-unique"
+            },
+            "label": "Uniquely mapped reads",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#unique"
+          },
+          {
+            "sbg:category": "ROOT files merging",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "itemSeparator": " ",
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-merge"
+            },
+            "description": "Merge multiple ROOT files into a single file.",
+            "label": "Input ROOT files",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#merging"
+          },
+          {
+            "sbg:category": "General",
+            "sbg:fileTypes": "ROOT",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 0,
+              "prefix": "-root"
+            },
+            "description": "The input ROOT file. This input is required for all the steps except for the extracting of the read mappings and merging ROOT files step.",
+            "label": "Input ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "sbg:stageInput": "link",
+            "id": "#input_root_file"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "Generate a histogram. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-his"
+            },
+            "label": "Histogram",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#histogram"
+          },
+          {
+            "sbg:category": "Histogram generation",
+            "description": "The reference FASTA files for all the chromosomes. Files should be named as: chr1.fa, chr2.fa, etc. This input is required for the histogram generation step. All the files should be in the same directory(project, or generated by the same app).",
+            "type": [
+              "null",
+              {
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "id": "#ref_genome_files",
+            "label": "Reference genome files"
+          },
+          {
+            "sbg:category": "Statistics calculation",
+            "description": "Calculate statistics step. This step must be completed before proceeding to partitioning and CNV calling. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-stat"
+            },
+            "label": "Calculate statistics",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#statistics"
+          },
+          {
+            "sbg:category": "General",
+            "description": "This option specifies not to use GC corrected RD signal. It can be used in the partitioning or CNV calling step.",
+            "sbg:includeInPorts": true,
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 100,
+              "prefix": "-ngc"
+            },
+            "label": "No GC correction",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "id": "#no_gc_correction"
+          },
+          {
+            "sbg:category": "Partitioning",
+            "description": "RD signal partitioning. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-partition"
+            },
+            "label": "RD signal partitioning",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#partitioning"
+          },
+          {
+            "sbg:category": "Calling",
+            "description": "Identifying CNVs (CNV calling).The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-call"
+            },
+            "label": "Identifying CNVs",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#calling"
+          },
+          {
+            "sbg:category": "Evaluation",
+            "description": "Returns average read depth(RD) per bin. The value sets the bin size.",
+            "inputBinding": {
+              "separate": true,
+              "sbg:cmdInclude": true,
+              "position": 99,
+              "prefix": "-eval"
+            },
+            "label": "Evaluate RD",
+            "type": [
+              "null",
+              "int"
+            ],
+            "id": "#evaluation"
+          },
+          {
+            "sbg:fileTypes": "BAM",
+            "description": "This Field is used for nameig the output of the Result and Evaluation steps.",
+            "label": "Input BAM Files",
+            "type": [
+              "null",
+              {
+                "name": "input_bam_files",
+                "type": "array",
+                "items": "File"
+              }
+            ],
+            "sbg:stageInput": null,
+            "id": "#input_bam_files"
+          }
+        ],
+        "sbg:license": "Creative Commons Attribution-NonCommercial 2.5",
+        "sbg:createdOn": 1453799735,
+        "sbg:sbgMaintained": false,
+        "sbg:toolkit": "CNVnator",
+        "sbg:job": {
+          "allocatedResources": {
+            "mem": 8000,
+            "cpu": 1
+          },
+          "inputs": {
+            "input_root_file": {
+              "path": "input/root.ext",
+              "class": "File",
+              "size": 0,
+              "secondaryFiles": []
+            },
+            "unique": false,
+            "ref_genome_files": [
+              {
+                "path": "/input/ref1.fa"
+              },
+              {
+                "path": "/input/ref2.fa"
+              }
+            ],
+            "histogram": 100,
+            "evaluation": 100,
+            "input_bam_files": [
+              {
+                "path": "/path/to/input_bam_files-1.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              },
+              {
+                "path": "/path/to/input_bam_files-2.ext",
+                "class": "File",
+                "size": 0,
+                "secondaryFiles": []
+              }
+            ],
+            "merging": null,
+            "tree": null,
+            "no_gc_correction": false,
+            "chromosomes": "11 20",
+            "calling": 100,
+            "statistics": 100,
+            "ref_genome": {
+              "path": "input/input.fa"
+            },
+            "partitioning": 100
+          }
+        },
+        "sbg:toolkitVersion": "v0.3.2",
+        "sbg:project": "sevenbridges/public-apps",
+        "id": "https://api.sbgenomics.com/v2/apps/sevenbridges/public-apps/cnvnator-0-3-2/12/raw/",
+        "sbg:toolAuthor": "Alexej Abyzov, Alexander E. Urban, Michael Snyder, and Mark Gerstein",
+        "baseCommand": [
+          "/opt/CNVnator_v0.3.2/src/cnvnator"
+        ],
+        "sbg:validationErrors": [],
+        "requirements": [
+          {
+            "class": "ExpressionEngineRequirement",
+            "requirements": [
+              {
+                "class": "DockerRequirement",
+                "dockerPull": "rabix/js-engine"
+              }
+            ],
+            "id": "#cwl-js-engine"
+          }
+        ],
+        "successCodes": [],
+        "sbg:latestRevision": 12,
+        "sbg:revisionsInfo": [
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799735,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 0
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799736,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 1
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1453799737,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 2
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456250925,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 3
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1456338151,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 4
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 5
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 6
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526724,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 7
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 8
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 9
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1457526725,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 10
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1459789092,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 11
+          },
+          {
+            "sbg:revisionNotes": null,
+            "sbg:modifiedOn": 1465231639,
+            "sbg:modifiedBy": "sevenbridges",
+            "sbg:revision": 12
+          }
+        ],
+        "stdin": "",
+        "hints": [
+          {
+            "class": "DockerRequirement",
+            "dockerPull": "images.sbgenomics.com/markop/cnvnator:0.3.2",
+            "dockerImageId": "47e9c8d664b3"
+          },
+          {
+            "class": "sbg:CPURequirement",
+            "value": 1
+          },
+          {
+            "class": "sbg:MemRequirement",
+            "value": 8000
+          }
+        ],
+        "sbg:createdBy": "sevenbridges",
+        "sbg:id": "sevenbridges/public-apps/cnvnator-0-3-2/12",
+        "sbg:contributors": [
+          "sevenbridges"
+        ],
+        "sbg:modifiedBy": "sevenbridges",
+        "stdout": {
+          "class": "Expression",
+          "engine": "#cwl-js-engine",
+          "script": "{\n  if (typeof $job.inputs.calling !== 'undefined'){\n  \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n    result_name += \"_cnv_calling_results.txt\"\n    return result_name\n  }\n  else{\n    if (typeof $job.inputs.evaluation !== 'undefined'){\n    \tresult_name = [].concat($job.inputs.input_bam_files)[0].path.split(\"/\").pop().split(\".\")[0]\n      \tresult_name += \"_average_rd_output.txt\"\n    \treturn result_name\n    }\n    else\n      return \"out.txt\"\n  }\n  \n}"
+        },
+        "sbg:categories": [
+          "Variant-Calling"
+        ],
+        "sbg:cmdPreview": "/opt/CNVnator_v0.3.2/src/cnvnator -root CNVnator_result_root_file.root  -d /input/ > input_bam_files-1_cnv_calling_results.txt",
+        "outputs": [
+          {
+            "sbg:fileTypes": "ROOT",
+            "description": "Output ROOT file",
+            "outputBinding": {
+              "glob": {
+                "class": "Expression",
+                "engine": "#cwl-js-engine",
+                "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' || typeof $job.inputs.merging !== 'undefined')\n   return \"CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"CNVnator_result_root_file.his.root\";\n else if (typeof $job.inputs.input_root_file !== null)\n   return $job.inputs.input_root_file.path.split(\"/\").pop()\n else\n   return \"\"\n}"
+              },
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "Output ROOT file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#output_root_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "CNV  calling results file.",
+            "outputBinding": {
+              "glob": "*_cnv_calling_results.txt",
+              "sbg:inheritMetadataFrom": "#input_bam_files"
+            },
+            "label": "CNV calling results file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#cnv_results_file"
+          },
+          {
+            "sbg:fileTypes": "TXT",
+            "description": "Average RD output file.",
+            "outputBinding": {
+              "glob": "*_average_rd_output.txt"
+            },
+            "label": "Average RD output file",
+            "type": [
+              "null",
+              "File"
+            ],
+            "id": "#average_rd_output_file"
+          }
+        ],
+        "arguments": [
+          {
+            "separate": false,
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n if (typeof $job.inputs.tree !== 'undefined' ||  typeof $job.inputs.merging !== 'undefined')\n   return \"-root CNVnator_result_root_file.root\";\n else if (typeof $job.inputs.histogram !== 'undefined')\n   return \"-outroot CNVnator_result_root_file.his.root\"\n else\n   return \"\"\n}\n"
+            },
+            "position": 0,
+            "prefix": ""
+          },
+          {
+            "valueFrom": {
+              "class": "Expression",
+              "engine": "#cwl-js-engine",
+              "script": "{\t\n  if (typeof $job.inputs.ref_genome_files !== 'undefined'){\n    filepath = $job.inputs.ref_genome_files[0].path\n\n  \tfile_path_sep = filepath.split(\"/\")\n  \n  \tfile_path =\"\"\n \tif (file_path_sep.length > 1)\n \t\tfile_path = filepath.substr(0, filepath.lastIndexOf(\"/\")) + \"/\"\n    return \"-d \" + file_path;\n   }\n else\n   return \"\"\n}\n"
+            },
+            "position": 4,
+            "separate": true
+          }
+        ],
+        "sbg:revision": 12
+      },
+      "inputs": [
+        {
+          "id": "#CNVnator_Calling.tree"
+        },
+        {
+          "id": "#CNVnator_Calling.ref_genome"
+        },
+        {
+          "id": "#CNVnator_Calling.chromosomes"
+        },
+        {
+          "id": "#CNVnator_Calling.unique"
+        },
+        {
+          "id": "#CNVnator_Calling.merging"
+        },
+        {
+          "id": "#CNVnator_Calling.input_root_file",
+          "source": [
+            "#CNVnator_Partitioning.output_root_file"
+          ]
+        },
+        {
+          "id": "#CNVnator_Calling.histogram"
+        },
+        {
+          "id": "#CNVnator_Calling.ref_genome_files"
+        },
+        {
+          "id": "#CNVnator_Calling.statistics"
+        },
+        {
+          "id": "#CNVnator_Calling.no_gc_correction",
+          "source": [
+            "#no_gc_correction"
+          ]
+        },
+        {
+          "id": "#CNVnator_Calling.partitioning"
+        },
+        {
+          "id": "#CNVnator_Calling.calling",
+          "source": [
+            "#calling"
+          ]
+        },
+        {
+          "id": "#CNVnator_Calling.evaluation"
+        },
+        {
+          "id": "#CNVnator_Calling.input_bam_files",
+          "source": [
+            "#bam_files"
+          ]
+        }
+      ],
+      "id": "#CNVnator_Calling"
+    }
+  ],
+  "sbg:revisionNotes": "put in a SplitFasta and Decompressor to feed the histogram generator",
+  "sbg:modifiedBy": "jack_digi",
+  "sbg:categories": [
+    "DNA",
+    "WGS",
+    "WES-(WXS)",
+    "Targeted-sequencing"
+  ],
+  "sbg:toolkitVersion": "v0.3.2",
+  "outputs": [
+    {
+      "sbg:includeInPorts": true,
+      "sbg:x": 1525.5554883980465,
+      "sbg:y": 327.77776903576324,
+      "source": [
+        "#CNVnator_Calling.cnv_results_file"
+      ],
+      "label": "cnv_results_file",
+      "type": [
+        "null",
+        "File"
+      ],
+      "required": false,
+      "id": "#cnv_results_file"
+    },
+    {
+      "sbg:includeInPorts": true,
+      "sbg:x": 1526.666477173939,
+      "sbg:y": 536.6666590843671,
+      "source": [
+        "#CNVnator_Evaluation.average_rd_output_file"
+      ],
+      "label": "average_rd_output_file",
+      "type": [
+        "null",
+        "File"
+      ],
+      "required": false,
+      "id": "#average_rd_output_file"
+    },
+    {
+      "sbg:includeInPorts": true,
+      "sbg:x": 1780.0000271620554,
+      "sbg:y": 148.88572634599365,
+      "source": [
+        "#CNVnator2VCF.vcf"
+      ],
+      "label": "vcf",
+      "type": [
+        "null",
+        "File"
+      ],
+      "required": false,
+      "id": "#vcf"
+    }
+  ],
+  "sbg:modifiedOn": 1468355070,
+  "sbg:revision": 1
+}
