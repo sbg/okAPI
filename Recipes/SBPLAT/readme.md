@@ -41,13 +41,17 @@ Each of the main components in the SBPLAT is accessible by the API. These recipe
 * Tasks
  * create and start [tasks_create.ipynb]
  * monitor & get outputs [tasks_monitorAndGetResults.ipynb]
+
+* Volumes
+ * mount and write to volume [volumes_writeToCloudStorage.ipynb]
+ * mount and read from volume [volumes_readFromCloudStorage.ipynb]
  
 ### Notes
-<sup>1</sup> We are happy to add more cookbooks, please request what helps you most effectively get stuff done. Already in the queue are:
+<sup>1</sup> We are happy to add more recipes, please request what helps you most effectively get stuff done. Already in the queue are:
  
 * [files_makeProcessingList]. A way to screen through the metadata on all the files in your project. Can be passed to a (or a batch of) task(s)
 * [files_uploadViaAPI] New functionality to upload files via the API
-* [files_setMetadata] Create or adapt the metadata of a (non-TCGA) file on the CGC. **see also** _Tutorials/SBPLAT/quickstart_RNAseq.ipynb_ for an example of this
+* [files_setMetadata] Create or adapt the metadata of a file
 
 
 ### Extra Pictures of API calls
