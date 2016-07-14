@@ -1,4 +1,4 @@
- <img src = "/SB_logo_navy.jpg" width = "300"> 
+ <img src = "_images/SB_logo.eps" width = "300"> 
 # ok, API
       
 ### Code samples for using Seven Bridges APIs. Official [master branch]
@@ -44,3 +44,5 @@ Note there are two branches of this repository. You are on the **master** branch
 2. This is an **beta** and we are constantly working on improving our examples. Expect the awesomeness to continue.
 3. Please share your _feedback_ on our [CGC forum](http://docs.cancergenomicscloud.org/discuss) or [SBG forum](http://docs.sevenbridges.com/discuss).
 4. We are happy to recieve Pull Requests with your _improvements_.
+
+Good luck, have fun!
