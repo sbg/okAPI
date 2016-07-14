@@ -4,5 +4,4 @@
 .project
 .pydevproject
 .python-version
-*files/
 .DS_Store
