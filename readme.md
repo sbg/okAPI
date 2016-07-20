@@ -36,7 +36,7 @@ Note there are two branches of this repository. You are on the **master** branch
 
 
 ### Notes
-0. We ask that you limit parallel tasks to **300** at a time<sup>1</sup>. If you need to run more, that is **great**, but please get in touch with us so we don't _run out of cloud_.
+0. We ask that you limit parallel tasks to **200** at a time<sup>1</sup>. If you need to run more, that is **great**, but please get in touch with us so we don't _run out of cloud_.
 1. This is compatible with **Python 2.6+ and Python 3**.
 2. This is an **beta** and we are constantly working on improving our examples. Expect the awesomeness to continue.
 3. Please share your _feedback_ on our [CGC forum](http://docs.cancergenomicscloud.org/discuss) or [SBG forum](http://docs.sevenbridges.com/discuss).
