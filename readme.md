@@ -1,13 +1,19 @@
- <img src = "_images/SB_logo.jpg" width = "300"> 
+ <img src = "_images/SB_logo.jpg" width = "300" align="center"> 
 # ok, API
       
-### Code samples for using Seven Bridges APIs. Official [master branch]
+### Code samples for using Seven Bridges APIs
+Official branch (master)
+
+[![sevenbridges-python version](https://img.shields.io/badge/sevenbridges--python-0.4.2-orange.svg)](https://pypi.python.org/pypi/sevenbridges-python)
+[![Licence](https://img.shields.io/badge/okAPI%20license-Creative%20Commons-brightgreen.svg)](https://github.com/sbg/okAPI/blob/master/license.txt)
+
+
 ####Background
 The recipes in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
  * Documentation for the Seven Bridges Platform is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
  * Documentation for the Cancer Genomics Cloud is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
 
-####About OK API
+####About ok, API
 To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. OK API contains examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
 
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
@@ -40,7 +46,7 @@ Note there are two branches of this repository. You are on the **master** branch
 1. This is compatible with **Python 2.6+ and Python 3**.
 2. This is an **beta** and we are constantly working on improving our examples. Expect the awesomeness to continue.
 3. Please share your _feedback_ on our [CGC forum](http://docs.cancergenomicscloud.org/discuss) or [SBG forum](http://docs.sevenbridges.com/discuss).
-4. We are happy to recieve Pull Requests with your _improvements_.
+4. We are happy to recieve Pull Requests with your _improvements_ or Issues which we will fix asap.
 
 <sup>1</sup> This limit is a rule of thumb for the CGC, it also depends on the complexity of the workflow and input files. For Seven Bridges Platform users, this limit depends on your contract.
 
