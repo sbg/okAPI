@@ -1,0 +1,611 @@
+{
+  "sbg:createdOn": 1460640041,
+  "sbg:job": {
+    "allocatedResources": {
+      "mem": 1000,
+      "cpu": 1
+    },
+    "inputs": {
+      "regions_array": [
+        "chr1",
+        "chr2:500-100"
+      ],
+      "output_alignemets_cigar": "output_al-string-value",
+      "output_header_only": false,
+      "fast_BAM_compress": false,
+      "reference_list_file": {
+        "path": "reference_list.fai",
+        "secondaryFiles": [],
+        "size": 0,
+        "class": "File"
+      },
+      "include_header_in_output": true,
+      "count_alignments_NO": false,
+      "output_cram": false,
+      "subsample_fraction": 10.424963167172294,
+      "exclude_read_taf": "exclude_read_taf-string-value",
+      "output_BAM": true,
+      "collapse_CIGAR": true,
+      "filter_not_in_FLAG": 4,
+      "Output_uncompressed_BAM": false,
+      "output_alignments_library": "output_alignments_library-string-value",
+      "fasta_ref_file": {
+        "path": "fasta_ref_file.fasta",
+        "secondaryFiles": [],
+        "size": 0,
+        "class": "File"
+      },
+      "output_flag": "output_flag-string-value",
+      "output_overlapped_BED": {
+        "path": "output_overlapped_BED.bed",
+        "secondaryFiles": [],
+        "size": 0,
+        "class": "File"
+      },
+      "out_alignments_read_group_list": {
+        "path": "out_alignements_read_group_list.txt",
+        "secondaryFiles": [],
+        "size": 0,
+        "class": "File"
+      },
+      "input_bam_or_sam_file": {
+        "path": "input_bam_or_sam_file.sam",
+        "secondaryFiles": [],
+        "size": 0,
+        "class": "File"
+      },
+      "skip_alignements": 8,
+      "BAM_compression_threads": 2,
+      "read_group": "read_group-string"
+    }
+  },
+  "stdout": "",
+  "sbg:project": "admin/sbg-public-data",
+  "requirements": [
+    {
+      "requirements": [
+        {
+          "dockerPull": "rabix/js-engine",
+          "class": "DockerRequirement"
+        }
+      ],
+      "id": "#cwl-js-engine",
+      "class": "ExpressionEngineRequirement"
+    }
+  ],
+  "outputs": [
+    {
+      "id": "#output_bam_or_sam_or_cram_file",
+      "label": "Output BAM, SAM, or cRAM file",
+      "type": [
+        "File"
+      ],
+      "fileTypes": "BAM,SAM,CRAM,TXT",
+      "description": "The output file.",
+      "outputBinding": {
+        "sbg:inheritMetadataFrom": "#input_bam_or_sam_file",
+        "glob": "{*.bam,*.sam,*.cram,*.txt}"
+      }
+    }
+  ],
+  "sbg:toolkitVersion": "v1.3",
+  "sbg:links": [
+    {
+      "id": "http://www.htslib.org",
+      "label": "Homepage"
+    },
+    {
+      "id": "https://github.com/samtools/",
+      "label": "Source code"
+    },
+    {
+      "id": "https://sourceforge.net/projects/samtools/files/samtools/",
+      "label": "Download"
+    },
+    {
+      "id": "http://www.ncbi.nlm.nih.gov/pubmed/19505943",
+      "label": "Publication"
+    },
+    {
+      "id": "http://www.htslib.org/doc/samtools.html",
+      "label": "Documentation"
+    },
+    {
+      "id": "http://www.htslib.org",
+      "label": "Wiki"
+    }
+  ],
+  "sbg:sbgMaintained": false,
+  "id": "https://api.sbgenomics.com/v2/apps/admin/sbg-public-data/samtools-view-1-3/9/raw/",
+  "sbg:revision": 9,
+  "sbg:categories": [
+    "SAM/BAM-Processing"
+  ],
+  "sbg:contributors": [
+    "admin",
+    "sevenbridges"
+  ],
+  "sbg:cmdPreview": "/opt/samtools-1.3/samtools view -o input_bam_or_sam_file.bam  input_bam_or_sam_file.sam",
+  "successCodes": [],
+  "sbg:id": "admin/sbg-public-data/samtools-view-1-3/9",
+  "inputs": [
+    {
+      "id": "#output_BAM",
+      "label": "Output BAM file",
+      "inputBinding": {
+        "position": 0,
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-b"
+      },
+      "sbg:category": "configuration",
+      "description": "Output in the BAM format.",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "id": "#output_cram",
+      "label": "Output cram format file",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-C"
+      },
+      "sbg:category": "configuration",
+      "description": "Output in the CRAM format.",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "id": "#fast_BAM_compress",
+      "label": "Fast bam compression",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-1"
+      },
+      "sbg:category": "configuration",
+      "description": "Enable fast BAM compression.",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "id": "#Output_uncompressed_BAM",
+      "label": "Output uncompreessed bam",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-u"
+      },
+      "description": "Output uncompressed BAM.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "id": "#include_header_in_output",
+      "label": "Include header in the output",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-h"
+      },
+      "description": "Include the header in the output.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "id": "#output_header_only",
+      "label": "Output the header only",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-H"
+      },
+      "description": "Output the header only.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "id": "#count_alignments_NO",
+      "label": "Count & print alignemt no",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-c"
+      },
+      "sbg:category": "configuration",
+      "description": "Instead of printing the alignments, only count them and print the total number. All filter options, such as -f, -F, and -q, are taken into account.",
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    {
+      "sbg:fileTypes": "FAI",
+      "id": "#reference_list_file",
+      "label": "List of reference names and lengths",
+      "type": [
+        "null",
+        "File"
+      ],
+      "inputBinding": {
+        "loadContents": false,
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-t"
+      },
+      "description": "List of reference names and lengths (force -S). This file is TAB-delimited. Each line must contain the reference name and the length of the reference, one line for each distinct reference; additional fields are ignored. This file also defines the order of the reference sequences in sorting. If you run `samtools faidx <ref.fa>', the resultant index file <ref.fa>.fai can be used as this <in.ref_list> file.",
+      "sbg:category": "File input"
+    },
+    {
+      "sbg:fileTypes": "FASTA, BGZIP",
+      "id": "#fasta_ref_file",
+      "label": "FASTA ref file",
+      "type": [
+        "null",
+        "File"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-T"
+      },
+      "description": "A FASTA format reference FILE, optionally compressed by bgzip and ideally indexed by samtools faidx. If an index is not present, one will be generated for you.",
+      "sbg:stageInput": "link",
+      "sbg:category": "File input"
+    },
+    {
+      "sbg:fileTypes": "BED",
+      "id": "#output_overlapped_BED",
+      "label": "Output alignements overlapped with BED",
+      "type": [
+        "null",
+        "File"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-L"
+      },
+      "description": "Only output alignments overlapping the input BED FILE [null].",
+      "sbg:stageInput": "link",
+      "sbg:category": "File input"
+    },
+    {
+      "id": "#read_group",
+      "label": "Read group",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-r"
+      },
+      "sbg:category": "configuration",
+      "description": "Only output reads in the specified read group.",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "sbg:fileTypes": "TXT",
+      "id": "#out_alignments_read_group_list",
+      "label": "Output alignement in read groups list",
+      "type": [
+        "null",
+        "File"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-R"
+      },
+      "description": "Output alignments in read groups listed in FILE [null].",
+      "sbg:category": "File input"
+    },
+    {
+      "id": "#skip_alignements",
+      "label": "Skip alignments smaller than int",
+      "type": [
+        "null",
+        "int"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-q"
+      },
+      "description": "Skip alignments with MAPQ smaller than.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "id": "#output_alignments_library",
+      "label": "Only output alignments in library STR",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-I"
+      },
+      "sbg:category": "configuration",
+      "description": "Only output alignments in library STR [null].",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "id": "#output_alignemets_cigar",
+      "label": "Output only alignments with number of cigar bases consuming query sequence  \u2265 int",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-m"
+      },
+      "sbg:category": "configuration",
+      "description": "Only output alignments with number of CIGAR bases consuming query sequence  \u2265 INT [0].",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "id": "#output_flag",
+      "label": "Filtering flag",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-f"
+      },
+      "sbg:category": "configuration",
+      "description": "Only output alignments with all bits set in INT present in the FLAG field.",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "id": "#filter_not_in_FLAG",
+      "label": "Do not output alignments with any bits set in FLAG",
+      "type": [
+        "null",
+        "int"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-F"
+      },
+      "description": "Do not output alignments with any bits set in INT present in the FLAG field.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "id": "#exclude_read_taf",
+      "label": "Exclude read tag",
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-x"
+      },
+      "sbg:category": "configuration",
+      "description": "Read tag to exclude from output.",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "id": "#collapse_CIGAR",
+      "label": "Collapes backward cigar",
+      "type": [
+        "null",
+        "boolean"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-B"
+      },
+      "description": "Collapse the backward CIGAR operation.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "id": "#subsample_fraction",
+      "label": "Subsample fraction",
+      "type": [
+        "null",
+        "float"
+      ],
+      "sbg:toolDefaultValue": "-1",
+      "sbg:category": "configuration",
+      "description": "Fraction of templates/pairs to subsample; the integer part is treated as the seed for the random number generator.",
+      "sbg:stageInput": null,
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-s"
+      }
+    },
+    {
+      "id": "#BAM_compression_threads",
+      "label": "BAM compression threads",
+      "type": [
+        "null",
+        "int"
+      ],
+      "inputBinding": {
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "prefix": "-@"
+      },
+      "description": "Number of BAM compression threads to use in addition to main thread.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    },
+    {
+      "sbg:fileTypes": "BAM, SAM",
+      "id": "#input_bam_or_sam_file",
+      "label": "BAM or SAM input file",
+      "type": [
+        "File"
+      ],
+      "inputBinding": {
+        "position": 1,
+        "separate": true,
+        "sbg:cmdInclude": true
+      },
+      "description": "BAM or SAM input file.",
+      "sbg:category": "File input"
+    },
+    {
+      "id": "#regions_array",
+      "label": "Regions_array",
+      "type": [
+        "null",
+        {
+          "name": "regions_array",
+          "items": "string",
+          "type": "array"
+        }
+      ],
+      "inputBinding": {
+        "position": 2,
+        "separate": true,
+        "sbg:cmdInclude": true,
+        "itemSeparator": null
+      },
+      "description": "If no region is specified, all the alignments will be printed; otherwise only alignments overlapping the specified regions will be output. An alignment may be given multiple times if it is overlapping several regions. A region can be presented, for example, in the following format: `chr2' (the whole chr2), `chr2:1000000' (region starting from 1,000,000bp) or `chr2:1,000,000-2,000,000' (region between 1,000,000 and 2,000,000bp including the end points). The coordinate is 1-based.",
+      "sbg:stageInput": null,
+      "sbg:category": "configuration"
+    }
+  ],
+  "sbg:toolAuthor": "Heng Li/Sanger Institute,  Bob Handsaker/Broad Institute, James Bonfield/Sanger Institute,",
+  "arguments": [
+    {
+      "valueFrom": {
+        "script": "{\n filepath = $job.inputs.input_bam_or_sam_file.path\n\n filename = filepath.split(\"/\").pop();\n\n file_dot_sep = filename.split(\".\");\n file_ext = file_dot_sep[file_dot_sep.length-1];\n\n new_filename = filename.substr(0,filename.lastIndexOf(\".\"));\n \n extension = '.sam';\n  \n if ((typeof $job.inputs.output_BAM !== \"undefined\" && $job.inputs.output_BAM === true) ||\n     (typeof $job.inputs.Output_uncompressed_BAM !== \"undefined\" && $job.inputs.Output_uncompressed_BAM === true) ||\n     (typeof $job.inputs.fast_BAM_compress !== \"undefined\" && $job.inputs.fast_BAM_compress === true))\n \textension = '.bam'\n    \n else if (typeof $job.inputs.output_cram !== \"undefined\" && $job.inputs.output_cram === true)\n \t extension = '.cram'\n    \n else if ((typeof $job.inputs.output_header_only !== \"undefined\" && $job.inputs.output_header_only === true) ||\n          (typeof $job.inputs.count_alignments_NO !== \"undefined\" && $job.inputs.count_alignments_NO === true))\n   \textension = '.txt'\n             \n return new_filename + extension; \n}",
+        "engine": "#cwl-js-engine",
+        "class": "Expression"
+      },
+      "separate": true,
+      "prefix": "-o"
+    }
+  ],
+  "sbg:validationErrors": [],
+  "sbg:toolkit": "SAMtools",
+  "label": "SAMtools View",
+  "sbg:latestRevision": 9,
+  "baseCommand": [
+    "/opt/samtools-1.3/samtools",
+    "view"
+  ],
+  "sbg:license": "BSD License, MIT License",
+  "sbg:image_url": null,
+  "class": "CommandLineTool",
+  "sbg:modifiedOn": 1469726738,
+  "temporaryFailCodes": [],
+  "hints": [
+    {
+      "class": "sbg:CPURequirement",
+      "value": 1
+    },
+    {
+      "class": "sbg:MemRequirement",
+      "value": 1000
+    },
+    {
+      "dockerImageId": "",
+      "dockerPull": "images.sbgenomics.com/marouf/samtools:1.3",
+      "class": "DockerRequirement"
+    },
+    {
+      "class": "sbg:AWSInstanceType",
+      "value": "c4.2xlarge"
+    }
+  ],
+  "stdin": "",
+  "sbg:modifiedBy": "admin",
+  "sbg:createdBy": "sevenbridges",
+  "description": "The view command filters SAM or BAM formatted data. Using options and arguments it understands what data to select (possibly all of it) and passes only that data through. Input is usually a sam or bam file specified as an argument, but could be sam or bam data piped from any other command. Possible uses include extracting a subset of data into a new file, converting between BAM and SAM formats, and just looking at the raw file contents. The order of extracted reads is preserved. Additionally, a cRAM file (another compressed version of the alignments) could be produced by this command.",
+  "sbg:revisionsInfo": [
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1460640041,
+      "sbg:revision": 0,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1460640041,
+      "sbg:revision": 1,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1461762650,
+      "sbg:revision": 2,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1461762650,
+      "sbg:revision": 3,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1462904151,
+      "sbg:revision": 4,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1462904152,
+      "sbg:revision": 5,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1462904152,
+      "sbg:revision": 6,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1462904152,
+      "sbg:revision": 7,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "sevenbridges",
+      "sbg:modifiedOn": 1464422171,
+      "sbg:revision": 8,
+      "sbg:revisionNotes": null
+    },
+    {
+      "sbg:modifiedBy": "admin",
+      "sbg:modifiedOn": 1469726738,
+      "sbg:revision": 9,
+      "sbg:revisionNotes": null
+    }
+  ]
+}
