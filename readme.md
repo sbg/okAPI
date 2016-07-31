@@ -8,13 +8,13 @@ Official branch (master)
 [![Licence](https://img.shields.io/badge/okAPI%20license-Creative%20Commons-brightgreen.svg)](https://github.com/sbg/okAPI/blob/master/license.txt)
 
 
-####Background
-The recipes in this repository cover the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more about the Seven Bridges Platform or Cancer Genomics Cloud, see their documentation.
- * Documentation for the Seven Bridges Platform is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
- * Documentation for the Cancer Genomics Cloud is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
+#### Background
+This repository covers the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more, see their documentation.
+ * The Seven Bridges Platform documentation is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
+ * The Cancer Genomics Cloud documentation is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
 
-####About ok, API
-To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. OK API contains examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
+#### About _ok, API_
+To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. _ok, API_ contains examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
 
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
 * **_"How do I complete my entire analysis?"_** You want a **tutorial**, which may _combine multiple recipes_ to go from start to finish of an analysis. 
