@@ -1,19 +1,11 @@
  <img src = "_images/SB_logo.jpg" width = "300" align="center"> 
 # ok, API
       
-### Code samples for using Seven Bridges APIs
 Official branch (master)
 
 [![sevenbridges-python version](https://img.shields.io/badge/sevenbridges--python-0.4.2-orange.svg)](https://pypi.python.org/pypi/sevenbridges-python)
 [![Licence](https://img.shields.io/badge/okAPI%20license-Creative%20Commons-brightgreen.svg)](https://github.com/sbg/okAPI/blob/master/license.txt)
 
-
-#### Background
-This repository covers the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more, see their documentation.
- * The Seven Bridges Platform documentation is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
- * The Cancer Genomics Cloud documentation is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
-
-#### About _ok, API_
 To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. _ok, API_ contains examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
 
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
@@ -32,14 +24,18 @@ to
 # [USER INPUT] specify platform {cgc, sbpla}
 prof = 'sbpla'
 ```
-in the second code cell of any recipe (Note some features are available on one platform but not the other). Each folder has it's own _readme_ files within each folder which details the scripts. Feedback and improvements are welcome. Good luck & have fun!
+in the second code cell of any recipe (Note some features are available on one platform but not the other). Each folder has it's own _readme_ files within each folder which details the scripts. Feedback and improvements are welcome.
+
+## Background
+This repository covers the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more, see their documentation.
+ * The Seven Bridges Platform documentation is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
+ * The Cancer Genomics Cloud documentation is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
 
 ## Branches
 Note there are two branches of this repository. You are on the **master** branch. We are currently _populating this branch_.
 
  * **master**: This was released April 2016 and uses _sevenbridges-python_, the **official** Seven Bridges [Python bindings](http://sevenbridges-python.readthedocs.io/en/latest/). This branch includes most of the API functionality and is compatible with Python 2.6+ and 3.
  * **advanced\_access**: This was developed from January to May 2016 and uses _apimethods.py_. This is an **unofficial** branch where we may roll out new features. Currently there are more notebooks here. It is _only compatible_ with Python 2.7.
-
 
 ### Notes
 0. We ask that you limit parallel tasks to **200** at a time<sup>1</sup>. If you need to run more, that is **great**, but please get in touch with us so we don't _run out of cloud_.
