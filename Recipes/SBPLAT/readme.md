@@ -23,9 +23,11 @@ Each Seven Bridges Platform component is accessible by the API. These recipes ar
   
 * Files
  * list (within a project) [files\_listAll.ipynb]
+ * list based on metadata [files\_screenbyMetadata.ipynb]
  * get details [files\_detailOne.ipynb]
  * copy Public Reference file [files\_copyFromMyProject.ipynb]
  * copy from another project [files\_copyFromPublicReference.ipynb]
+ * upload and set metadata [files\_upload_and_setMetadata.ipynb] 
  
 * Apps
  * list [apps\_listAll.ipynb]
@@ -43,10 +45,8 @@ Each Seven Bridges Platform component is accessible by the API. These recipes ar
  * mount and read from volume [volumes\_readFromCloudStorage.ipynb]
  
 ### Notes
-<sup>1</sup> We are happy to add more recipes, please request what helps you most effectively get stuff done. Already in the queue are:
+<sup>1</sup> We are happy to add more recipes, please request what helps you most effectively get stuff done. Already in the queue is:
 
-* [files\_upload_and_setMetadata.ipynb] Upload files with the API; set their metadata
-* [files\_screenbyMetadata.ipynb] make a file list based on metadata - showcase blazing speed.
 * [billing\_\*] we definity have neglected billing, sorry. 
 
 <sup>2</sup> These recipes will be updated to use the sevenbridges-python library which now (version >= 0.4.0) supports Volumes API.
