@@ -14,7 +14,7 @@ The [**batch\_o\_tasks\_standard.ipynb**] tutorial creates a project, copies WGS
 The [**quickstartOpenData.ipynb**] tutorial creates an **open-data** project, add reference files and reference apps, create a task, and finally download the outputs. 
 
 ## How could I get VCF files to pass to a tertiary analysis software?
-The [**Get_my_VCFs.ipynb**] tutorial searches for _VCF_ files within a particular project OR within a particular tasks inside of a particular project. 
+The [**Get\_my\_VCFs.ipynb**] tutorial searches for _VCF_ files within a particular project OR within a particular tasks inside of a particular project. 
 
 ### Notes
 1. _Extensive_ and _beautiful_ API documentation for the Seven Bridges Platform is available [here](http://docs.sevenbridges.com/docs/the-api)
