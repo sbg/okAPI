@@ -1,4 +1,4 @@
- <img src = "../../_images/SB_logo.eps" width = "300"> 
+ <img src = "https://github.com/sbg/okAPI/blob/master/_images/SB_logo.jpg" width = "300"> 
 # tutor me
 We are happy to share a few _use-cases_  that have been useful for our customers. We are even happier to hear your **needs** so we can make things run more smoothly for you. 
 
