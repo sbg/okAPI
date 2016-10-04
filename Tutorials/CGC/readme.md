@@ -13,6 +13,9 @@ The [**access\_TCGA\_on\_AWS.ipynb**] tutorial  strives to empower the public to
 ## How could I get VCF files to pass to a tertiary analysis software?
 The [**Get\_my\_VCFs.ipynb**] tutorial searches for _VCF_ files within a particular project OR within a particular tasks inside of a particular project. 
 
+## Integration with Synapse for the DREAM challenge
+Gaurav has co-organized a [DREAM Challenge](http://www.cancergenomicscloud.org/dreamchallenge/) for RNA somatic mutation calling. Python scripts which call the API are available in his github [repo](https://github.com/sbg/dreamwebinars). 
+
 ### Notes
 1. _Extensive_ and _beautiful_ API documentation for the Seven Bridges Platform is available [here](http://docs.cancergenomicscloud.org/docs/the-cgc-api)
 2. The **advanced-access** branch still has MUCH better tutorials.
