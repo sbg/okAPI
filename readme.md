@@ -41,7 +41,7 @@ Note there are two branches of this repository. You are on the **master** branch
 0. We ask that you limit parallel tasks to **200** at a time<sup>1</sup>. If you need to run more, that is **great**, but please get in touch with us so we don't _run out of cloud_.
 1. This is compatible with **Python 2.6+ and Python 3**.
 2. This is an **beta** and we are constantly working on improving our examples. Expect the awesomeness to continue.
-3. Please share your _feedback_ on our [CGC forum](http://docs.cancergenomicscloud.org/discuss) or [SBG forum](http://docs.sevenbridges.com/discuss).
+3. Please share your _feedback_ on our [CGC forum](http://docs.cancergenomicscloud.org/discuss) or by emailing [support@sevenbridges.com](mailto:support@sevenbridges.com).
 4. We are happy to recieve Pull Requests with your _improvements_ or Issues which we will fix asap.
 
 <sup>1</sup> This limit is a rule of thumb for the CGC, it also depends on the complexity of the workflow and input files. For Seven Bridges Platform users, this limit depends on your contract.
