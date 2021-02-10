@@ -11,30 +11,19 @@ To help people maximize the _extensibility_ and _automation_ capability of Seven
 * **_"How do I do this one thing?"_** You want a **recipe**, which is a _modular_ example of common operations. 
 * **_"How do I complete my entire analysis?"_** You want a **tutorial**, which may _combine multiple recipes_ to go from start to finish of an analysis. 
 
-The _recipe_ and _tutorial_ folders in this repository are subdivided into **CGC** (the Cancer Genomics Cloud) and **SBPLAT** (the Seven Bridges Platform). This separation ensures we link to the appropriate docs. Switching environments is as easy as changing. 
+The _recipe_ and _tutorial_ folders in this repository are subdivided into **CGC** (the Cancer Genomics Cloud) and **SBPLAT** (the Seven Bridges Platform). This separation ensures we link to the appropriate docs. 
 
 ---
 **NOTE**
 
-The recipes in the CGC folder is not actively maintained. Please refer the SBPLA folder for latest recipes.
+The recipes and tutorials in the CGC folders are not actively maintained. Please refer to the SBPLA folder for latest recipes.
 
 ---
 
-```python
-# [USER INPUT] specify platform {cgc, sbpla}
-prof = 'cgc'
-```
-
-to 
-
-```python
-# [USER INPUT] specify platform {cgc, sbpla}
-prof = 'sbpla'
-```
-in the second code cell of any recipe (Note some features are available on one platform but not the other). Each folder has it's own _readme_ files within each folder which details the scripts. Feedback and improvements are welcome.
+Switching between environments is as easy as choosing a different authentication token and API endpoint or a different profile from the `sevenbridges credentials` file [(explained here)](https://sevenbridges-python.readthedocs.io/en/latest/quickstart/#initialize-the-library-using-a-configuration-file). Feedback and improvements are welcome.
 
 ## Background
-This repository covers the Seven Bridges Plaform and the Cancer Genomics Cloud. To learn more, see their documentation.
+This repository mainly covered the Seven Bridges Plaform and the Cancer Genomics Cloud Platform, but the recipes and tutorials are applicable to any other installation of the Seven Bridges Platform (the EU platform, the Cavatica Platform, the BioDataCatalys Powered by Seven Bridges Platform and others). To learn more, see te respective platform documentation (SBPLA and CGC links only).
  * The Seven Bridges Platform documentation is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
  * The Cancer Genomics Cloud documentation is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
 
