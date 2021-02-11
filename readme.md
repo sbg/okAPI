@@ -23,9 +23,11 @@ The recipes and tutorials in the CGC folders are not actively maintained. Please
 Switching between environments is as easy as choosing a different authentication token and API endpoint or a different profile from the `sevenbridges credentials` file [(explained here)](https://sevenbridges-python.readthedocs.io/en/latest/quickstart/#initialize-the-library-using-a-configuration-file). Feedback and improvements are welcome.
 
 ## Background
-This repository mainly covered the Seven Bridges Plaform and the Cancer Genomics Cloud Platform, but the recipes and tutorials are applicable to any other installation of the Seven Bridges Platform (the EU platform, the Cavatica Platform, the BioDataCatalys Powered by Seven Bridges Platform and others). To learn more, see te respective platform documentation (SBPLA and CGC links only).
+This repository mainly covered the Seven Bridges Plaform and the Cancer Genomics Cloud Platform, but the recipes and tutorials are applicable to any other installation of the Seven Bridges Platform (the EU platform, the Cavatica Platform, the BioDataCatalyst Powered by Seven Bridges Platform and others). To learn more, see the respective platform documentation.
  * The Seven Bridges Platform documentation is at [docs.sevenbridges.com](http://docs.sevenbridges.com/). In particular, see the [API documentation](http://docs.sevenbridges.com/docs/the-api). 
  * The Cancer Genomics Cloud documentation is at [docs.cancergenomicscloud.com](http://docs.cancergenomicscloud.org/). In particular, see the [API documentation](http://docs.cancergenomicscloud.org/docs/the-cgc-api). 
+ * The Cavatica platform documentation is at [docs.cavatica.org/docs/getting-started](https://docs.cavatica.org/docs/getting-started).
+ * The BioDataCatalyst powered by Seven Bridges platform documentation is at [https://sb-biodatacatalyst.readme.io/docs](https://sb-biodatacatalyst.readme.io/docs)
 
 ### Notes
 1. This is compatible with **Python 3.6+**.
