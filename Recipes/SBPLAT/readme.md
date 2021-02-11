@@ -40,7 +40,7 @@ Each Seven Bridges Platform component is accessible by the API. These recipes ar
  * create and start [tasks\_create.ipynb]
  * monitor & get outputs [tasks\_monitorAndGetResults.ipynb]
 
-* Volumes<sup>2</sup>
+* Volumes
  * mount and write to volume [volumes\_writeToCloudStorage.ipynb]
  * mount and read from volume [volumes\_readFromCloudStorage.ipynb]
  
@@ -48,5 +48,3 @@ Each Seven Bridges Platform component is accessible by the API. These recipes ar
 <sup>1</sup> We are happy to add more recipes, please request what helps you most effectively get stuff done. Already in the queue is:
 
 * [billing\_\*] we definity have neglected billing, sorry. 
-
-<sup>2</sup> These recipes will be updated to use the sevenbridges-python library which now (version >= 0.4.0) supports Volumes API.
