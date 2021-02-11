@@ -3,7 +3,7 @@
       
 Official branch (master)
 
-[![sevenbridges-python version](https://https://img.shields.io/badge/sevenbridges--python-2.0.0-orange.svg)](https://pypi.python.org/pypi/sevenbridges-python)
+[![sevenbridges-python version](https://img.shields.io/badge/sevenbridges--python-2.0.1-green)](https://pypi.python.org/pypi/sevenbridges-python)
 [![Licence](https://img.shields.io/badge/okAPI%20license-Creative%20Commons-brightgreen.svg)](https://github.com/sbg/okAPI/blob/master/license.txt)
 
 To help people maximize the _extensibility_ and _automation_ capability of Seven Bridges products, we're happy to share example **API** code. _ok, API_ contains examples have been used to address common user _wants_ and _needs_. They are divided into **recipes** & **tutorials**. 
