@@ -24,6 +24,7 @@ Each Seven Bridges Platform component is accessible by the API. These recipes ar
 * Files
  * list (within a project) [files\_listAll.ipynb]
  * list based on metadata [files\_screenbyMetadata.ipynb]
+ * list based on metadata recursive [files\_listByMetadataRecursive.ipynb]
  * get details [files\_detailOne.ipynb]
  * copy Public Reference file [files\_copyFromMyProject.ipynb]
  * copy from another project [files\_copyFromPublicReference.ipynb]
